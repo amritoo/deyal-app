@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<GridPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.CreateMissionController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <VBox alignment="CENTER" prefHeight="50.0" style="-fx-background-color: E8E9EA;">
+            <children>
+                <Label alignment="CENTER" prefHeight="27.0" prefWidth="328.0" text="Create Mission">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+            </children>
+        </VBox>
+        <AnchorPane prefHeight="400.0" prefWidth="500.0" GridPane.rowIndex="1">
+            <children>
+                <Label layoutX="20.0" layoutY="25.0" text="Title">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="titleTextField" layoutX="130.0" layoutY="14.0" prefHeight="40.0" prefWidth="350.0"
+                           promptText="Give a name to your mission"/>
+                <Label layoutX="20.0" layoutY="89.0" text="Short description">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextArea fx:id="shortDescriptionTextArea" layoutX="130.0" layoutY="69.0" prefHeight="60.0"
+                          prefWidth="350.0" promptText="Give a short descirption about your mission"/>
+                <Label layoutX="20.0" layoutY="185.0" text="Details">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextArea fx:id="detailsTextArea" layoutX="130.0" layoutY="144.0" prefHeight="100.0" prefWidth="350.0"
+                          promptText="Give a detailed description of the mission including what you expect, reward  and deadline."/>
+                <Label layoutX="20.0" layoutY="270.0" text="Difficulty Level">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <ChoiceBox fx:id="levelChoiceBox" layoutX="130.0" layoutY="259.0" prefHeight="40.0" prefWidth="350.0"/>
+                <Button fx:id="createButton" layoutX="65.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleCreateButtonAction" prefHeight="40.0"
+                        prefWidth="100.0" text="Create"/>
+                <Button fx:id="cancelButton" layoutX="336.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleCancelButtonAction" prefHeight="40.0"
+                        prefWidth="100.0" text="Cancel"/>
+            </children>
+        </AnchorPane>
+    </children>
+</GridPane>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.065" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.171"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.ViewMissionController">
+    <items>
+        <Pane prefHeight="59.0" prefWidth="500.0" style="-fx-background-color: E8E9EA;">
+            <children>
+                <Label fx:id="missionTitleLabel" alignment="CENTER" layoutX="86.0" layoutY="12.0" prefHeight="27.0"
+                       prefWidth="328.0" text="Mission Name">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <AnchorPane prefHeight="600.0" prefWidth="500.0">
+            <children>
+                <Label layoutX="20.0" layoutY="35.0" text="Short description">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextArea fx:id="shortDescriptionTextArea" editable="false" layoutX="130.0" layoutY="15.0"
+                          prefHeight="60.0" prefWidth="350.0"/>
+                <Label layoutX="20.0" layoutY="131.0" text="Details">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextArea fx:id="detailsTextArea" editable="false" layoutX="130.0" layoutY="90.0" prefHeight="100.0"
+                          prefWidth="350.0"/>
+                <Label layoutX="20.0" layoutY="216.0" text="Difficulty Level">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="levelTextField" editable="false" focusTraversable="false" layoutX="130.0"
+                           layoutY="205.0" prefHeight="40.0" prefWidth="350.0"/>
+                <Label layoutX="20.0" layoutY="271.0" text="Creator">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="creatorTextField" editable="false" focusTraversable="false" layoutX="130.0"
+                           layoutY="260.0" prefHeight="40.0" prefWidth="350.0"/>
+                <Label layoutX="20.0" layoutY="326.0" text="Contractor">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="contractorTextField" editable="false" focusTraversable="false" layoutX="130.0"
+                           layoutY="315.0" prefHeight="40.0" prefWidth="350.0"/>
+                <Label layoutX="20.0" layoutY="370.0" text="Mission Events">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextArea fx:id="eventsTextArea" editable="false" layoutX="20.0" layoutY="399.0" prefHeight="150.0"
+                          prefWidth="460.0" promptText="No events available"/>
+                <Button fx:id="acceptButton" layoutX="80.0" layoutY="580.0" mnemonicParsing="false"
+                        onAction="#handleAcceptButtonAction" prefHeight="40.0" prefWidth="100.0" text="Accept"/>
+                <Button fx:id="cancelButton" layoutX="351.0" layoutY="580.0" mnemonicParsing="false"
+                        onAction="#handleCancelButtonAction" prefHeight="40.0" prefWidth="100.0" text="Cancel"/>
+            </children>
+        </AnchorPane>
+    </items>
+</SplitPane>
