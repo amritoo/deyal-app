@@ -1,6 +1,6 @@
 package app.deyal.deyal_app.data;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
@@ -19,7 +19,8 @@ public class User {
     private Address address;
 
     private MissionInfo missionInfo;
-    private int reputation;
+    private double reputation;
+    private ArrayList<Notification> notifications;
 
     private Date registrationDate;
 
@@ -110,12 +111,27 @@ public class User {
         this.missionInfo = missionInfo;
     }
 
-    public int getReputation() {
+    public double getReputation() {
         return reputation;
     }
 
-    public void setReputation(int reputation) {
+    public void setReputation(double reputation) {
         this.reputation = reputation;
+    }
+
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public ArrayList<Notification> getNotificationsInReverse() {
+        ArrayList<Notification> reverseNotifications = new ArrayList<>();
+        for(int i = notifications.size() - 1; i >= 0; i--)
+            reverseNotifications.add(notifications.get(i));
+        return reverseNotifications;
+    }
+
+    public void setNotifications(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public Date getRegistrationDate() {

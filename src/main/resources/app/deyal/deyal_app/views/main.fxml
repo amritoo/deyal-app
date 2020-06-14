@@ -6,47 +6,26 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="app.deyal.deyal_app.controllers.MainController">
     <children>
-        <MenuBar VBox.vgrow="NEVER">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="New"/>
-                        <MenuItem mnemonicParsing="false" text="Open…"/>
-                        <Menu mnemonicParsing="false" text="Open Recent"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Close"/>
-                        <MenuItem mnemonicParsing="false" text="Revert"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Preferences…"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Quit"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Undo"/>
-                        <MenuItem mnemonicParsing="false" text="Redo"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Cut"/>
-                        <MenuItem mnemonicParsing="false" text="Copy"/>
-                        <MenuItem mnemonicParsing="false" text="Paste"/>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Select All"/>
-                        <MenuItem mnemonicParsing="false" text="Unselect All"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Help"/>
-                        <MenuItem mnemonicParsing="false" text="About Deyal"/>
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+        <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="700.0" spacing="10.0">
+            <children>
+                <Button fx:id="createMissionButton" layoutX="50.0" layoutY="50.0" mnemonicParsing="false"
+                        onAction="#handleCreateMissionButtonAction" text="Create Mission"/>
+                <Button fx:id="searchMissionButton" mnemonicParsing="false" onAction="#handleSearchMissionButtonAction"
+                        text="Search Mission"/>
+                <Button fx:id="refreshButton" layoutX="150.0" layoutY="150.0" mnemonicParsing="false"
+                        onAction="#handleRefreshButtonAction" text="Refresh"/>
+                <Button fx:id="notificationButton" mnemonicParsing="false" onAction="#handleNotificationButtonAction"
+                        text="Notification"/>
+                <Button fx:id="logoutButton" layoutX="250.0" layoutY="250.0" mnemonicParsing="false"
+                        onAction="#handleLogoutButtonAction" text="Logout"/>
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+        </HBox>
         <TabPane tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Dashboard">
@@ -58,11 +37,11 @@
                                     <columns>
                                         <TableColumn fx:id="missionTitleTableColumn" prefWidth="120.0"
                                                      text="Mission Name"/>
-                                        <TableColumn fx:id="missionLevelTableColumn" prefWidth="50.0" text="Level"/>
-                                        <TableColumn fx:id="missionContractorTableColumn" prefWidth="120.0"
+                                        <TableColumn fx:id="missionLevelTableColumn" prefWidth="100.0" text="Level"/>
+                                        <TableColumn fx:id="missionCreatorTableColumn" prefWidth="120.0"
                                                      text="Contractor Name"/>
                                         <TableColumn fx:id="missionDescriptionTableColumn" prefWidth="300.0"
-                                                     text="Description"/>
+                                                     text="Short Description"/>
                                     </columns>
                                 </TableView>
                             </content>
@@ -74,17 +53,25 @@
                 </Tab>
                 <Tab text="My Missions">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0">
-                            <Button fx:id="createMissionButton" layoutX="50.0" layoutY="50.0"
-                                    mnemonicParsing="false" onAction="#handleCreateMissionButtonAction"
-                                    text="Create Mission"/>
-                            <Button fx:id="refreshButton" layoutX="150.0" layoutY="150.0"
-                                    mnemonicParsing="false" onAction="#handleRefreshButtonAction"
-                                    text="Refresh"/>
-                            <Button fx:id="logoutButton" layoutX="250.0" layoutY="250.0"
-                                    mnemonicParsing="false" onAction="#handleLogoutButtonAction"
-                                    text="Logout"/>
-                        </AnchorPane>
+                        <ScrollPane>
+                            <content>
+                                <TableView fx:id="myMissionTableView" fixedCellSize="24.0" prefHeight="600.0"
+                                           prefWidth="700.0" tableMenuButtonVisible="true">
+                                    <columns>
+                                        <TableColumn fx:id="mmMissionTitleTableColumn" prefWidth="120.0"
+                                                     text="Mission Name"/>
+                                        <TableColumn fx:id="mmMissionStatusTableColumn" prefWidth="120.0"
+                                                     text="Status"/>
+                                        <TableColumn fx:id="mmMissionLevelTableColumn" prefWidth="100.0" text="Level"/>
+                                        <TableColumn fx:id="mmMissionDescriptionTableColumn" prefWidth="250.0"
+                                                     text="Short Description"/>
+                                    </columns>
+                                </TableView>
+                            </content>
+                            <padding>
+                                <Insets bottom="10.0"/>
+                            </padding>
+                        </ScrollPane>
                     </content>
                 </Tab>
                 <Tab text="Profile">
@@ -132,7 +119,7 @@
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <DatePicker fx:id="birthDatePicker" editable="false" layoutX="100.0"
+                                                <DatePicker fx:id="birthDatePicker" editable="false" disable="true" layoutX="100.0"
                                                             layoutY="220.0" prefHeight="40.0" prefWidth="300.0"
                                                             promptText="Pick Your Date of Birth"/>
                                             </children>
@@ -144,23 +131,24 @@
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="houseAddressTextField" editable="false" layoutX="85.0"
-                                                           prefHeight="40.0" prefWidth="250.0"
+                                                <TextField fx:id="houseAddressTextField" editable="false"
+                                                           layoutX="100.0" prefHeight="40.0" prefWidth="250.0"
                                                            promptText="Enter Your House Address"/>
                                                 <Label layoutY="66.0" text="Block">
                                                     <font>
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="blockAddressTextField" editable="false" layoutX="85.0"
-                                                           layoutY="55.0" prefHeight="40.0" prefWidth="250.0"
+                                                <TextField fx:id="blockAddressTextField" editable="false"
+                                                           layoutX="100.0" layoutY="55.0" prefHeight="40.0"
+                                                           prefWidth="250.0"
                                                            promptText="Enter Your Block/Road Address"/>
                                                 <Label layoutY="121.0" text="District">
                                                     <font>
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="districtTextField" editable="false" layoutX="85.0"
+                                                <TextField fx:id="districtTextField" editable="false" layoutX="100.0"
                                                            layoutY="110.0" prefHeight="40.0" prefWidth="250.0"
                                                            promptText="Enter Your District"/>
                                                 <Label layoutY="176.0" text="Police Station">
@@ -169,19 +157,19 @@
                                                     </font>
                                                 </Label>
                                                 <TextField fx:id="policeStationTextField" editable="false"
-                                                           layoutX="85.0" layoutY="165.0" prefHeight="40.0"
+                                                           layoutX="100.0" layoutY="165.0" prefHeight="40.0"
                                                            prefWidth="250.0" promptText="Enter Your Police Station"/>
                                                 <Label layoutY="231.0" text="Post-Office">
                                                     <font>
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="postOfficeTextField" editable="false" layoutX="85.0"
+                                                <TextField fx:id="postOfficeTextField" editable="false" layoutX="100.0"
                                                            layoutY="220.0" prefHeight="40.0" prefWidth="250.0"
                                                            promptText="Enter Your Post-Office Number"/>
                                             </children>
                                         </Pane>
-                                        <Pane layoutX="479.0" layoutY="14.0">
+                                        <Pane layoutX="450.0" layoutY="14.0">
                                             <children>
                                                 <ImageView fx:id="avatarImageView" fitHeight="170.0" fitWidth="170.0"
                                                            pickOnBounds="true" preserveRatio="true">
@@ -194,44 +182,41 @@
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <Label layoutX="20.0" layoutY="210.0" text="Created at: ">
+                                                <Label layoutY="202.0" text="Created at: ">
                                                     <font>
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="createTimeLabel" layoutX="85.0" layoutY="210.0"
-                                                       text="13 June, 2018"/>
+                                                <Label fx:id="createTimeLabel" layoutX="65.0" layoutY="202.0"
+                                                       text="Unknown"/>
                                             </children>
                                         </Pane>
-                                        <Pane layoutX="479.0" layoutY="300.0">
+                                        <Pane layoutX="450.0" layoutY="300.0">
                                             <children>
                                                 <Label text="Rating as Client:"/>
                                                 <Label fx:id="ratingClientLabel" layoutX="115.0" layoutY="1.0"
-                                                       text="8.0"/>
+                                                       text="Unknown"/>
                                                 <Label layoutY="25.0" text="Rating as Contractor:"/>
                                                 <Label fx:id="ratingContractorLabel" layoutX="115.0" layoutY="25.0"
-                                                       text="5.7"/>
+                                                       text="Unknown"/>
                                                 <Label layoutY="50.0" text="Mission Created:"/>
                                                 <Label fx:id="missionCreatedLabel" layoutX="115.0" layoutY="50.0"
-                                                       text="5"/>
+                                                       text="Unknown"/>
                                                 <Label layoutY="75.0" text="Mission Completed:"/>
                                                 <Label fx:id="missionCompletedLabel" layoutX="115.0" layoutY="75.0"
-                                                       text="105"/>
+                                                       text="Unknown"/>
                                                 <Label layoutY="100.0" text="Mission Failed:"/>
                                                 <Label fx:id="missionFailedLabel" layoutX="115.0" layoutY="100.0"
-                                                       text="10"/>
+                                                       text="Unknown"/>
                                                 <Label layoutY="125.0" text="Reputation (max 10):"/>
                                                 <Label fx:id="reputationLabel" layoutX="115.0" layoutY="125.0"
-                                                       text="7.5"/>
+                                                       text="Unknown"/>
                                             </children>
                                         </Pane>
-                                        <Button fx:id="updateProfileButton" layoutX="480.0" layoutY="570.0"
-                                                mnemonicParsing="false" onAction="#handleUpdateProfileButtonAction"
-                                                text="Update" visible="false"/>
-                                        <Button fx:id="changePasswordButton" layoutX="300.0" layoutY="570.0"
+                                        <Button fx:id="changePasswordButton" layoutX="450.0" layoutY="570.0"
                                                 mnemonicParsing="false" onAction="#handleChangePasswordButtonAction"
                                                 text="Change password"/>
-                                        <Button fx:id="editProfileButton" layoutX="560.0" layoutY="570.0"
+                                        <Button fx:id="editProfileButton" layoutX="200.0" layoutY="570.0"
                                                 mnemonicParsing="false" onAction="#handleEditProfileButtonAction"
                                                 text="Edit Profile"/>
                                     </children>
@@ -248,6 +233,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0">
                             <children>
                                 <Label layoutX="306.0" layoutY="277.0" text="This is Deyal app"/>
+                                <Label layoutX="104.0" layoutY="120.0" text="Help"/>
                             </children>
                         </AnchorPane>
                     </content>

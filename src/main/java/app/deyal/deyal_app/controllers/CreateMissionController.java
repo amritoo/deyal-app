@@ -1,7 +1,9 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.DataManager;
 import app.deyal.deyal_app.StageManager;
 import app.deyal.deyal_app.data.Mission;
+import app.deyal.deyal_app.data.MissionDifficulty;
 import app.deyal.deyal_app.repository.MissionClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +18,7 @@ public class CreateMissionController {
     @FXML
     public TextArea detailsTextArea;
     @FXML
-    public ChoiceBox<Integer> levelChoiceBox;
+    public ChoiceBox<String> levelChoiceBox;
     @FXML
     public Button createButton;
     @FXML
@@ -24,11 +26,11 @@ public class CreateMissionController {
 
     @FXML
     public void initialize() {
-        levelChoiceBox.getItems().add(1);
-        levelChoiceBox.getItems().add(2);
-        levelChoiceBox.getItems().add(3);
-        levelChoiceBox.getItems().add(4);
-        levelChoiceBox.getItems().add(5);
+        levelChoiceBox.getItems().add("Very easy");
+        levelChoiceBox.getItems().add("Easy");
+        levelChoiceBox.getItems().add("Medium");
+        levelChoiceBox.getItems().add("Hard");
+        levelChoiceBox.getItems().add("Very hard");
     }
 
     @FXML
@@ -37,23 +39,39 @@ public class CreateMissionController {
         mission.setTitle(titleTextField.getText());
         mission.setDescription(shortDescriptionTextArea.getText());
         mission.setLongDescription(detailsTextArea.getText());
-        if (levelChoiceBox.getValue() != null)
-            mission.setDifficulty(levelChoiceBox.getValue());
+        mission.setDifficulty(this.getDifficulty());
 
-        if (MissionClient.createMission(StageManager.getInstance().getToken(), mission)) {
+        if (MissionClient.createMission(DataManager.getInstance().getToken(), mission)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText("Mission created");
             alert.setContentText("Mission created successfully.");
             alert.showAndWait();
-        } else {
+        } else {    //show mission could not be created
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Mission couldn't be created");
-            alert.setContentText("Mission creation failed.");
+            alert.setTitle("Failed");
+            alert.setHeaderText("Mission creation failed");
+            alert.setContentText("Mission couldn't be created. Please check your internet connection.");
             alert.showAndWait();
         }
+        StageManager.getInstance().createMissionStage.hide();
+    }
 
+    private MissionDifficulty getDifficulty() {
+        switch (levelChoiceBox.getValue()) {
+            case "Very easy":
+                return MissionDifficulty.VERY_EASY;
+            case "Easy":
+                return MissionDifficulty.EASY;
+            case "Medium":
+                return MissionDifficulty.MEDIUM;
+            case "Hard":
+                return MissionDifficulty.HARD;
+            case "Very hard":
+                return MissionDifficulty.VERY_HARD;
+            default:
+                return MissionDifficulty.UNKNOWN;
+        }
     }
 
     @FXML

@@ -7,14 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.io.IOException;
 import java.util.Optional;
 
 
 public class RegisterController {
 
-    @FXML
-    private Button backButton;
     @FXML
     private TextField userNameTextField;
     @FXML
@@ -29,34 +26,34 @@ public class RegisterController {
     private TextField phoneTextField;
     @FXML
     private CheckBox checkBox;
-    @FXML
-    private Button submitButton;
 
     private Register register;
 
-    private void initialize() {
+    private void loadRegister() {
         register = new Register();
         register.setUserName(userNameTextField.getText());
         register.setFullName(fullNameTextField.getText());
         register.setEmail(emailTextField.getText());
         register.setPassword(passwordField.getText());
-        register.setPhoneNumber(phoneTextField.getText());
+        register.setPhoneNumber("+880" + phoneTextField.getText());
     }
 
     @FXML
-    private void handleSubmitButtonAction(ActionEvent event) {
-        System.out.println("Submit button pressed");
-
+    private void handleCreateButtonAction(ActionEvent event) {
         if (check()) {
-            //show must agree to terms and conditions
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
             alert.setHeaderText("Do you want to submit?");
+            alert.setContentText("If you submit your account will be created using the given email. You can not change email later.");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                //ok button is pressed
-                initialize();
+                loadRegister();
                 if (Auth.register(register)) {
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Successfully registered account.");
+                    alert.setContentText("Your new account has been created. Please login to use Deyal app.");
+                    alert.showAndWait();
                     StageManager.getInstance().registerStage.hide();
                     StageManager.getInstance().loginStage.show();
                 } else {
@@ -72,14 +69,12 @@ public class RegisterController {
 
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
-        System.out.println("Back button pressed");
         StageManager.getInstance().registerStage.hide();
         StageManager.getInstance().loginStage.show();
     }
 
     private boolean check() {
-        if (!passwordField.getText().equals(confirmPasswordField.getText())) {
-            //show password mismatch
+        if (!passwordField.getText().equals(confirmPasswordField.getText())) {  //show password mismatch
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Password and confirm password is not same");
@@ -87,8 +82,7 @@ public class RegisterController {
             alert.showAndWait();
             return false;
         }
-        if (!checkBox.isSelected()) {
-            //show must agree to terms and conditions
+        if (!checkBox.isSelected()) {   //show must agree to terms and conditions
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Must agree to terms and conditions");

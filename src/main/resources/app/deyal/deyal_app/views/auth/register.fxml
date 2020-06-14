@@ -1,96 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<SplitPane dividerPositions="0.075" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.171"
+
+<SplitPane dividerPositions="0.075" orientation="VERTICAL" xmlns="http://javafx.com/javafx/10.0.2-internal"
            xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.RegisterController">
     <items>
-        <Pane prefHeight="60.0" prefWidth="500.0" style="-fx-background-color: E8E9EA;">
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
             <children>
-                <Button fx:id="backButton" alignment="CENTER" layoutX="14.0" layoutY="7.0" mnemonicParsing="false"
-                        onAction="#handleBackButtonAction" prefHeight="34.0" prefWidth="59.0" text="Back"/>
-                <Label layoutX="80.0" layoutY="11.0" prefHeight="27.0" prefWidth="328.0" text="Create New Account">
+                <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false"
+                        onAction="#handleBackButtonAction" prefHeight="30.0" prefWidth="60.0" text="Back"/>
+                <Label text="Create New Account">
                     <font>
                         <Font size="20.0"/>
                     </font>
                 </Label>
             </children>
-        </Pane>
-        <Pane prefHeight="600.0" prefWidth="500.0">
+            <padding>
+                <Insets bottom="5.0" left="10.0" top="5.0"/>
+            </padding>
+        </HBox>
+        <VBox alignment="CENTER_LEFT" spacing="10.0">
             <children>
-                <Label layoutX="20.0" layoutY="14.0" text="User Name">
+                <Label text="User Name">
                     <font>
                         <Font size="13.0"/>
                     </font>
                 </Label>
-                <TextField fx:id="userNameTextField" layoutX="20.0" layoutY="40.0" prefHeight="40.0" prefWidth="450.0"
+                <TextField fx:id="userNameTextField" prefHeight="40.0" prefWidth="450.0"
                            promptText="Enter Your User Name"/>
-                <Label layoutX="20.0" layoutY="96.0" text="Full Name">
+                <Label text="Full Name">
                     <font>
                         <Font size="13.0"/>
                     </font>
                 </Label>
-                <TextField fx:id="fullNameTextField" layoutX="20.0" layoutY="122.0" prefHeight="40.0" prefWidth="450.0"
+                <TextField fx:id="fullNameTextField" prefHeight="40.0" prefWidth="450.0"
                            promptText="Enter Your Full Name"/>
-                <Label layoutX="20.0" layoutY="180.0" text="Email">
+                <Label text="Email">
                     <font>
                         <Font size="13.0"/>
                     </font>
                 </Label>
-                <Label alignment="CENTER" layoutX="20.0" layoutY="206.0" prefHeight="40.0" prefWidth="45.0" text="\@">
-                    <font>
-                        <Font name="System Bold Italic" size="24.0"/>
-                    </font>
-                </Label>
-                <TextField fx:id="emailTextField" layoutX="70.0" layoutY="206.0" prefHeight="40.0" prefWidth="400.0"
-                           promptText="Enter email address"/>
-                <Label layoutX="20.0" layoutY="263.0" text="Password">
-                    <font>
-                        <Font size="13.0"/>
-                    </font>
-                </Label>
-                <Label alignment="CENTER" layoutX="20.0" layoutY="288.0" prefHeight="40.0" prefWidth="45.0" text="#">
-                    <font>
-                        <Font name="System Bold Italic" size="24.0"/>
-                    </font>
-                </Label>
-                <PasswordField fx:id="passwordField" layoutX="70.0" layoutY="288.0" prefHeight="40.0" prefWidth="400.0"
-                               promptText="Enter Password"/>
-                <Label layoutX="20.0" layoutY="337.0" text="Confirm Password">
+                <HBox>
+                    <children>
+                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="45.0" text="\@">
+                            <font>
+                                <Font name="System Bold Italic" size="24.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="emailTextField" prefHeight="40.0" prefWidth="400.0"
+                                   promptText="Enter email address"/>
+                    </children>
+                </HBox>
+                <Label text="Password">
                     <font>
                         <Font size="13.0"/>
                     </font>
                 </Label>
-                <Label alignment="CENTER" layoutX="20.0" layoutY="363.0" prefHeight="40.0" prefWidth="45.0" text="#">
-                    <font>
-                        <Font name="System Bold Italic" size="24.0"/>
-                    </font>
-                </Label>
-                <PasswordField fx:id="confirmPasswordField" layoutX="70.0" layoutY="363.0" prefHeight="40.0"
-                               prefWidth="400.0" promptText="Re-enter Password"/>
-                <Label layoutX="20.0" layoutY="412.0" text="Mobile Number">
+                <HBox>
+                    <children>
+                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="45.0" text="#">
+                            <font>
+                                <Font name="System Bold Italic" size="24.0"/>
+                            </font>
+                        </Label>
+                        <PasswordField fx:id="passwordField" prefHeight="40.0" prefWidth="400.0"
+                                       promptText="Enter Password"/>
+                    </children>
+                </HBox>
+                <Label text="Confirm Password">
                     <font>
                         <Font size="13.0"/>
                     </font>
                 </Label>
-                <Label alignment="CENTER" layoutX="20.0" layoutY="438.0" prefHeight="40.0" prefWidth="45.0"
-                       text="+880 ">
+                <HBox>
+                    <children>
+                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="45.0" text="#">
+                            <font>
+                                <Font name="System Bold Italic" size="24.0"/>
+                            </font>
+                        </Label>
+                        <PasswordField fx:id="confirmPasswordField" prefHeight="40.0" prefWidth="400.0"
+                                       promptText="Re-enter Password"/>
+                    </children>
+                </HBox>
+                <Label text="Mobile Number">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font size="13.0"/>
                     </font>
                 </Label>
-                <TextField fx:id="phoneTextField" layoutX="70.0" layoutY="438.0" prefHeight="40.0" prefWidth="400.0"
-                           promptText="Enter Your Mobile Number"/>
-                <CheckBox fx:id="checkBox" layoutX="20.0" layoutY="505.0" mnemonicParsing="false"
-                          text="I agree to terms and conditions">
+                <HBox>
+                    <children>
+                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="45.0" text="+880 ">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="phoneTextField" prefHeight="40.0" prefWidth="400.0"
+                                   promptText="Enter Your Mobile Number"/>
+                    </children>
+                </HBox>
+                <CheckBox fx:id="checkBox" mnemonicParsing="false" text="I agree to terms and conditions">
                     <font>
                         <Font size="14.0"/>
                     </font>
                 </CheckBox>
-                <Button fx:id="submitButton" layoutX="317.0" layoutY="550.0" mnemonicParsing="false" prefHeight="40.0"
-                        onAction="#handleSubmitButtonAction" prefWidth="150.0" text="Submit"/>
+                <HBox alignment="CENTER">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#handleCreateButtonAction" prefHeight="40.0"
+                                prefWidth="150.0" text="Create"/>
+                    </children>
+                </HBox>
             </children>
-        </Pane>
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            </padding>
+        </VBox>
     </items>
 </SplitPane>

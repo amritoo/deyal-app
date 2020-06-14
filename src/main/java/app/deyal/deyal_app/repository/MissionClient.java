@@ -1,6 +1,6 @@
 package app.deyal.deyal_app.repository;
 
-import app.deyal.deyal_app.StageManager;
+import app.deyal.deyal_app.DataManager;
 import app.deyal.deyal_app.data.Mission;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -26,18 +27,10 @@ public class MissionClient {
 
     public static boolean getMissionList(String token) {
         try {
-            //Creating a HttpClient object
             CloseableHttpClient httpclient = HttpClients.createDefault();
-
-            //adding token
-//            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/list"));
-//            uriBuilder.setParameter("token", token);
-
-            //Creating a HttpGet object
-//            HttpGet httpGet = new HttpGet(uriBuilder.build());
-            HttpGet httpGet = new HttpGet("http://localhost:3030/v2/mission/list");
-
-//            System.out.println(httpGet.getURI());
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/list/all"));
+            uriBuilder.setParameter("token", token);
+            HttpGet httpGet = new HttpGet(uriBuilder.build());
 
             //Executing the Get request
             HttpResponse httpResponse = httpclient.execute(httpGet);
@@ -47,55 +40,134 @@ public class MissionClient {
             if (statusCode == 200) {
                 Scanner scanner = new Scanner(httpResponse.getEntity().getContent());
                 String json = scanner.nextLine();
-//            System.out.println(json);
-                JsonArray jsonList = JsonParser
-                        .parseString(json)
-                        .getAsJsonObject()
-                        .get("payload")
-                        .getAsJsonArray();
-                System.out.println(jsonList);
+                JsonArray jsonList = JsonParser.parseString(json).getAsJsonObject().get("payload").getAsJsonArray();
 
+                System.out.println("Inside get mission list");
+                System.out.println(jsonList);
                 Gson gson = new Gson();
                 Type missionListType = new TypeToken<ArrayList<Mission>>() {
                 }.getType();
-
                 ArrayList<Mission> missionArray = gson.fromJson(jsonList, missionListType);
 
-                StageManager.getInstance().missionList = missionArray;
+                DataManager.getInstance().allMissionsList = missionArray;
 
-                //printing list
-//                for(Mission mission : missionArray) {
-//                    mission.print();
-//                }
-
+                System.out.println("Outside get mission list");
                 return true;
             } else {
                 //Printing the status line
+                System.out.println("Inside get mission list");
                 System.out.println(httpResponse.getStatusLine());
                 Scanner sc = new Scanner(httpResponse.getEntity().getContent());
                 while (sc.hasNext()) {
                     System.out.println(sc.nextLine());
                 }
+                System.out.println("Outside get mission list");
+                return false;
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public static boolean getMyMissionList(String token) {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/list/mine"));
+            uriBuilder.setParameter("token", token);
+            HttpGet httpGet = new HttpGet(uriBuilder.build());
+
+            //Executing the Get request
+            HttpResponse httpResponse = httpclient.execute(httpGet);
+
+            int statusCode = httpResponse.getStatusLine().getStatusCode();
+
+            if (statusCode == 200) {
+                Scanner scanner = new Scanner(httpResponse.getEntity().getContent());
+                String json = scanner.nextLine();
+                JsonArray jsonList = JsonParser.parseString(json).getAsJsonObject().get("payload").getAsJsonArray();
+
+                System.out.println("Inside get my mission list");
+                System.out.println(jsonList);
+                Gson gson = new Gson();
+                Type missionListType = new TypeToken<ArrayList<Mission>>() {
+                }.getType();
+                ArrayList<Mission> missionArray = gson.fromJson(jsonList, missionListType);
+
+                DataManager.getInstance().myMissionsList = missionArray;
+
+                System.out.println("Outside get my mission list");
+                return true;
+            } else {
+                //Printing the status line
+                System.out.println("Inside get my mission list");
+                System.out.println(httpResponse.getStatusLine());
+                Scanner sc = new Scanner(httpResponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside get my mission list");
                 return false;
             }
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+    }
+
+    public static boolean searchMission(String token, String title) {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/search"));
+            uriBuilder.setParameter("token", token);
+            uriBuilder.setParameter("title", title);
+            HttpGet httpGet = new HttpGet(uriBuilder.build());
+
+            //Executing the Get request
+            HttpResponse httpResponse = httpclient.execute(httpGet);
+
+            int statusCode = httpResponse.getStatusLine().getStatusCode();
+
+            if (statusCode == 200) {
+                Scanner scanner = new Scanner(httpResponse.getEntity().getContent());
+                String json = scanner.nextLine();
+                JsonArray jsonList = JsonParser.parseString(json).getAsJsonObject().get("payload").getAsJsonArray();
+
+                System.out.println("Inside search mission");
+                System.out.println(jsonList);
+                Gson gson = new Gson();
+                Type missionListType = new TypeToken<ArrayList<Mission>>() {
+                }.getType();
+                ArrayList<Mission> missionArray = gson.fromJson(jsonList, missionListType);
+
+                DataManager.getInstance().tempMissionList = missionArray;
+
+                System.out.println("Outside search mission");
+                return true;
+            } else {
+                //Printing the status line
+                System.out.println("Inside search mission");
+                System.out.println(httpResponse.getStatusLine());
+                Scanner sc = new Scanner(httpResponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside search mission");
+                return false;
+            }
+
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static boolean createMission(String token, Mission mission) {
         try {
-            //Creating a HttpClient object
             CloseableHttpClient httpclient = HttpClients.createDefault();
-
-            //adding token
             URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/create"));
             uriBuilder.setParameter("token", token);
-
-            //Creating a HttpPut object
             HttpPost httpPost = new HttpPost(uriBuilder.build());
 
             //adding user data
@@ -111,18 +183,64 @@ public class MissionClient {
 
             int statusCode = httpresponse.getStatusLine().getStatusCode();
 
-            //Printing the status line
-            System.out.println(httpresponse.getStatusLine());
-            Scanner sc = new Scanner(httpresponse.getEntity().getContent());
-            while (sc.hasNext()) {
-                System.out.println(sc.nextLine());
+            if (statusCode == 200) {
+                return true;
+            } else {
+                //Printing the status line
+                System.out.println("Inside create mission");
+                System.out.println(httpresponse.getStatusLine());
+                Scanner sc = new Scanner(httpresponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("outside create mission");
+                return false;
             }
-
-            return statusCode == 200;
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+    }
+
+    public static boolean updateMission(String token, Mission mission) {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/update"));
+            uriBuilder.setParameter("token", token);
+            uriBuilder.setParameter("missionId", mission.getId());
+            HttpPut httpPut = new HttpPut(uriBuilder.build());
+
+            //adding mission data
+            Gson gson = new Gson();
+            String json = gson.toJson(mission);
+            System.out.println(json);
+            httpPut.setHeader("Accept", "application/json");
+            httpPut.setHeader("Content-type", "application/json");
+            httpPut.setEntity(new StringEntity(json));
+
+            //Executing the Put request
+            HttpResponse httpresponse = httpclient.execute(httpPut);
+
+            int statusCode = httpresponse.getStatusLine().getStatusCode();
+
+            if (statusCode == 200) {
+                return true;
+            } else {
+                //Printing the status line
+                System.out.println("Inside update mission");
+                System.out.println(httpresponse.getStatusLine());
+                Scanner sc = new Scanner(httpresponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside update mission");
+                return false;
+            }
+
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

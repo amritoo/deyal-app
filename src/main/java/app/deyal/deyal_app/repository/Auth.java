@@ -1,6 +1,6 @@
 package app.deyal.deyal_app.repository;
 
-import app.deyal.deyal_app.StageManager;
+import app.deyal.deyal_app.DataManager;
 import app.deyal.deyal_app.data.Register;
 import app.deyal.deyal_app.data.User;
 import com.google.gson.Gson;
@@ -36,11 +36,10 @@ public class Auth {
             //Creating a HttpPost object
             HttpPost httppost = new HttpPost(serverUrl.concat("/auth/login"));
 
-            //adding email, password and remember
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            //adding email and password
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("email", email));
             nameValuePairs.add(new BasicNameValuePair("password", password));
-            nameValuePairs.add(new BasicNameValuePair("remember", remember ? "true" : "false"));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             //Executing the Post request
@@ -49,42 +48,39 @@ public class Auth {
             int statusCode = httpresponse.getStatusLine().getStatusCode();
 
             if (statusCode == 200) {
+                //getting payload from json
                 Scanner scanner = new Scanner(httpresponse.getEntity().getContent());
                 String json = scanner.nextLine();
-//            System.out.println(json);
                 JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
                 String token = jsonObject.getAsJsonObject().get("payload").getAsString();
 
-                //add preference api to save token
-                StageManager.getInstance().token = token;
-                PreferenceSave.getInstance().setToken(token);
-
-                System.out.println(token);
-            }
-
-            //Printing the status line
-            System.out.println(httpresponse.getStatusLine());
-            Scanner sc = new Scanner(httpresponse.getEntity().getContent());
-            while (sc.hasNext()) {
-                System.out.println(sc.nextLine());
-            }
-
-            if (statusCode == 200)
+                DataManager.getInstance().token = token;
+                //if remember = true, add preference api to save token
+                if (remember) {
+                    PreferenceSave.getInstance().setToken(token);
+                }
                 return true;
-            else
+            } else {
+                //Printing the status line
+                System.out.println("inside login");
+                System.out.println(httpresponse.getStatusLine());
+                Scanner sc = new Scanner(httpresponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside login");
                 return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public static boolean register(Register register) {
         try {
-            //Creating a HttpClient object
             CloseableHttpClient httpclient = HttpClients.createDefault();
 
-            //Creating a HttpPost object
             HttpPost httppost = new HttpPost(serverUrl.concat("/auth/register"));
 
             //adding register data
@@ -99,27 +95,28 @@ public class Auth {
 
             int statusCode = httpresponse.getStatusLine().getStatusCode();
 
-            //Printing the status line
-            System.out.println(httpresponse.getStatusLine());
-            Scanner sc = new Scanner(httpresponse.getEntity().getContent());
-            while (sc.hasNext()) {
-                System.out.println(sc.nextLine());
-            }
-
-            if (statusCode == 200)
+            if (statusCode == 200) {
                 return true;
-            else
+            } else {
+                //Printing the status line
+                System.out.println("inside register");
+                System.out.println(httpresponse.getStatusLine());
+                Scanner sc = new Scanner(httpresponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside register");
                 return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public static boolean getUserData(String token) {
         if (token == null) return false;
         try {
-            //Creating a HttpClient object
             CloseableHttpClient httpclient = HttpClients.createDefault();
 
             //adding token
@@ -129,28 +126,24 @@ public class Auth {
             //Creating a HttpGet object
             HttpGet httpGet = new HttpGet(uriBuilder.build());
 
-//            System.out.println(httpGet.getURI());
-
             //Executing the Get request
             HttpResponse httpResponse = httpclient.execute(httpGet);
 
             int statusCode = httpResponse.getStatusLine().getStatusCode();
 
+            System.out.println("Inside get user data");
             if (statusCode == 200) {
                 Scanner scanner = new Scanner(httpResponse.getEntity().getContent());
                 String json = scanner.nextLine();
-//            System.out.println(json);
-                JsonObject userdata = JsonParser
-                        .parseString(json)
-                        .getAsJsonObject()
-                        .get("payload")
-                        .getAsJsonObject();
+                JsonObject userdata = JsonParser.parseString(json).getAsJsonObject().get("payload").getAsJsonObject();
+
                 System.out.println(userdata);
 
+                //Getting user object from json object
                 Gson gson = new Gson();
-                StageManager.getInstance().user = gson.fromJson(userdata, User.class);
-//                user.print();
+                DataManager.getInstance().userData = gson.fromJson(userdata, User.class);
 
+                System.out.println("Outside get user data");
                 return true;
             } else {
                 //Printing the status line
@@ -159,23 +152,21 @@ public class Auth {
                 while (sc.hasNext()) {
                     System.out.println(sc.nextLine());
                 }
-
+                System.out.println("Outside get user data");
                 return false;
             }
-
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public static boolean updateProfile(String token, User user) {
         try {
-            //Creating a HttpClient object
             CloseableHttpClient httpclient = HttpClients.createDefault();
 
             //adding token
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/auth/update"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/auth/update/user"));
             uriBuilder.setParameter("token", token);
 
             //Creating a HttpPut object
@@ -194,35 +185,33 @@ public class Auth {
 
             int statusCode = httpresponse.getStatusLine().getStatusCode();
 
-            //Printing the status line
-            System.out.println(httpresponse.getStatusLine());
-            Scanner sc = new Scanner(httpresponse.getEntity().getContent());
-            while (sc.hasNext()) {
-                System.out.println(sc.nextLine());
-            }
-
-            if (statusCode == 200)
+            if (statusCode == 200) {
                 return true;
-            else
+            } else {
+                //Printing the status line
+                System.out.println("inside update user");
+                System.out.println(httpresponse.getStatusLine());
+                Scanner sc = new Scanner(httpresponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside update user");
                 return false;
+            }
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public static boolean changePassword(String token, String newPassword, String oldPassword) {
         try {
-            //Creating a HttpClient object
             CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost(serverUrl.concat("/auth/update/password"));
 
-            //Creating a HttpPost object
-            HttpPost httppost = new HttpPost(serverUrl.concat("/auth/changepassword"));
-
-            //adding email, password and remember
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-            nameValuePairs.add(new BasicNameValuePair("new password", newPassword));
-            nameValuePairs.add(new BasicNameValuePair("old password", oldPassword));
+            nameValuePairs.add(new BasicNameValuePair("newPassword", newPassword));
+            nameValuePairs.add(new BasicNameValuePair("oldPassword", oldPassword));
             nameValuePairs.add(new BasicNameValuePair("token", token));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -231,21 +220,134 @@ public class Auth {
 
             int statusCode = httpresponse.getStatusLine().getStatusCode();
 
-            //Printing the status line
-            System.out.println(httpresponse.getStatusLine());
-            Scanner sc = new Scanner(httpresponse.getEntity().getContent());
-            while (sc.hasNext()) {
-                System.out.println(sc.nextLine());
-            }
-
-            if (statusCode == 200)
+            if (statusCode == 200) {
                 return true;
-            else
+            } else {
+                //Printing the status line
+                System.out.println("inside update password");
+                System.out.println(httpresponse.getStatusLine());
+                Scanner sc = new Scanner(httpresponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside update password");
                 return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+    }
+
+    public static boolean searchUser(String token, String userId) {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/auth/search"));
+            uriBuilder.setParameter("token", token);
+            uriBuilder.setParameter("userId", userId);
+            HttpGet httpGet = new HttpGet(uriBuilder.build());
+
+            //Executing the Get request
+            HttpResponse httpResponse = httpclient.execute(httpGet);
+
+            int statusCode = httpResponse.getStatusLine().getStatusCode();
+
+            System.out.println("inside search user");
+            if (statusCode == 200) {
+                Scanner scanner = new Scanner(httpResponse.getEntity().getContent());
+                String json = scanner.nextLine();
+                JsonObject userdata = JsonParser.parseString(json).getAsJsonObject().get("payload").getAsJsonObject();
+
+                System.out.println(userdata);
+                Gson gson = new Gson();
+                DataManager.getInstance().tempUser = gson.fromJson(userdata, User.class);
+
+                System.out.println("Outside search user");
+                return true;
+            } else {
+                //Printing the status line
+                System.out.println(httpResponse.getStatusLine());
+                Scanner sc = new Scanner(httpResponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside search user");
+                return false;
+            }
+
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean sendCode(String email) {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost(serverUrl.concat("/auth/forgot/send"));
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair("email", email));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            //Executing the Post request
+            HttpResponse httpresponse = httpclient.execute(httppost);
+
+            int statusCode = httpresponse.getStatusLine().getStatusCode();
+
+            if (statusCode == 200) {
+                return true;
+            } else {
+                //Printing the status line
+                System.out.println("inside send code");
+                System.out.println(httpresponse.getStatusLine());
+                Scanner sc = new Scanner(httpresponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside send code");
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean verifyCode(String email, String otp, String password) {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost(serverUrl.concat("/auth/forgot/verify"));
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+            nameValuePairs.add(new BasicNameValuePair("email", email));
+            nameValuePairs.add(new BasicNameValuePair("otp", otp));
+            nameValuePairs.add(new BasicNameValuePair("password", password));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            //Executing the Post request
+            HttpResponse httpresponse = httpclient.execute(httppost);
+
+            int statusCode = httpresponse.getStatusLine().getStatusCode();
+
+            if (statusCode == 200) {
+                return true;
+            } else {
+                //Printing the status line
+                System.out.println("inside verify code");
+                System.out.println(httpresponse.getStatusLine());
+                Scanner sc = new Scanner(httpresponse.getEntity().getContent());
+                while (sc.hasNext()) {
+                    System.out.println(sc.nextLine());
+                }
+                System.out.println("Outside verify code");
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
