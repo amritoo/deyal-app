@@ -1,7 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.DataManager;
-import app.deyal.deyal_app.StageManager;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Notification;
 import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.fxml.FXML;
@@ -18,7 +18,7 @@ public class NotificationController {
 
     @FXML
     public TableView<Notification> notificationTableView;
-//    @FXML
+    //    @FXML
 //    public TableColumn<Notification, Integer> indexNumberTableColumn;
     @FXML
     public TableColumn<Notification, String> notificationTableColumn;
@@ -33,7 +33,7 @@ public class NotificationController {
 
         //selecting a mission from notification table view
         notificationTableView.setOnMouseClicked((MouseEvent event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                 int index = notificationTableView.getSelectionModel().getSelectedIndex();
                 String missionId = notificationTableView.getItems().get(index).getMissionId();
                 DataManager.getInstance().tempMission = DataManager.getInstance().searchMissionById(missionId);

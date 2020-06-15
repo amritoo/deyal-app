@@ -1,6 +1,6 @@
 package app.deyal.deyal_app.data;
 
-import app.deyal.deyal_app.DataManager;
+import app.deyal.deyal_app.managers.DataManager;
 
 public class Mission {
     private String id;

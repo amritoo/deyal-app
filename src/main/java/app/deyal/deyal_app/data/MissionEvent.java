@@ -1,8 +1,7 @@
 package app.deyal.deyal_app.data;
 
-import app.deyal.deyal_app.DataManager;
+import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.data.events.*;
-import app.deyal.deyal_app.repository.Auth;
 import javafx.scene.control.Alert;
 
 import java.util.Date;
@@ -34,7 +33,7 @@ public class MissionEvent {
         String string = eventTime + "\n";
         switch (eventType) {
             case CREATE:
-                if (Auth.searchUser(DataManager.getInstance().token, create.getCreatedBy())) {
+                if (DataManager.getInstance().getUserName(create.getCreatedBy()) != null) {
                     string += "Mission created by " + DataManager.getInstance().tempUser.getUserName();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -50,7 +49,7 @@ public class MissionEvent {
                 string += "published with note:\n" + publish.getNote();
                 break;
             case REQUEST:
-                if (Auth.searchUser(DataManager.getInstance().token, request.getRequestBy())) {
+                if (DataManager.getInstance().getUserName(request.getRequestBy()) != null) {
                     string += "requested by " + DataManager.getInstance().tempUser.getUserName() + "\n" +
                             "with message:\n" + request.getRequestMessage();
                 } else {

@@ -1,6 +1,6 @@
 package app.deyal.deyal_app.repository;
 
-import app.deyal.deyal_app.DataManager;
+import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.data.Mission;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,12 +23,12 @@ import java.util.Scanner;
 
 public class MissionClient {
 
-    private static final String serverUrl = "http://localhost:3030/v1";
+    private static final String serverUrl = DataManager.server + "/mission";
 
     public static boolean getMissionList(String token) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/list/all"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/list/all"));
             uriBuilder.setParameter("token", token);
             HttpGet httpGet = new HttpGet(uriBuilder.build());
 
@@ -73,7 +73,7 @@ public class MissionClient {
     public static boolean getMyMissionList(String token) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/list/mine"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/list/mine"));
             uriBuilder.setParameter("token", token);
             HttpGet httpGet = new HttpGet(uriBuilder.build());
 
@@ -119,7 +119,7 @@ public class MissionClient {
     public static boolean searchMission(String token, String title) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/search"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/search"));
             uriBuilder.setParameter("token", token);
             uriBuilder.setParameter("title", title);
             HttpGet httpGet = new HttpGet(uriBuilder.build());
@@ -166,7 +166,7 @@ public class MissionClient {
     public static boolean createMission(String token, Mission mission) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/create"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/create"));
             uriBuilder.setParameter("token", token);
             HttpPost httpPost = new HttpPost(uriBuilder.build());
 
@@ -205,7 +205,7 @@ public class MissionClient {
     public static boolean updateMission(String token, Mission mission) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/mission/update"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/update"));
             uriBuilder.setParameter("token", token);
             uriBuilder.setParameter("missionId", mission.getId());
             HttpPut httpPut = new HttpPut(uriBuilder.build());

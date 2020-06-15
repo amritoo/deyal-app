@@ -1,6 +1,6 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.StageManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Register;
 import app.deyal.deyal_app.repository.Auth;
 import javafx.event.ActionEvent;

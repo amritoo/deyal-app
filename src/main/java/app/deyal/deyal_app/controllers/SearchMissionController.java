@@ -1,9 +1,8 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.DataManager;
-import app.deyal.deyal_app.StageManager;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Mission;
-import app.deyal.deyal_app.repository.Auth;
 import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -67,14 +66,14 @@ public class SearchMissionController {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();
-                    if (!Auth.searchUser(DataManager.getInstance().token, mission.getCreatorId())) {
+                    String name = DataManager.getInstance().getUserName(mission.getCreatorId());
+                    if (name == null) {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("Failed");
-                        alert.setHeaderText("creator name retrieve failed");
+                        alert.setHeaderText("Creator name retrieve failed");
                         alert.setContentText("Please check your Internet connection.");
                         alert.showAndWait();
                     }
-                    String name = DataManager.getInstance().tempUser.getUserName();
                     return new ReadOnlyObjectWrapper<>(name);
                 }
             });
@@ -118,7 +117,7 @@ public class SearchMissionController {
 
             //selecting a mission from dashboard
             dashboardTableView.setOnMouseClicked((MouseEvent event) -> {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     int index = dashboardTableView.getSelectionModel().getSelectedIndex();
                     DataManager.getInstance().tempMission = dashboardTableView.getItems().get(index);
                     if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,

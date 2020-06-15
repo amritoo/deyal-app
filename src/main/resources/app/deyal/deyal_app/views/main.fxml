@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <VBox xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="app.deyal.deyal_app.controllers.MainController">
     <children>
@@ -78,149 +77,152 @@
                     <content>
                         <ScrollPane>
                             <content>
-                                <AnchorPane prefHeight="600.0" prefWidth="700.0">
+                                <VBox prefHeight="600.0" prefWidth="700.0" spacing="20.0">
                                     <children>
-                                        <Pane layoutX="21.0" layoutY="14.0">
+                                        <HBox alignment="CENTER" spacing="20.0">
                                             <children>
-                                                <Label layoutY="10.0" text="User Name">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="userNameTextField" editable="false" layoutX="100.0"
-                                                           prefHeight="40.0" prefWidth="300.0"
-                                                           promptText="Enter Your Full Name"/>
-                                                <Label layoutY="66.0" text="Full Name">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="fullNameTextField" editable="false" layoutX="100.0"
-                                                           layoutY="55.0" prefHeight="40.0" prefWidth="300.0"
-                                                           promptText="Enter Your Full Name"/>
-                                                <Label layoutY="121.0" text="Email">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="emailTextField" editable="false"
-                                                           focusTraversable="false" layoutX="100.0" layoutY="110.0"
-                                                           prefHeight="40.0" prefWidth="300.0"/>
-                                                <Label layoutY="176.0" text="Mobile Number">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="phoneNumberTextField" editable="false" layoutX="100.0"
-                                                           layoutY="165.0" prefHeight="40.0" prefWidth="300.0"
-                                                           promptText="Enter Your Mobile Number"/>
-                                                <Label layoutY="231.0" text="Date of Birth">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <DatePicker fx:id="birthDatePicker" editable="false" disable="true" layoutX="100.0"
-                                                            layoutY="220.0" prefHeight="40.0" prefWidth="300.0"
-                                                            promptText="Pick Your Date of Birth"/>
+                                                <VBox alignment="CENTER">
+                                                    <children>
+                                                        <ImageView fx:id="avatarImageView" fitHeight="150.0"
+                                                                   fitWidth="150.0" pickOnBounds="true"
+                                                                   preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../../../../images/user_64px.png"/>
+                                                            </image>
+                                                        </ImageView>
+                                                        <GridPane alignment="CENTER" hgap="10.0" vgap="5.0">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                                   prefWidth="100.0"/>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                                   prefWidth="150.0"/>
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <Label text="User Name:"/>
+                                                                <Label fx:id="userNameLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1"/>
+                                                                <Label text="Full Name:" GridPane.rowIndex="1"/>
+                                                                <Label fx:id="fullNameLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                                                <Label text="Email:" GridPane.rowIndex="2"/>
+                                                                <Label fx:id="emailLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                                                <Label text="Mobile Number:" GridPane.rowIndex="3"/>
+                                                                <Label fx:id="phoneNumberLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                                                <Label text="Date of Birth:" GridPane.rowIndex="4"/>
+                                                                <Label fx:id="birthDateLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                                                <Label text="House Address:" GridPane.rowIndex="5"/>
+                                                                <Label fx:id="houseLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                                                                <Label text="Block Address:" GridPane.rowIndex="6"/>
+                                                                <Label fx:id="blockLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                                                                <Label text="District:" GridPane.rowIndex="7"/>
+                                                                <Label fx:id="districtLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                                                                <Label text="Police Station:" GridPane.rowIndex="8"/>
+                                                                <Label fx:id="policeStationLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                                                                <Label text="Post-Office:" GridPane.rowIndex="9"/>
+                                                                <Label fx:id="postOfficeLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+                                                            </children>
+                                                            <padding>
+                                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                                            </padding>
+                                                        </GridPane>
+                                                    </children>
+                                                </VBox>
+                                                <VBox alignment="CENTER" spacing="10.0">
+                                                    <children>
+                                                        <GridPane alignment="CENTER" hgap="15.0" vgap="10.0">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0"/>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                                   prefWidth="100.0"/>
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints/>
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <Label text="Rating as Client:" GridPane.rowIndex="1"/>
+                                                                <Label fx:id="ratingClientLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                                                <Label text="Rating as Contractor:"
+                                                                       GridPane.rowIndex="2"/>
+                                                                <Label fx:id="ratingContractorLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                                                <Label text="Mission Created:" GridPane.rowIndex="3"/>
+                                                                <Label fx:id="missionCreatedLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                                                <Label text="Mission Completed:" GridPane.rowIndex="4"/>
+                                                                <Label fx:id="missionCompletedLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                                                <Label text="Mission Failed:" GridPane.rowIndex="5"/>
+                                                                <Label fx:id="missionFailedLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                                                                <Label text="Reputation (max 10):"
+                                                                       GridPane.rowIndex="6"/>
+                                                                <Label fx:id="reputationLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                                                                <Label text="Registered:" GridPane.rowIndex="7"/>
+                                                                <Label fx:id="accountAgeLabel" text="Unknown"
+                                                                       GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                                                            </children>
+                                                            <padding>
+                                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                                            </padding>
+                                                        </GridPane>
+                                                    </children>
+                                                </VBox>
                                             </children>
-                                        </Pane>
-                                        <Pane layoutX="21.0" layoutY="293.0">
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="200.0">
                                             <children>
-                                                <Label layoutY="11.0" text="House">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="houseAddressTextField" editable="false"
-                                                           layoutX="100.0" prefHeight="40.0" prefWidth="250.0"
-                                                           promptText="Enter Your House Address"/>
-                                                <Label layoutY="66.0" text="Block">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="blockAddressTextField" editable="false"
-                                                           layoutX="100.0" layoutY="55.0" prefHeight="40.0"
-                                                           prefWidth="250.0"
-                                                           promptText="Enter Your Block/Road Address"/>
-                                                <Label layoutY="121.0" text="District">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="districtTextField" editable="false" layoutX="100.0"
-                                                           layoutY="110.0" prefHeight="40.0" prefWidth="250.0"
-                                                           promptText="Enter Your District"/>
-                                                <Label layoutY="176.0" text="Police Station">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="policeStationTextField" editable="false"
-                                                           layoutX="100.0" layoutY="165.0" prefHeight="40.0"
-                                                           prefWidth="250.0" promptText="Enter Your Police Station"/>
-                                                <Label layoutY="231.0" text="Post-Office">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="postOfficeTextField" editable="false" layoutX="100.0"
-                                                           layoutY="220.0" prefHeight="40.0" prefWidth="250.0"
-                                                           promptText="Enter Your Post-Office Number"/>
+                                                <Button fx:id="editProfileButton" mnemonicParsing="false"
+                                                        onAction="#handleEditProfileButtonAction" prefHeight="30.0"
+                                                        prefWidth="120.0" text="Edit Profile"/>
+                                                <Button fx:id="changePasswordButton" mnemonicParsing="false"
+                                                        onAction="#handleChangePasswordButtonAction" prefHeight="30.0"
+                                                        prefWidth="120.0" text="Change password"/>
                                             </children>
-                                        </Pane>
-                                        <Pane layoutX="450.0" layoutY="14.0">
-                                            <children>
-                                                <ImageView fx:id="avatarImageView" fitHeight="170.0" fitWidth="170.0"
-                                                           pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="@../../../../images/user_64px.png"/>
-                                                    </image>
-                                                </ImageView>
-                                                <Label layoutX="67.0" layoutY="170.0" text="Avatar">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <Label layoutY="202.0" text="Created at: ">
-                                                    <font>
-                                                        <Font size="13.0"/>
-                                                    </font>
-                                                </Label>
-                                                <Label fx:id="createTimeLabel" layoutX="65.0" layoutY="202.0"
-                                                       text="Unknown"/>
-                                            </children>
-                                        </Pane>
-                                        <Pane layoutX="450.0" layoutY="300.0">
-                                            <children>
-                                                <Label text="Rating as Client:"/>
-                                                <Label fx:id="ratingClientLabel" layoutX="115.0" layoutY="1.0"
-                                                       text="Unknown"/>
-                                                <Label layoutY="25.0" text="Rating as Contractor:"/>
-                                                <Label fx:id="ratingContractorLabel" layoutX="115.0" layoutY="25.0"
-                                                       text="Unknown"/>
-                                                <Label layoutY="50.0" text="Mission Created:"/>
-                                                <Label fx:id="missionCreatedLabel" layoutX="115.0" layoutY="50.0"
-                                                       text="Unknown"/>
-                                                <Label layoutY="75.0" text="Mission Completed:"/>
-                                                <Label fx:id="missionCompletedLabel" layoutX="115.0" layoutY="75.0"
-                                                       text="Unknown"/>
-                                                <Label layoutY="100.0" text="Mission Failed:"/>
-                                                <Label fx:id="missionFailedLabel" layoutX="115.0" layoutY="100.0"
-                                                       text="Unknown"/>
-                                                <Label layoutY="125.0" text="Reputation (max 10):"/>
-                                                <Label fx:id="reputationLabel" layoutX="115.0" layoutY="125.0"
-                                                       text="Unknown"/>
-                                            </children>
-                                        </Pane>
-                                        <Button fx:id="changePasswordButton" layoutX="450.0" layoutY="570.0"
-                                                mnemonicParsing="false" onAction="#handleChangePasswordButtonAction"
-                                                text="Change password"/>
-                                        <Button fx:id="editProfileButton" layoutX="200.0" layoutY="570.0"
-                                                mnemonicParsing="false" onAction="#handleEditProfileButtonAction"
-                                                text="Edit Profile"/>
+                                        </HBox>
                                     </children>
-                                </AnchorPane>
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                    </padding>
+                                </VBox>
                             </content>
                             <padding>
                                 <Insets bottom="10.0"/>
@@ -233,7 +235,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0">
                             <children>
                                 <Label layoutX="306.0" layoutY="277.0" text="This is Deyal app"/>
-                                <Label layoutX="104.0" layoutY="120.0" text="Help"/>
+                                <Label layoutX="142.0" layoutY="87.0" text="Help"/>
                             </children>
                         </AnchorPane>
                     </content>

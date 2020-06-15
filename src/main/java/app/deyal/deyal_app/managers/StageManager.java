@@ -1,4 +1,4 @@
-package app.deyal.deyal_app;
+package app.deyal.deyal_app.managers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +21,7 @@ public class StageManager {
     public Stage createMissionStage;
     public Stage viewMissionStage;
     public Stage userProfileStage;
+    public Stage editProfileStage;
 
     //For notification or messages
     public Stage requestMessageStage;
@@ -156,7 +157,7 @@ public class StageManager {
     public void createUserProfileStage() {
         userProfileStage = new Stage();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/userProfile.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/viewProfile.fxml"));
             Scene scene = new Scene(root);
             userProfileStage.setScene(scene);
             userProfileStage.setTitle("Deyal - Profile");
@@ -279,6 +280,19 @@ public class StageManager {
             searchMissionStage.setScene(scene);
             searchMissionStage.setTitle("Search mission");
             searchMissionStage.setResizable(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createEditProfileStage() {
+        editProfileStage = new Stage();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/editProfile.fxml"));
+            Scene scene = new Scene(root);
+            editProfileStage.setScene(scene);
+            editProfileStage.setTitle("Edit Profile");
+            editProfileStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
         }

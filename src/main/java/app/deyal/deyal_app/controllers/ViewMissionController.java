@@ -1,7 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.DataManager;
-import app.deyal.deyal_app.StageManager;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.data.MissionEvent;
 import app.deyal.deyal_app.data.User;
@@ -83,11 +83,10 @@ public class ViewMissionController {
                 case REQUEST:
                     if (DataManager.getInstance().userData.getId().equals(mission.getCreatorId())) {
                         acceptButton.setText("Assign");
-                        acceptButton.setVisible(true);
                     } else {
                         acceptButton.setText("Request");
-                        acceptButton.setVisible(false);
                     }
+                    acceptButton.setVisible(true);
                     break;
                 case ASSIGN:
                     if (DataManager.getInstance().userData.getId().equals(mission.getContractorId())) {

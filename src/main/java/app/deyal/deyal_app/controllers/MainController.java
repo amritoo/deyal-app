@@ -1,8 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.DataManager;
-import app.deyal.deyal_app.StageManager;
-import app.deyal.deyal_app.data.Address;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.repository.Auth;
@@ -17,13 +16,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 
 public class MainController {
     //Dashboard
@@ -52,30 +53,28 @@ public class MainController {
 
     //Profile
     @FXML
-    public TextField userNameTextField;
+    public Label userNameLabel;
     @FXML
-    public TextField fullNameTextField;
+    public Label fullNameLabel;
     @FXML
-    public TextField emailTextField;
+    public Label emailLabel;
     @FXML
-    public DatePicker birthDatePicker;
+    public Label phoneNumberLabel;
     @FXML
-    public TextField phoneNumberTextField;
+    public Label birthDateLabel;
     @FXML
-    public ImageView avatarImageView;
+    public Label houseLabel;
+    @FXML
+    public Label blockLabel;
+    @FXML
+    public Label districtLabel;
+    @FXML
+    public Label policeStationLabel;
+    @FXML
+    public Label postOfficeLabel;
 
     @FXML
-    public TextField houseAddressTextField;
-    @FXML
-    public TextField blockAddressTextField;
-    @FXML
-    public TextField districtTextField;
-    @FXML
-    public TextField policeStationTextField;
-    @FXML
-    public TextField postOfficeTextField;
-    @FXML
-    public Label createTimeLabel;
+    public Label accountAgeLabel;
     @FXML
     public Label ratingClientLabel;
     @FXML
@@ -93,8 +92,16 @@ public class MainController {
     @FXML
     public Button editProfileButton;
 
+    //TODO: handle auto refresh
     @FXML
     private void initialize() {
+        if (!Auth.getUserNameList(DataManager.getInstance().token)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Failed");
+            alert.setHeaderText("User names loading failed");
+            alert.setContentText("Check your internet connection.");
+            alert.showAndWait();
+        }
         this.loadDashboard();
         this.loadMyMissions();
         this.loadProfile();
@@ -103,6 +110,8 @@ public class MainController {
     @FXML
     public void handleCreateMissionButtonAction(ActionEvent event) {
         StageManager.getInstance().createMissionStage.showAndWait();
+        this.loadDashboard();
+        this.loadMyMissions();
     }
 
     @FXML
@@ -124,6 +133,7 @@ public class MainController {
     @FXML
     public void handleLogoutButtonAction(ActionEvent event) {   //remove preference token
         PreferenceSave.getInstance().setToken(null);
+        DataManager.getInstance().clearAllData();
         StageManager.getInstance().mainStage.hide();
         StageManager.getInstance().loginStage.show();
     }
@@ -150,14 +160,14 @@ public class MainController {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();
-                    if (!Auth.searchUser(DataManager.getInstance().token, mission.getCreatorId())) {
+                    String name = DataManager.getInstance().getUserName(mission.getCreatorId());
+                    if (name == null) {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("Failed");
-                        alert.setHeaderText("creator name retrieve failed");
+                        alert.setHeaderText("Creator name retrieve failed");
                         alert.setContentText("Please check your Internet connection.");
                         alert.showAndWait();
                     }
-                    String name = DataManager.getInstance().tempUser.getUserName();
                     return new ReadOnlyObjectWrapper<>(name);
                 }
             });
@@ -249,7 +259,7 @@ public class MainController {
             });
             myMissionTableView.getItems().setAll(missionArrayList);
 
-            // custom sort dashboard table
+            // custom sort My Mission table
             myMissionTableView.setSortPolicy(tv -> {
                 final ObservableList<Mission> itemsList = myMissionTableView.getItems();
                 if (itemsList == null || itemsList.isEmpty()) {
@@ -286,7 +296,7 @@ public class MainController {
 
             //selecting a mission from dashboard
             myMissionTableView.setOnMouseClicked((MouseEvent event) -> {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     int index = myMissionTableView.getSelectionModel().getSelectedIndex();
                     DataManager.getInstance().tempMission = myMissionTableView.getItems().get(index); //sometime shows index out of bound error
                     if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,
@@ -313,19 +323,19 @@ public class MainController {
             alert.showAndWait();
         } else {
             User user = DataManager.getInstance().userData;
-            userNameTextField.setText(user.getUserName());
-            fullNameTextField.setText(user.getFullName());
-            emailTextField.setText(user.getEmail());
-            phoneNumberTextField.setText(user.getPhoneNumber());
-            birthDatePicker.setValue(LocalDate.ofEpochDay(user.getDateOfBirth())); //converting user dateOfBirth to LocalDate
+            userNameLabel.setText(user.getUserName());
+            fullNameLabel.setText(user.getFullName());
+            emailLabel.setText(user.getEmail());
+            phoneNumberLabel.setText(user.getPhoneNumber());
+            birthDateLabel.setText(String.valueOf(LocalDate.ofEpochDay(user.getDateOfBirth()))); //converting user dateOfBirth to LocalDate
             if (user.getAddress() != null) {
-                houseAddressTextField.setText(user.getAddress().getHouseAddress());
-                blockAddressTextField.setText(user.getAddress().getBlockAddress());
-                districtTextField.setText(user.getAddress().getDistrict());
-                policeStationTextField.setText(user.getAddress().getPoliceStation());
-                postOfficeTextField.setText(user.getAddress().getPostOffice());
+                houseLabel.setText(user.getAddress().getHouseAddress());
+                blockLabel.setText(user.getAddress().getBlockAddress());
+                districtLabel.setText(user.getAddress().getDistrict());
+                policeStationLabel.setText(user.getAddress().getPoliceStation());
+                postOfficeLabel.setText(user.getAddress().getPostOffice());
             }
-            createTimeLabel.setText(user.getRegistrationDate().toString());
+            accountAgeLabel.setText(this.calculateAccountAge(user.getRegistrationDate()));
             if (user.getMissionInfo() != null) {
                 ratingClientLabel.setText(String.valueOf(user.getMissionInfo().getRatingAsClient()));
                 ratingContractorLabel.setText(String.valueOf(user.getMissionInfo().getRatingAsContractor()));
@@ -337,57 +347,23 @@ public class MainController {
         }
     }
 
-    private void changeEditOption(boolean show) {
-        userNameTextField.setEditable(show);
-        fullNameTextField.setEditable(show);
-        phoneNumberTextField.setEditable(show);
-        birthDatePicker.setVisible(show);
-        houseAddressTextField.setEditable(show);
-        blockAddressTextField.setEditable(show);
-        districtTextField.setEditable(show);
-        policeStationTextField.setEditable(show);
-        postOfficeTextField.setEditable(show);
+    private String calculateAccountAge(Date date) {
+        LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Period p = Period.between(ld, LocalDate.now());
+        if (p.getYears() >= 2) {
+            return p.getYears() + " years ago";
+        } else if (p.getMonths() >= 2) {
+            return p.getMonths() + " months ago";
+        } else {
+            return p.getDays() + (p.getDays() <= 1 ? " day ago" : " days ago");
+        }
     }
 
     @FXML
     public void handleEditProfileButtonAction(ActionEvent event) {
-        if (editProfileButton.getText().equals("Edit Profile")) {
-            changeEditOption(true);
-            editProfileButton.setText("Save");
-        } else if (editProfileButton.getText().equals("Save")) {
-            User user = new User();
-            user.setUserName(userNameTextField.getText());
-            user.setFullName(fullNameTextField.getText());
-            user.setEmail(emailTextField.getText());
-            user.setPhoneNumber(phoneNumberTextField.getText());
-            if (birthDatePicker.getValue() != null)
-                user.setDateOfBirth(birthDatePicker.getValue().toEpochDay()); //converting dateOfBirth to EpochDay
-            user.setAddress(new Address());
-            user.getAddress().setHouseAddress(houseAddressTextField.getText());
-            user.getAddress().setBlockAddress(blockAddressTextField.getText());
-            user.getAddress().setDistrict(districtTextField.getText());
-            user.getAddress().setPoliceStation(policeStationTextField.getText());
-            user.getAddress().setPostOffice(postOfficeTextField.getText());
-
-            Alert alert;
-            if (Auth.updateProfile(DataManager.getInstance().getToken(), user) &&
-                    Auth.getUserData(DataManager.getInstance().getToken())) {
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("User Profile updated");
-                alert.setContentText("Your profile has been updated successfully.");
-                alert.showAndWait();
-                loadProfile();
-                changeEditOption(false);
-                editProfileButton.setText("Edit Profile");
-            } else {
-                alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Failed");
-                alert.setHeaderText("User Profile update Failed!");
-                alert.setContentText("Please check your Internet connection. Update failed for some reasons.");
-                alert.showAndWait();
-            }
-        }
+        StageManager.getInstance().createEditProfileStage();
+        StageManager.getInstance().editProfileStage.showAndWait();
+        this.loadProfile();
     }
 
     @FXML

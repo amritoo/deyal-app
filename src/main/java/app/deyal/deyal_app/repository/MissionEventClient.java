@@ -1,6 +1,6 @@
 package app.deyal.deyal_app.repository;
 
-import app.deyal.deyal_app.DataManager;
+import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.data.MissionEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -22,12 +22,12 @@ import java.util.Scanner;
 
 public class MissionEventClient {
 
-    private static final String serverUrl = "http://localhost:3030/v1";
+    private static final String serverUrl = DataManager.server + "/event";
 
     public static boolean getMissionEventList(String token, String missionId) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/event/list"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/list"));
             uriBuilder.setParameter("token", token);
             uriBuilder.setParameter("missionId", missionId);
             HttpGet httpGet = new HttpGet(uriBuilder.build());
@@ -74,7 +74,7 @@ public class MissionEventClient {
     public static boolean addEvent(String token, MissionEvent missionEvent) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/event/add"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/add"));
             uriBuilder.setParameter("token", token);
             HttpPost httpPost = new HttpPost(uriBuilder.build());
 

@@ -1,5 +1,7 @@
 package app.deyal.deyal_app;
 
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
 import app.deyal.deyal_app.repository.PreferenceSave;
 import javafx.application.Application;

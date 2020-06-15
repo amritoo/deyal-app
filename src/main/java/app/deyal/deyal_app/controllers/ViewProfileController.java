@@ -1,7 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.DataManager;
-import app.deyal.deyal_app.StageManager;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,8 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 
-public class UserProfileController {
+public class ViewProfileController {
 
     @FXML
     public Label userNameLabel;
@@ -36,7 +39,7 @@ public class UserProfileController {
     @FXML
     public ImageView avatarImageView;
     @FXML
-    public Label createTimeLabel;
+    public Label accountAgeLabel;
 
     @FXML
     public Label ratingClientLabel;
@@ -67,7 +70,7 @@ public class UserProfileController {
                 policeStationLabel.setText(user.getAddress().getPoliceStation());
                 postOfficeLabel.setText(user.getAddress().getPostOffice());
             }
-            createTimeLabel.setText(user.getRegistrationDate().toString());
+            accountAgeLabel.setText(this.calculateAccountAge(user.getRegistrationDate()));
             if (user.getMissionInfo() != null) {
                 ratingClientLabel.setText(String.valueOf(user.getMissionInfo().getRatingAsClient()));
                 ratingContractorLabel.setText(String.valueOf(user.getMissionInfo().getRatingAsContractor()));
@@ -76,6 +79,18 @@ public class UserProfileController {
                 missionFailedLabel.setText(String.valueOf(user.getMissionInfo().getFailed().size()));
             }
             reputationLabel.setText(String.valueOf(user.getReputation()));
+        }
+    }
+
+    private String calculateAccountAge(Date date) {
+        LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Period p = Period.between(ld, LocalDate.now());
+        if (p.getYears() >= 2) {
+            return p.getYears() + " years ago";
+        } else if (p.getMonths() >= 2) {
+            return p.getMonths() + " months ago";
+        } else {
+            return p.getDays() + " days ago";
         }
     }
 

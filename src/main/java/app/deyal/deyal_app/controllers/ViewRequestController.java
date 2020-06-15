@@ -1,7 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.DataManager;
-import app.deyal.deyal_app.StageManager;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.MissionEvent;
 import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.data.events.Assign;
