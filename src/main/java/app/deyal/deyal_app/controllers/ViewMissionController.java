@@ -1,19 +1,19 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.managers.DataManager;
-import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.data.MissionEvent;
 import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.data.events.*;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
 import app.deyal.deyal_app.repository.MissionEventClient;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
@@ -23,9 +23,9 @@ public class ViewMissionController {
     @FXML
     public Label missionTitleLabel;
     @FXML
-    public TextArea shortDescriptionTextArea;
+    public JFXTextArea shortDescriptionTextArea;
     @FXML
-    public TextArea detailsTextArea;
+    public JFXTextArea detailsTextArea;
     @FXML
     public Label levelLabel;
     @FXML
@@ -33,9 +33,9 @@ public class ViewMissionController {
     @FXML
     public Label contractorLabel;
     @FXML
-    public TextArea eventsTextArea;
+    public JFXTextArea eventsTextArea;
     @FXML
-    public Button acceptButton;
+    public JFXButton acceptButton;
 
     private Mission mission;
     private User creator;

@@ -1,36 +1,49 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.managers.DataManager;
-import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.data.MissionDifficulty;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.MissionClient;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 
 public class CreateMissionController {
 
     @FXML
-    public TextField titleTextField;
+    public JFXTextField titleTextField;
     @FXML
-    public TextArea shortDescriptionTextArea;
+    public JFXTextArea shortDescriptionTextArea;
     @FXML
-    public TextArea detailsTextArea;
+    public JFXTextArea detailsTextArea;
     @FXML
-    public ChoiceBox<String> levelChoiceBox;
+    public ComboBox<String> levelChoiceBox;
     @FXML
-    public Button createButton;
+    public JFXButton createButton;
     @FXML
-    public Button cancelButton;
+    public JFXButton cancelButton;
+
+    public CreateMissionController() {
+        //TODO: error handle
+        levelChoiceBox = new JFXComboBox<>();
+//        levelChoiceBox.setValue("Very easy");
+//        levelChoiceBox.setValue("Easy");
+//        levelChoiceBox.setValue("Medium");
+//        levelChoiceBox.getItems().add("Very easy");
+//        levelChoiceBox.getItems().add("Easy");
+//        levelChoiceBox.getItems().add("Medium");
+//        levelChoiceBox.getItems().add("Hard");
+//        levelChoiceBox.getItems().add("Very hard");
+    }
 
     @FXML
     public void initialize() {
-        levelChoiceBox.getItems().add("Very easy");
-        levelChoiceBox.getItems().add("Easy");
-        levelChoiceBox.getItems().add("Medium");
-        levelChoiceBox.getItems().add("Hard");
-        levelChoiceBox.getItems().add("Very hard");
     }
 
     @FXML

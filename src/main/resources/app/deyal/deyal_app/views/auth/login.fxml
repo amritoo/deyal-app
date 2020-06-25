@@ -1,64 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import com.jfoenix.controls.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.LoginController">
     <children>
         <Pane layoutX="174.0" layoutY="42.0">
             <children>
-                <ImageView fitHeight="90.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../../../images/icon.png"/>
-                    </image>
-                    <viewport>
-                        <Rectangle2D/>
-                    </viewport>
-                </ImageView>
                 <Label layoutX="110.0" layoutY="10.0" text="Deyal">
                     <font>
                         <Font name="System Bold" size="48.0"/>
                     </font>
+                    <effect>
+                        <DropShadow color="#2889ff" offsetX="3.0" offsetY="2.0" spread="0.3"/>
+                    </effect>
                 </Label>
                 <Label layoutX="155.0" layoutY="85.0" text="Login"/>
+                <FontAwesomeIconView glyphName="EMPIRE" layoutX="11.0" layoutY="81.0" size="80.0"/>
             </children>
         </Pane>
         <Separator layoutX="294.0" layoutY="156.0" prefHeight="5.0" prefWidth="111.0"/>
-        <HBox layoutX="146.0" layoutY="211.0">
+        <VBox alignment="CENTER" layoutX="151.0" layoutY="195.0" spacing="30.0">
             <children>
-                <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../../../images/baseline_mail_outline_black_36dp.png"/>
-                    </image>
-                </ImageView>
-                <TextField fx:id="emailTextField" prefHeight="40.0" prefWidth="360.0" promptText="Email Address"/>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <FontAwesomeIconView glyphName="AT" size="40.0"/>
+                        <JFXTextField fx:id="emailTextField" labelFloat="true" prefHeight="40.0" prefWidth="350.0"
+                                      promptText="Email address">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </JFXTextField>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
+                        <JFXPasswordField fx:id="passwordField" labelFloat="true" prefHeight="40.0" prefWidth="350.0"
+                                          promptText="Password">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </JFXPasswordField>
+                    </children>
+                </HBox>
             </children>
-        </HBox>
-        <HBox layoutX="145.0" layoutY="268.0">
-            <children>
-                <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../../../images/baseline_lock_black_36dp.png"/>
-                    </image>
-                </ImageView>
-                <PasswordField fx:id="passwordField" prefHeight="40.0" prefWidth="360.0" promptText="Password"/>
-            </children>
-        </HBox>
-        <CheckBox fx:id="checkBox" layoutX="148.0" layoutY="321.0" mnemonicParsing="false" text="Remember Me"/>
-        <Button layoutX="455.0" layoutY="351.0" mnemonicParsing="false"
-                onAction="#handleSignInButtonAction" prefHeight="30.0" prefWidth="100.0" text="Sign In"/>
-        <Label fx:id="forgotPasswordLabel" layoutX="150.0" layoutY="357.0" onMouseClicked="#handleMouseEvent"
-               text="Forgot Password?" textFill="BLUE" underline="true">
+        </VBox>
+        <Separator layoutX="167.0" layoutY="402.0" prefHeight="5.0" prefWidth="349.0"/>
+        <JFXCheckBox fx:id="rememberCheckbox" layoutX="150.0" layoutY="327.0" text="Remember Me">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXCheckBox>
+        <JFXButton alignment="CENTER" buttonType="RAISED" defaultButton="true" layoutX="405.0" layoutY="347.0"
+                   onAction="#handleSignInButtonAction" prefHeight="40.0" prefWidth="150.0"
+                   style="-fx-background-color: blue;" text="Sign In" textFill="WHITE">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton alignment="CENTER" layoutX="150.0" layoutY="360.0" onAction="#handleForgotPasswordAction"
+                   text="Forgot Password?" textFill="RED" underline="true">
             <font>
                 <Font name="System Italic" size="12.0"/>
             </font>
-        </Label>
-        <Separator layoutX="167.0" layoutY="402.0" prefHeight="5.0" prefWidth="349.0"/>
-        <Button layoutX="229.0" layoutY="419.0" mnemonicParsing="false"
-                onAction="#handleRegisterButtonAction" prefHeight="40.0" prefWidth="200.0" text="Create Account"/>
+        </JFXButton>
+        <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="251.0" layoutY="422.0"
+                   onAction="#handleRegisterButtonAction" prefHeight="50.0" prefWidth="200.0"
+                   style="-fx-background-color: green;" text="Create Account" textFill="WHITE">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </JFXButton>
     </children>
 </AnchorPane>

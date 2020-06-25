@@ -4,6 +4,9 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,13 +16,11 @@ import javafx.scene.input.MouseEvent;
 public class LoginController {
 
     @FXML
-    private TextField emailTextField;
+    public JFXTextField emailTextField;
     @FXML
-    private PasswordField passwordField;
+    public JFXPasswordField passwordField;
     @FXML
-    private CheckBox checkBox;
-    @FXML
-    private Label forgotPasswordLabel;
+    public JFXCheckBox rememberCheckbox;
 
     @FXML
     private void handleRegisterButtonAction(ActionEvent event) {
@@ -31,7 +32,7 @@ public class LoginController {
     private void handleSignInButtonAction(ActionEvent event) {
         String email = emailTextField.getText();
         String password = passwordField.getText();
-        boolean remember = checkBox.isSelected();
+        boolean remember = rememberCheckbox.isSelected();
 
         if (Auth.login(email, password, remember)) {
             StageManager.getInstance().loginStage.hide();
@@ -47,7 +48,7 @@ public class LoginController {
     }
 
     @FXML
-    private void handleMouseEvent(MouseEvent event) {
+    private void handleForgotPasswordAction(ActionEvent event) {
         //TODO: for mouse hover action show underline
         if (!DataManager.getInstance().tempChoice) {
             StageManager.getInstance().sendCodeStage.showAndWait();

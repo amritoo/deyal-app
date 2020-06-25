@@ -62,7 +62,7 @@ public class SearchMissionController {
 
             missionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("title"));
             missionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, Integer>("difficulty"));
-            missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<>("creatorId") {
+            missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("creatorId") {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();

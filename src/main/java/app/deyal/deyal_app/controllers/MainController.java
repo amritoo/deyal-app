@@ -149,14 +149,14 @@ public class MainController {
             ArrayList<Mission> missionArrayList = DataManager.getInstance().allMissionsList;
 
             missionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-            missionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty") {
+            missionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("difficulty") {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();
                     return new ReadOnlyObjectWrapper<>(mission.getDifficultyAsString());
                 }
             });
-            missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<>("creatorId") {
+            missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("creatorId") {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();
@@ -249,7 +249,7 @@ public class MainController {
                 }
             });
             mmMissionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("description"));
-            mmMissionStatusTableColumn.setCellValueFactory(new PropertyValueFactory<>("id") {   //set status (completed, created, failed, ongoing) of my missions
+            mmMissionStatusTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("id") {   //set status (completed, created, failed, ongoing) of my missions
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();

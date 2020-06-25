@@ -1,11 +1,15 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Register;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
@@ -13,29 +17,31 @@ import java.util.Optional;
 public class RegisterController {
 
     @FXML
-    private TextField userNameTextField;
+    public JFXTextField firstNameTextField;
     @FXML
-    private TextField fullNameTextField;
+    public JFXTextField lastNameTextField;
     @FXML
-    private TextField emailTextField;
+    public JFXTextField userNameTextField;
     @FXML
-    private PasswordField passwordField;
+    public JFXTextField emailTextField;
     @FXML
-    private PasswordField confirmPasswordField;
+    public JFXPasswordField passwordField;
     @FXML
-    private TextField phoneTextField;
+    public JFXPasswordField confirmPasswordField;
     @FXML
-    private CheckBox checkBox;
+    public JFXTextField phoneTextField;
+    @FXML
+    public JFXCheckBox agreementCheckBox;
 
     private Register register;
 
     private void loadRegister() {
         register = new Register();
         register.setUserName(userNameTextField.getText());
-        register.setFullName(fullNameTextField.getText());
+        register.setFullName(firstNameTextField.getText() + " " + lastNameTextField.getText());
         register.setEmail(emailTextField.getText());
         register.setPassword(passwordField.getText());
-        register.setPhoneNumber("+880" + phoneTextField.getText());
+        register.setPhoneNumber("+88" + phoneTextField.getText());
     }
 
     @FXML
@@ -82,7 +88,7 @@ public class RegisterController {
             alert.showAndWait();
             return false;
         }
-        if (!checkBox.isSelected()) {   //show must agree to terms and conditions
+        if (!agreementCheckBox.isSelected()) {   //show must agree to terms and conditions
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Must agree to terms and conditions");

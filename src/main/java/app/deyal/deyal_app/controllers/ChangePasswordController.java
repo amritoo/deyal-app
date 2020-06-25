@@ -3,27 +3,27 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
 
 import java.util.Optional;
 
 public class ChangePasswordController {
 
     @FXML
-    public PasswordField oldPasswordField;
+    public JFXPasswordField oldPasswordField;
     @FXML
-    public PasswordField newPasswordField;
+    public JFXPasswordField newPasswordField;
     @FXML
-    public PasswordField newPasswordRepeatField;
+    public JFXPasswordField newPasswordRepeatField;
     @FXML
-    public Button submitButton;
+    public JFXButton submitButton;
     @FXML
-    public Button cancelButton;
+    public JFXButton cancelButton;
 
     @FXML
     public void handleSubmitButtonAction(ActionEvent event) {

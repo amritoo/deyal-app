@@ -3,21 +3,22 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 public class verifyCodeController {
 
     @FXML
-    public TextField recoverCodeTextField;
+    public JFXTextField recoverCodeTextField;
     @FXML
-    public PasswordField passwordField;
+    public JFXPasswordField passwordField;
     @FXML
-    public PasswordField passwordRepeatField;
+    public JFXPasswordField passwordRepeatField;
 
     @FXML
     public void handleVerifyButtonAction(ActionEvent event) {
@@ -46,7 +47,7 @@ public class verifyCodeController {
     }
 
     @FXML
-    public void sendCodeAction(MouseEvent mouseEvent) {
+    public void sendCodeAction(ActionEvent event) {
         String email = DataManager.getInstance().tempMessage;
         if (Auth.sendCode(email)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

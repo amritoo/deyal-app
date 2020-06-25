@@ -3,18 +3,18 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
 
 import java.util.Optional;
 
 public class SendCodeController {
 
     @FXML
-    public TextField emailTextField;
+    public JFXTextField emailTextField;
 
     @FXML
     public void handleSendButtonAction(ActionEvent event) {
