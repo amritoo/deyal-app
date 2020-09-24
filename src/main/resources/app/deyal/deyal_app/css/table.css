@@ -1,0 +1,136 @@
+#loginLayout {
+  -fx-background-color: #1a1917;
+}
+#txtuser {
+  -fx-background-color: #b9f6f1;
+  -fx-background-radius: 10px;
+}
+
+#hbox {
+  -fx-background-color: #3c3f41;
+}
+#txtpassword {
+  -fx-background-color: #f3f6f4;
+  -fx-background-radius: 10px;
+}
+#slideLeft {
+  -fx-background-color: #333;
+}
+#logout {
+  -fx-background-color: #f3091c;
+  -fx-background-radius: 50px;
+}
+
+#mmid {
+  -fx-background-color: #4f7c7c;
+  -fx-background-radius: 10px;
+}
+#tableview {
+  -fx-background-color: #884781;
+}
+#editpane {
+  -fx-background-color: #312034;
+}
+#AnchorPane,
+#gridpane {
+  -fx-background-color: rgba(8, 17, 15, 0.8);
+}
+#registerLayout {
+  -fx-background-color: #002d2d;
+}
+
+#rowHeading {
+  -fx-alignment: CENTER_LEFT;
+}
+
+.root {
+  -fx-background-color: #262626;
+}
+
+.table-view {
+  -fx-background-color: transparent;
+}
+
+.table-view:focused {
+  -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #000000;
+  -fx-border-color: #005797;
+  -fx-border-width: 0px 0px 1px 0px;
+  -fx-border-style: solid;
+}
+.table-view:row-selection .column-header-background .filler {
+  -fx-background-color: #ffffff;
+}
+.table-view:row-selection .column-header-background .show-hide-columns-button {
+  -fx-background-color: #e0e0e0;
+}
+
+.table-view .column-header-background .label {
+  -fx-background-color: transparent;
+  -fx-text-fill: #005797;
+  -fx-font-weight: bold;
+  -fx-font-size: 16px;
+  -fx-text-alignment: LEFT;
+}
+
+.table-view .column-header {
+  -fx-background-color: transparent;
+  -fx-pref-height: 50px;
+  -fx-text-alignment: LEFT;
+}
+.table-view .column-header .label {
+  -fx-alignment: CENTER_LEFT;
+}
+.table-view .table-column {
+  -fx-padding: 18 0 0 10;
+  -fx-border-width: 0px 0px 0px 0px;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+  -fx-background-color: transparent;
+}
+
+.table-view > .virtual-flow > .scroll-bar > .increment-button,
+.table-view > .virtual-flow > .scroll-bar > .decrement-button {
+  -fx-opacity: 0;
+}
+
+.table-view .table-row-cell {
+  -fx-background-color: Cyan;
+  -fx-font-size: 15px;
+  -fx-pref-height: 40px;
+  -fx-border-width: 0px 0px 1px 0px;
+  -fx-border-color: Violet;
+  -fx-text-alignment: LEFT;
+}
+
+.table-view .table-row-cell:hover {
+  -fx-background-color: White;
+}
+
+.table-view .table-row-cell:selected {
+  -fx-background-color: #009792;
+}
+.table-view:row-selection .virtual-flow .scroll-bar:vertical .thumb {
+  -fx-background-color: #e0e0e0;
+  -fx-border-color: #262626;
+}
+.table-view .table-row-cell:empty {
+  -fx-background-color: #009780;
+  -fx-border-color: #4a6358;
+}
+
+.table-view :row-selection {
+  -fx-background-color: transparent;
+  -fx-text-fill: white;
+  -fx-fixed-cell-size: 50;
+  -fx-alignment: CENTER;
+}
