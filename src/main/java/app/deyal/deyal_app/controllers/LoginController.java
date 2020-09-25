@@ -9,7 +9,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 
 
@@ -44,16 +44,17 @@ public class LoginController {
             alert.setHeaderText("Login Failed!");
             alert.setContentText("Please check your email or password.");
             alert.showAndWait();
+            emailTextField.getStyleClass().add("wrong-credentials");
+            passwordField.getStyleClass().add("wrong-credentials");
         }
     }
 
     @FXML
-    private void handleForgotPasswordAction(ActionEvent event) {
-        //TODO: for mouse hover action show underline
+    private void handleForgotPasswordAction(MouseEvent mouseEvent) {
         if (!DataManager.getInstance().tempChoice) {
             StageManager.getInstance().sendCodeStage.showAndWait();
         }
-        if(DataManager.getInstance().tempChoice) {
+        if (DataManager.getInstance().tempChoice) {
             StageManager.getInstance().verifyCodeStage.showAndWait();
         }
     }
