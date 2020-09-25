@@ -8,23 +8,17 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<SplitPane dividerPositions="0.2" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.171"
+<SplitPane dividerPositions="0.2" orientation="VERTICAL" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171"
            xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.SendCodeController">
     <items>
         <HBox alignment="CENTER_LEFT" spacing="10.0">
             <children>
-                <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction" prefWidth="50.0"
-                           text="Back">
+                <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction" text="Back">
                     <graphic>
                         <FontAwesomeIconView glyphName="ARROW_LEFT" size="25"/>
                     </graphic>
                 </JFXButton>
-                <Label text="Recover password | Send Code">
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                </Label>
+                <Label text="Recover password | Send Code" styleClass="label-title"/>
             </children>
             <padding>
                 <Insets bottom="5.0" left="10.0" top="5.0"/>
@@ -33,22 +27,12 @@
         <VBox alignment="CENTER" spacing="30.0">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <children>
-                        <FontAwesomeIconView glyphName="AT" size="40.0"/>
-                        <JFXTextField fx:id="emailTextField" labelFloat="true" prefHeight="40.0" prefWidth="300.0"
-                                      promptText="Email address">
-                            <font>
-                                <Font size="14.0"/>
-                            </font>
-                        </JFXTextField>
-                    </children>
+                    <FontAwesomeIconView glyphName="AT" size="40.0"/>
+                    <JFXTextField fx:id="emailTextField" labelFloat="true" prefHeight="40.0" prefWidth="300.0"
+                                  promptText="Email address"/>
                 </HBox>
-                <JFXButton buttonType="RAISED" defaultButton="true" onAction="#handleSendButtonAction" prefHeight="40.0"
-                           prefWidth="100.0" style="-fx-background-color: blue;" text="Send Code" textFill="WHITE">
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                </JFXButton>
+                <JFXButton buttonType="RAISED" defaultButton="true" onAction="#handleSendButtonAction"
+                           prefHeight="40.0" prefWidth="150.0" text="Send Code"/>
             </children>
             <padding>
                 <Insets bottom="30.0" left="30.0" right="30.0" top="40.0"/>

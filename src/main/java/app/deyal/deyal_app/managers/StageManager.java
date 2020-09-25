@@ -34,7 +34,13 @@ public class StageManager {
     public Stage notificationStage;
     public Stage searchMissionStage;
 
+    private String themeDark = getClass().getResource("/app/deyal/deyal_app/theme_dark.css").toExternalForm();
+    private String themeLight = getClass().getResource("/app/deyal/deyal_app/theme_light.css").toExternalForm();
+    private String theme;
+
     private StageManager() {
+        // TODO set theme
+
         createLoginStage();
         createRegisterStage();
         createSendCodeStage();

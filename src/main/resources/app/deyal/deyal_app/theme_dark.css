@@ -17,32 +17,37 @@
 
 .button {
     -fx-text-fill: -fx-primarytext;
+    -fx-font-size: 12pt;
     -fx-background-color: -fx-primary;
+    -fx-background-radius: 20px;
     -fx-border-color: -fx-secondary;
     -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-font-size: 12pt;
 }
 
 .button:hover, .button:focused {
-    -fx-border-color: -fx-secondary;
-    -fx-background-color: -fx-secondary;
     -fx-text-fill: -fx-primary;
+    -fx-background-color: -fx-secondary;
+    -fx-border-color: -fx-secondary;
 }
 
 .text-field {
     /*-fx-text-fill: -fx-primarytext;*/
     -fx-prompt-text-fill: -fx-primarytext;
+    -fx-text-fill: derive(-fx-secondary, 20%);
     -fx-font-size: 12pt;
     -jfx-focus-color: -fx-secondary;
-    -fx-text-fill: derive(-fx-secondary, 20%);
 }
 
 .checkbox-main {
-    -fx-text-fill: -fx-secondary;
     -jfx-checked-color: -fx-primary;
+    -fx-text-fill: -fx-secondary;
     -fx-font-size: 10pt;
     -fx-padding: 5;
+}
+
+.label-title {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 15pt;
 }
 
 /*---------------------------------------- auth ----------------------------------------*/

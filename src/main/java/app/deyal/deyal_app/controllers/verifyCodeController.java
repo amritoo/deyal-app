@@ -47,7 +47,7 @@ public class verifyCodeController {
     }
 
     @FXML
-    public void sendCodeAction(ActionEvent event) {
+    public void sendCodeAction(MouseEvent mouseEvent) {
         String email = DataManager.getInstance().tempMessage;
         if (Auth.sendCode(email)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

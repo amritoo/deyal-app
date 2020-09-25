@@ -6,23 +6,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<SplitPane dividerPositions="0.12" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.171"
+<SplitPane dividerPositions="0.12" orientation="VERTICAL" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171"
            xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.verifyCodeController">
     <items>
         <HBox alignment="CENTER_LEFT" spacing="10.0">
             <children>
-                <JFXButton cancelButton="true" contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction"
-                           prefWidth="50.0">
+                <JFXButton cancelButton="true" contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction">
                     <graphic>
                         <FontAwesomeIconView glyphName="ARROW_LEFT" size="25"/>
                     </graphic>
                 </JFXButton>
-                <Label text="Recover password | Verify Code">
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                </Label>
+                <Label text="Recover password | Verify Code" styleClass="label-title"/>
             </children>
             <padding>
                 <Insets bottom="5.0" left="10.0" top="5.0"/>
@@ -31,51 +25,24 @@
         <VBox alignment="CENTER" spacing="30.0">
             <children>
                 <HBox spacing="10.0">
-                    <children>
-                        <FontAwesomeIconView glyphName="HASHTAG" size="40.0"/>
-                        <JFXTextField fx:id="recoverCodeTextField" labelFloat="true" prefHeight="40.0" prefWidth="300.0"
-                                      promptText="Enter recover code">
-                            <font>
-                                <Font size="14.0"/>
-                            </font>
-                        </JFXTextField>
-                    </children>
+                    <FontAwesomeIconView glyphName="HASHTAG" size="40.0"/>
+                    <JFXTextField fx:id="recoverCodeTextField" labelFloat="true" prefHeight="40.0" prefWidth="300.0"
+                                  promptText="Enter recover code"/>
                 </HBox>
-                <JFXButton onAction="#sendCodeAction" text="Didn't get one? Click here to get another" textFill="RED"
-                           underline="true">
-                    <font>
-                        <Font name="System Italic" size="12.0"/>
-                    </font>
-                </JFXButton>
+                <Label onMouseClicked="#sendCodeAction" text="Didn't get one? Click here to get another"
+                       styleClass="label-recover"/>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <children>
-                        <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
-                        <JFXPasswordField fx:id="passwordField" labelFloat="true" prefHeight="40.0" prefWidth="300.0"
-                                          promptText="Enter your new password">
-                            <font>
-                                <Font size="14.0"/>
-                            </font>
-                        </JFXPasswordField>
-                    </children>
+                    <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
+                    <JFXPasswordField fx:id="passwordField" labelFloat="true" prefHeight="40.0" prefWidth="300.0"
+                                      promptText="Enter your new password"/>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <children>
-                        <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
-                        <JFXPasswordField fx:id="passwordRepeatField" labelFloat="true" prefHeight="40.0"
-                                          prefWidth="300.0" promptText="Re-enter password">
-                            <font>
-                                <Font size="14.0"/>
-                            </font>
-                        </JFXPasswordField>
-                    </children>
+                    <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
+                    <JFXPasswordField fx:id="passwordRepeatField" labelFloat="true" prefHeight="40.0"
+                                      prefWidth="300.0" promptText="Re-enter password"/>
                 </HBox>
                 <JFXButton buttonType="RAISED" defaultButton="true" onAction="#handleVerifyButtonAction"
-                           prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: blue;"
-                           text="Verify and change password" textFill="WHITE">
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                </JFXButton>
+                           prefHeight="50.0" prefWidth="250.0" text="Verify and change password"/>
             </children>
             <padding>
                 <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
