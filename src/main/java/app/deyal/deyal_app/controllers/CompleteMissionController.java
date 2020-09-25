@@ -2,6 +2,7 @@ package app.deyal.deyal_app.controllers;
 
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 public class CompleteMissionController {
     @FXML
-    public ChoiceBox<String> gotRewardChoiceBox;
+    public JFXComboBox<String> gotRewardChoiceBox;
     @FXML
     public TextArea messageTextArea;
 

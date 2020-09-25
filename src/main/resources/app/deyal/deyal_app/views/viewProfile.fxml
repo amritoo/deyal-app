@@ -1,119 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.ViewProfileController">
+<VBox alignment="CENTER" spacing="35.0" styleClass="root" stylesheets="@../theme_dark.css"
+      xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="app.deyal.deyal_app.controllers.ViewProfileController">
     <children>
         <HBox alignment="CENTER" spacing="10.0">
-            <children>
-                <GridPane alignment="CENTER" hgap="10.0" vgap="5.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <children>
-                        <Label text="User Name:"/>
-                        <Label fx:id="userNameLabel" text="Unknown" GridPane.columnIndex="1"/>
-                        <Label text="Full Name:" GridPane.rowIndex="1"/>
-                        <Label fx:id="fullNameLabel" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                        <Label text="Email:" GridPane.rowIndex="2"/>
-                        <Label fx:id="emailLabel" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                        <Label text="Mobile Number:" GridPane.rowIndex="3"/>
-                        <Label fx:id="phoneNumberLabel" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <Label text="Date of Birth:" GridPane.rowIndex="4"/>
-                        <Label fx:id="birthDateLabel" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                        <Label text="House Address:" GridPane.rowIndex="5"/>
-                        <Label fx:id="houseLabel" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-                        <Label text="Block Address:" GridPane.rowIndex="6"/>
-                        <Label fx:id="blockLabel" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                        <Label text="District:" GridPane.rowIndex="7"/>
-                        <Label fx:id="districtLabel" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-                        <Label text="Police Station:" GridPane.rowIndex="8"/>
-                        <Label fx:id="policeStationLabel" text="Unknown" GridPane.columnIndex="1"
-                               GridPane.rowIndex="8"/>
-                        <Label text="Post-Office:" GridPane.rowIndex="9"/>
-                        <Label fx:id="postOfficeLabel" text="Unknown" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
-                    </children>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                    </padding>
-                </GridPane>
-                <VBox alignment="CENTER" spacing="10.0">
-                    <children>
-                        <ImageView fx:id="avatarImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true"
-                                   preserveRatio="true">
-                            <image>
-                                <Image url="@../../../../images/user_64px.png"/>
-                            </image>
-                        </ImageView>
-                        <GridPane alignment="CENTER_LEFT" hgap="15.0" vgap="10.0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                            <children>
-                                <Label text="Rating as Client:"/>
-                                <Label fx:id="ratingClientLabel" text="Unknown" GridPane.columnIndex="1"/>
-                                <Label text="Rating as Contractor:" GridPane.rowIndex="1"/>
-                                <Label fx:id="ratingContractorLabel" text="Unknown" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="1"/>
-                                <Label text="Mission Created:" GridPane.rowIndex="2"/>
-                                <Label fx:id="missionCreatedLabel" text="Unknown" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="2"/>
-                                <Label text="Mission Completed:" GridPane.rowIndex="3"/>
-                                <Label fx:id="missionCompletedLabel" text="Unknown" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="3"/>
-                                <Label text="Mission Failed:" GridPane.rowIndex="4"/>
-                                <Label fx:id="missionFailedLabel" text="Unknown" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="4"/>
-                                <Label text="Reputation (max 10):" GridPane.rowIndex="5"/>
-                                <Label fx:id="reputationLabel" text="Unknown" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="5"/>
-                                <Label text="Registered:" GridPane.rowIndex="6"/>
-                                <Label fx:id="accountAgeLabel" text="Unknown" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="6"/>
-                            </children>
-                        </GridPane>
-                    </children>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                    </padding>
-                </VBox>
-            </children>
+            <GridPane alignment="CENTER" hgap="10.0" vgap="5.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <children>
+                    <Label styleClass="label-view" text="User Name:"/>
+                    <Label fx:id="userNameLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"/>
+                    <Label styleClass="label-view" text="Full Name:" GridPane.rowIndex="1"/>
+                    <Label fx:id="fullNameLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"
+                           GridPane.rowIndex="1"/>
+                    <Label styleClass="label-view" text="Email:" GridPane.rowIndex="2"/>
+                    <Label fx:id="emailLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"
+                           GridPane.rowIndex="2"/>
+                    <Label styleClass="label-view" text="Mobile Number:" GridPane.rowIndex="3"/>
+                    <Label fx:id="phoneNumberLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"
+                           GridPane.rowIndex="3"/>
+                    <Label styleClass="label-view" text="Date of Birth:" GridPane.rowIndex="4"/>
+                    <Label fx:id="birthDateLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"
+                           GridPane.rowIndex="4"/>
+                    <Label styleClass="label-view" text="House Address:" GridPane.rowIndex="5"/>
+                    <Label fx:id="houseLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"
+                           GridPane.rowIndex="5"/>
+                    <Label styleClass="label-view" text="Block Address:" GridPane.rowIndex="6"/>
+                    <Label fx:id="blockLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"
+                           GridPane.rowIndex="6"/>
+                    <Label styleClass="label-view" text="District:" GridPane.rowIndex="7"/>
+                    <Label fx:id="districtLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"
+                           GridPane.rowIndex="7"/>
+                    <Label styleClass="label-view" text="Police Station:" GridPane.rowIndex="8"/>
+                    <Label fx:id="policeStationLabel" styleClass="label-view" text="Unknown"
+                           GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                    <Label styleClass="label-view" text="Post-Office:" GridPane.rowIndex="9"/>
+                    <Label fx:id="postOfficeLabel" styleClass="label-view" text="Unknown" GridPane.columnIndex="1"
+                           GridPane.rowIndex="9"/>
+                </children>
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </padding>
+            </GridPane>
+            <VBox alignment="CENTER" spacing="10.0">
+                <children>
+                    <ImageView fx:id="avatarImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true"
+                               preserveRatio="true">
+                        <Image url="@../../../../images/user_64px.png"/>
+                    </ImageView>
+                    <GridPane alignment="CENTER_LEFT" hgap="15.0" vgap="10.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <children>
+                            <Label styleClass="label-view" text="Rating as Client:"/>
+                            <Label fx:id="ratingClientLabel" styleClass="label-view" text="Unknown"
+                                   GridPane.columnIndex="1"/>
+                            <Label styleClass="label-view" text="Rating as Contractor:" GridPane.rowIndex="1"/>
+                            <Label fx:id="ratingContractorLabel" styleClass="label-view" text="Unknown"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            <Label styleClass="label-view" text="Mission Created:" GridPane.rowIndex="2"/>
+                            <Label fx:id="missionCreatedLabel" styleClass="label-view" text="Unknown"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                            <Label styleClass="label-view" text="Mission Completed:" GridPane.rowIndex="3"/>
+                            <Label fx:id="missionCompletedLabel" styleClass="label-view" text="Unknown"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                            <Label styleClass="label-view" text="Mission Failed:" GridPane.rowIndex="4"/>
+                            <Label fx:id="missionFailedLabel" styleClass="label-view" text="Unknown"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                            <Label styleClass="label-view" text="Reputation (max 10):" GridPane.rowIndex="5"/>
+                            <Label fx:id="reputationLabel" styleClass="label-view" text="Unknown"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                            <Label styleClass="label-view" text="Registered:" GridPane.rowIndex="6"/>
+                            <Label fx:id="accountAgeLabel" styleClass="label-view" text="Unknown"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                        </children>
+                    </GridPane>
+                </children>
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </padding>
+            </VBox>
         </HBox>
-        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="30.0"
-                prefWidth="100.0" text="Close">
-            <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-            </padding>
-        </Button>
+        <JFXButton buttonType="RAISED" cancelButton="true" mnemonicParsing="false" onAction="#handleCloseButtonAction"
+                   prefHeight="30.0" prefWidth="150.0" text="Close"/>
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="35.0" left="35.0" right="35.0" top="35.0"/>
     </padding>
 </VBox>

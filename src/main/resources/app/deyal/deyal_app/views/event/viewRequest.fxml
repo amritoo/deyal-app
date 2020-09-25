@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane styleClass="root" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="app.deyal.deyal_app.controllers.ViewRequestController">
     <top>
-        <HBox alignment="CENTER" spacing="10.0" style="-fx-background-color: E8E9EA;" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
             </padding>
-            <Label text="Viewing"/>
-            <Label fx:id="currentNumber" text="Unknown"/>
-            <Label text="/"/>
-            <Label fx:id="totalNumber" text="Unknown"/>
-            <Label text="(Total request:"/>
-            <Label fx:id="totalNumber2" text="Unknown"/>
-            <Label text=")"/>
+            <Label text="Viewing" styleClass="label-view"/>
+            <Label fx:id="currentNumber" text="Unknown" styleClass="label-view"/>
+            <Label text="/" styleClass="label-view"/>
+            <Label fx:id="totalNumber" text="Unknown" styleClass="label-view"/>
+            <Label text="(Total request:" styleClass="label-view"/>
+            <Label fx:id="totalNumber2" text="Unknown" styleClass="label-view"/>
+            <Label text=")" styleClass="label-view"/>
         </HBox>
     </top>
     <left>
@@ -31,8 +31,8 @@
             <rowConstraints>
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
             </rowConstraints>
-            <Button alignment="CENTER" ellipsisString="&lt;" mnemonicParsing="false"
-                    onAction="#handlePreviousButtonAction" prefHeight="320.0" text="&lt;"/>
+            <JFXButton alignment="CENTER" ellipsisString="&lt;" mnemonicParsing="false" styleClass="button-side"
+                       onAction="#handlePreviousButtonAction" prefHeight="320.0" text="&lt;"/>
         </GridPane>
     </left>
     <right>
@@ -43,44 +43,37 @@
             <rowConstraints>
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
             </rowConstraints>
-            <Button alignment="CENTER" ellipsisString="&gt;" mnemonicParsing="false" onAction="#handleNextButtonAction"
-                    prefHeight="320.0" text="&gt;"/>
+            <JFXButton alignment="CENTER" ellipsisString="&gt;" mnemonicParsing="false" styleClass="button-side"
+                       onAction="#handleNextButtonAction" prefHeight="320.0" text="&gt;"/>
         </GridPane>
     </right>
     <center>
         <VBox alignment="CENTER">
             <Group>
                 <Label text="Requester Name:"/>
-                <Label fx:id="nameLabel" layoutX="120.0" onMouseClicked="#showRequesterProfile" text="Name"
-                       underline="true">
-                    <font>
-                        <Font name="System Bold" size="14.0"/>
-                    </font>
-                </Label>
-                <Label layoutY="60.0" text="Request Message:"/>
-                <TextArea fx:id="messageTextArea" editable="false" layoutY="88.0" prefHeight="150.0" prefWidth="350.0"/>
-                <Label layoutY="30.0" text="Requested time:"/>
-                <Label fx:id="timeLabel" layoutX="120.0" layoutY="30.0" text="time">
-                    <font>
-                        <Font name="System Italic" size="12.0"/>
-                    </font>
-                </Label>
+                <Label fx:id="nameLabel" layoutX="120.0" styleClass="label-view" onMouseClicked="#showRequesterProfile"
+                       underline="true" text="Name"/>
+                <Label layoutY="60.0" text="Request Message:" styleClass="label-view"/>
+                <JFXTextArea fx:id="messageTextArea" editable="false" layoutY="88.0" prefHeight="150.0"
+                             prefWidth="350.0"/>
+                <Label layoutY="30.0" text="Requested time:" styleClass="label-view"/>
+                <Label fx:id="timeLabel" layoutX="120.0" layoutY="30.0" text="time" styleClass="label-view"/>
             </Group>
         </VBox>
     </center>
     <bottom>
-        <HBox alignment="CENTER" spacing="70.0" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" spacing="35.0" BorderPane.alignment="CENTER">
             <padding>
-                <Insets bottom="15.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets bottom="35.0" left="5.0" right="5.0" top="5.0"/>
             </padding>
-            <Button mnemonicParsing="false" onAction="#handleAcceptButtonAction" prefHeight="30.0" prefWidth="70.0"
+            <Button mnemonicParsing="false" onAction="#handleAcceptButtonAction" prefHeight="30.0" prefWidth="100.0"
                     text="Accept"/>
-            <Button mnemonicParsing="false" onAction="#handlePreviousButtonAction" prefHeight="30.0" prefWidth="70.0"
+            <Button mnemonicParsing="false" onAction="#handlePreviousButtonAction" prefHeight="30.0" prefWidth="100.0"
                     text="Previous"/>
-            <Button mnemonicParsing="false" onAction="#handleNextButtonAction" prefHeight="30.0" prefWidth="70.0"
+            <Button mnemonicParsing="false" onAction="#handleNextButtonAction" prefHeight="30.0" prefWidth="100.0"
                     text="Next"/>
             <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancelButtonAction" prefHeight="30.0"
-                    prefWidth="70.0" text="Cancel"/>
+                    prefWidth="100.0" text="Cancel"/>
         </HBox>
     </bottom>
 </BorderPane>

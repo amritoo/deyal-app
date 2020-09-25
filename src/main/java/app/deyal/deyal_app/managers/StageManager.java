@@ -1,5 +1,7 @@
 package app.deyal.deyal_app.managers;
 
+import app.deyal.deyal_app.data.Texts;
+import app.deyal.deyal_app.repository.PreferenceSave;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,12 +36,13 @@ public class StageManager {
     public Stage notificationStage;
     public Stage searchMissionStage;
 
-    private String themeDark = getClass().getResource("/app/deyal/deyal_app/theme_dark.css").toExternalForm();
-    private String themeLight = getClass().getResource("/app/deyal/deyal_app/theme_light.css").toExternalForm();
-    private String theme;
+    private final String themeUrl;
 
     private StageManager() {
-        // TODO set theme
+        if (PreferenceSave.getInstance().getBoolean("DarkTheme"))
+            themeUrl = getClass().getResource("/app/deyal/deyal_app/theme_dark.css").toExternalForm();
+        else
+            themeUrl = getClass().getResource("/app/deyal/deyal_app/theme_light.css").toExternalForm();
 
         createLoginStage();
         createRegisterStage();
@@ -57,13 +60,18 @@ public class StageManager {
         createSearchMissionStage();
     }
 
+    private void setTheme(Scene scene) {
+        scene.getStylesheets().add(themeUrl);
+    }
+
     private void createLoginStage() {
         loginStage = new Stage();
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/auth/login.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             loginStage.setScene(scene);
-            loginStage.setTitle("Deyal - Login");
+            loginStage.setTitle(Texts.TITLE_LOGIN);
             loginStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,8 +83,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/auth/register.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             registerStage.setScene(scene);
-            registerStage.setTitle("Deyal - Create Account");
+            registerStage.setTitle(Texts.TITLE_REGISTER);
             registerStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,8 +97,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/auth/sendCode.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             sendCodeStage.setScene(scene);
-            sendCodeStage.setTitle("Deyal - Recover Password");
+            sendCodeStage.setTitle(Texts.TITLE_RECOVER_PASSWORD);
             sendCodeStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,8 +111,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/auth/verifyCode.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             verifyCodeStage.setScene(scene);
-            verifyCodeStage.setTitle("Deyal - Recover Password");
+            verifyCodeStage.setTitle(Texts.TITLE_RECOVER_PASSWORD);
             verifyCodeStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,8 +125,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/main.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             mainStage.setScene(scene);
-            mainStage.setTitle("Deyal");
+            mainStage.setTitle(Texts.TITLE_MAIN);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,8 +138,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/auth/changePassword.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             changePasswordStage.setScene(scene);
-            changePasswordStage.setTitle("Deyal - Change Password");
+            changePasswordStage.setTitle(Texts.TITLE_CHANGE_PASSWORD);
             changePasswordStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,8 +152,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/mission/createMission.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             createMissionStage.setScene(scene);
-            createMissionStage.setTitle("Deyal - Create Mission");
+            createMissionStage.setTitle(Texts.TITLE_CREATE_MISSION);
             createMissionStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -152,8 +166,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/mission/ViewMission.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             viewMissionStage.setScene(scene);
-            viewMissionStage.setTitle("Deyal - View Mission");
+            viewMissionStage.setTitle(Texts.TITLE_VIEW_MISSION);
             viewMissionStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -165,8 +180,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/viewProfile.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             userProfileStage.setScene(scene);
-            userProfileStage.setTitle("Deyal - Profile");
+            userProfileStage.setTitle(Texts.TITLE_PROFILE);
             userProfileStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,8 +194,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/event/requestMessage.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             requestMessageStage.setScene(scene);
-            requestMessageStage.setTitle("Request Message");
+            requestMessageStage.setTitle(Texts.TITLE_REQUEST_MESSAGE);
             requestMessageStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -191,8 +208,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/event/assignMessage.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             assignMessageStage.setScene(scene);
-            assignMessageStage.setTitle("Assign Message");
+            assignMessageStage.setTitle(Texts.TITLE_ASSIGN_MESSAGE);
             assignMessageStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -204,8 +222,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/event/submitMission.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             submitMissionStage.setScene(scene);
-            submitMissionStage.setTitle("Submit");
+            submitMissionStage.setTitle(Texts.TITLE_SUBMIT_MISSION);
             submitMissionStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -217,8 +236,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/event/viewSubmission.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             viewSubmissionStage.setScene(scene);
-            viewSubmissionStage.setTitle("View Submission");
+            viewSubmissionStage.setTitle(Texts.TITLE_VIEW_SUBMISSION);
             viewSubmissionStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -230,8 +250,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/event/judgingMessage.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             judgingMessageStage.setScene(scene);
-            judgingMessageStage.setTitle("Approve/Reject Message");
+            judgingMessageStage.setTitle(Texts.TITLE_JUDGE_MESSAGE);
             judgingMessageStage.setResizable(false);
             //TODO: set closing property, cannot close
         } catch (IOException e) {
@@ -244,8 +265,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/event/viewRequest.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             viewRequestStage.setScene(scene);
-            viewRequestStage.setTitle("View Request");
+            viewRequestStage.setTitle(Texts.TITLE_VIEW_REQUEST);
             viewRequestStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -257,8 +279,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/event/completeMission.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             completeMissionStage.setScene(scene);
-            completeMissionStage.setTitle("Complete Mission");
+            completeMissionStage.setTitle(Texts.TITLE_COMPLETE_MISSION);
             completeMissionStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -270,8 +293,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/notification.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             notificationStage.setScene(scene);
-            notificationStage.setTitle("Notification");
+            notificationStage.setTitle(Texts.TITLE_NOTIFICATION);
             notificationStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -283,8 +307,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/mission/search.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             searchMissionStage.setScene(scene);
-            searchMissionStage.setTitle("Search mission");
+            searchMissionStage.setTitle(Texts.TITLE_SEARCH_MISSION);
             searchMissionStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -296,8 +321,9 @@ public class StageManager {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/editProfile.fxml"));
             Scene scene = new Scene(root);
+            setTheme(scene);
             editProfileStage.setScene(scene);
-            editProfileStage.setTitle("Edit Profile");
+            editProfileStage.setTitle(Texts.TITLE_EDIT_PROFILE);
             editProfileStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();

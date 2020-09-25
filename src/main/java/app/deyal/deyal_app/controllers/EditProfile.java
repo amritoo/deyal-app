@@ -5,6 +5,7 @@ import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Address;
 import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.repository.Auth;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -33,6 +34,8 @@ public class EditProfile {
     public TextField policeStationTextField;
     @FXML
     public TextField postOfficeTextField;
+    public JFXTextField firstNameTextField;
+    public JFXTextField lastNameTextField;
 
     @FXML
     private void initialize() {

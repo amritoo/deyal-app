@@ -38,6 +38,40 @@
     -jfx-focus-color: -fx-secondary;
 }
 
+.text-area {
+    -fx-prompt-text-fill: -fx-primarytext;
+    -fx-text-fill: derive(-fx-secondary, 20%);
+    -fx-font-size: 12pt;
+    -jfx-focus-color: -fx-secondary;
+}
+
+/* Combo box */
+.combo-box {
+    -fx-prompt-text-fill: -fx-primarytext;
+    -fx-text-fill: derive(-fx-secondary, 20%);
+    -fx-font-size: 12pt;
+    -jfx-focus-color: -fx-secondary;
+    -fx-background-color: -fx-primary;
+}
+
+.combo-box .arrow {
+    -fx-background-color: -fx-primarytext;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: -fx-primary;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-text-fill: -fx-primary;
+    -fx-background-color: -fx-secondary;
+}
+
+.combo-box .list-cell:filled:selected {
+    -fx-text-fill: derive(-fx-secondary, 20%);
+}
+
+/* Check box */
 .checkbox-main {
     -jfx-checked-color: -fx-primary;
     -fx-text-fill: -fx-secondary;
@@ -50,14 +84,10 @@
     -fx-font-size: 15pt;
 }
 
+
 /*---------------------------------------- auth ----------------------------------------*/
 
 /*  Login   */
-.label-login {
-    -fx-text-fill: -fx-secondary;
-    -fx-font-size: 24pt;
-}
-
 .label-recover {
     -fx-text-fill: red;
     -fx-border-color: -fx-primary;
@@ -74,4 +104,24 @@
 .wrong-credentials {
     -jfx-unfocus-color: #ef5350;
     -jfx-focus-color: #ef5350;
+}
+
+.datepicker {
+    -fx-background-color: white;
+}
+
+/*---------------------------------------- event ----------------------------------------*/
+.label-view {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 12pt;
+    -fx-font-style: bold;
+}
+
+.button-side {
+    -fx-text-fill: -fx-primarytext;
+    -fx-font-size: 12pt;
+    -fx-background-color: -fx-primary;
+    -fx-background-radius: 0px;
+    -fx-border-color: -fx-primary;
+    -fx-border-radius: 0px;
 }

@@ -28,6 +28,7 @@ dependencies {
     compile group: 'org.controlsfx', name: 'controlsfx', version: '11.0.1'
     // https://mvnrepository.com/artifact/com.jfoenix/jfoenix
     compile group: 'com.jfoenix', name: 'jfoenix', version: '9.0.10'
+
     // https://bintray.com/jerady/maven/FontAwesomeFX
     implementation 'de.jensd:fontawesomefx-commons:11.0'
     implementation 'de.jensd:fontawesomefx-controls:11.0'
@@ -39,7 +40,6 @@ dependencies {
     implementation 'de.jensd:fontawesomefx-materialstackicons:2.1-11'
     implementation 'de.jensd:fontawesomefx-octicons:4.3.0-11'
     implementation 'de.jensd:fontawesomefx-weathericons:2.0.10-11'
-
 }
 
 javafx {

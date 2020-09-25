@@ -6,9 +6,8 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="root" stylesheets="@../../theme_dark.css"
-            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="app.deyal.deyal_app.controllers.LoginController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.LoginController">
     <Pane layoutX="222.0" layoutY="24.0" prefHeight="128.0" prefWidth="256.0">
         <FontAwesomeIconView glyphName="LEAF" layoutX="11.0" layoutY="81.0" size="80.0"/>
         <Label layoutX="110.0" layoutY="10.0" text="Deyal">
@@ -19,7 +18,7 @@
                 <DropShadow color="#2889ff" offsetX="3.0" offsetY="2.0" spread="0.3"/>
             </effect>
         </Label>
-        <Label layoutX="99.0" layoutY="80.0" styleClass="label-login" text="Login"/>
+        <Label layoutX="99.0" layoutY="90.0" styleClass="label-title" text="Login"/>
     </Pane>
     <Separator layoutX="227.0" layoutY="152.0" prefHeight="5.0" prefWidth="248.0"/>
     <VBox alignment="CENTER" layoutX="151.0" layoutY="195.0" spacing="30.0">
