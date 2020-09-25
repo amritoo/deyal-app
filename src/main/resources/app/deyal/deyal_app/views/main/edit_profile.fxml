@@ -4,12 +4,13 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.DatePicker?>
 <VBox alignment="CENTER_LEFT" spacing="35.0" styleClass="root"
       xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="app.deyal.deyal_app.controllers.EditProfile">
     <children>
         <HBox spacing="10.0">
-            <FontAwesomeIconView glyphName="USER_CIRCLE" size="40.0"/>
+<!--            <FontAwesomeIconView glyphName="USER_CIRCLE" size="40.0"/>-->
             <JFXTextField fx:id="userNameTextField" labelFloat="true" prefHeight="40.0" prefWidth="350.0"
                           promptText="User name"/>
         </HBox>
@@ -26,8 +27,8 @@
         </HBox>
         <HBox spacing="10.0">
             <FontAwesomeIconView glyphName="CALENDAR" size="40.0"/>
-            <JFXDatePicker fx:id="birthDatePicker" prefHeight="40.0" prefWidth="350.0"
-                           promptText="Pick Your Date of Birth"/>
+            <DatePicker fx:id="birthDatePicker" prefHeight="40.0" prefWidth="350.0"
+                        promptText="Pick Your Date of Birth"/>
         </HBox>
         <HBox spacing="40.0">
             <JFXTextField fx:id="houseAddressTextField" labelFloat="true" prefHeight="40.0" prefWidth="180.0"

@@ -123,7 +123,7 @@ public class StageManager {
     public void createMainStage() {
         mainStage = new Stage();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/main.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/main/main.fxml"));
             Scene scene = new Scene(root);
             setTheme(scene);
             mainStage.setScene(scene);
@@ -319,7 +319,7 @@ public class StageManager {
     public void createEditProfileStage() {
         editProfileStage = new Stage();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/editProfile.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/app/deyal/deyal_app/views/main/edit_profile.fxml"));
             Scene scene = new Scene(root);
             setTheme(scene);
             editProfileStage.setScene(scene);
