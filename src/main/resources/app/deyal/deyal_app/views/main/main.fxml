@@ -1,30 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<VBox styleClass="root" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="app.deyal.deyal_app.controllers.MainController">
-    <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="700.0" spacing="10.0">
-        <children>
-            <JFXButton fx:id="createMissionButton" layoutX="50.0" layoutY="50.0" mnemonicParsing="false"
-                       onAction="#handleCreateMissionButtonAction" text="Create Mission"/>
-            <JFXButton fx:id="searchMissionButton" mnemonicParsing="false" onAction="#handleSearchMissionButtonAction"
-                       text="Search Mission"/>
-            <JFXButton fx:id="refreshButton" layoutX="150.0" layoutY="150.0" mnemonicParsing="false"
-                       onAction="#handleRefreshButtonAction" text="Refresh"/>
-            <JFXButton fx:id="notificationButton" mnemonicParsing="false" onAction="#handleNotificationButtonAction"
-                       text="Notification"/>
-            <JFXButton fx:id="logoutButton" layoutX="250.0" layoutY="250.0" mnemonicParsing="false"
-                       onAction="#handleLogoutButtonAction" text="Logout"/>
-        </children>
-        <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-        </padding>
-    </HBox>
-    <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
+<?import javafx.scene.layout.*?>
+<AnchorPane styleClass="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="app.deyal.deyal_app.controllers.MainController">
+    <JFXDrawer fx:id="drawer" defaultDrawerSize="140.0" direction="BOTTOM" resizableOnDrag="true" resizeContent="true"
+               AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0"/>
+    <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+             AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
         <Tab fx:id="dashboardTab" text="Dashboard">
             <fx:include fx:id="dashboardTabPage" source="dashboard.fxml"/>
         </Tab>
@@ -38,4 +23,6 @@
             <fx:include fx:id="aboutTabPage" source="about.fxml"/>
         </Tab>
     </TabPane>
-</VBox>
+    <JFXHamburger fx:id="hamburger" styleClass="jfx-hamburger-icon" AnchorPane.rightAnchor="25.0"
+                  AnchorPane.topAnchor="10.0"/>
+</AnchorPane>

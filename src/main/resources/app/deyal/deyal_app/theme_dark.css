@@ -2,9 +2,8 @@
     -fx-primary: #2A2E37;
     -fx-secondary: #FFFF8D;
     -fx-primarytext: #B2B2B2;
-    -fx-blue: #1976D2;
-    -fx-red: #FF0000;
-    -fx-color-1: #1976D2;
+    -fx-error: #ef5350;
+    -fx-warning: red;
 }
 
 .root {
@@ -59,6 +58,7 @@
 }
 
 .combo-box-popup .list-view .list-cell {
+    -fx-text-fill: -fx-secondary;
     -fx-background-color: -fx-primary;
 }
 
@@ -89,7 +89,7 @@
 
 /*  Login   */
 .label-recover {
-    -fx-text-fill: red;
+    -fx-text-fill: -fx-warning;
     -fx-border-color: -fx-primary;
     -fx-font-size: 12pt;
     -fx-font-style: italic;
@@ -102,14 +102,15 @@
 }
 
 .wrong-credentials {
-    -jfx-unfocus-color: #ef5350;
-    -jfx-focus-color: #ef5350;
+    -jfx-unfocus-color: -fx-error;
+    -jfx-focus-color: -fx-error;
 }
 
 /* Date picker */
 .datepicker {
     -fx-background-color: -fx-primarytext;
 }
+
 .date-picker > .text-field {
     -fx-text-fill: -fx-secondary;
     -fx-background-color: -fx-primary;
@@ -118,7 +119,7 @@
 .date-picker:focused > .text-field,
 .date-picker > .text-field:focused {
     -fx-text-fill: -fx-primary;
-    -fx-background-color:-fx-secondary;
+    -fx-background-color: -fx-secondary;
 }
 
 .date-picker-popup > .month-year-pane {
@@ -126,16 +127,33 @@
     -fx-text-fill: -fx-secondary;
 }
 
-/*.date-picker:editable > .arrow-button > * {*/
-/*    -fx-opacity: 0; !* Set the node in the button to be visible *!*/
-/*}*/
+/* Toolbar buttons */
+.toolbar-button {
+    -fx-border-color: transparent;
+    -fx-background-color: derive(-fx-primary, 10%);
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+}
 
-/*.date-picker > .arrow-button {*/
-/*    -fx-background-image: url("/images/baseline_lock_black_36dp.png"); !* Url of the icon *!*/
-/*    -fx-background-size: 60% 60%; !* Can be `cover` or `100% 100%` ect. *!*/
-/*    -fx-background-repeat: no-repeat;*/
-/*    -fx-background-position: center center; !* Put the icon in the center *!*/
-/*}*/
+.toolbar-button:hover {
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
+.toolbar-button:hover .glyph-icon, .toolbar-button:hover .glyph-icon {
+    -fx-fill: -fx-primary;
+}
+
+
+/*Hamburger Styling*/
+.jfx-hamburger-icon {
+    -fx-spacing: 7;
+}
+
+.jfx-hamburger-icon StackPane {
+    -fx-background-color: -fx-secondary;
+    -fx-background-radius: 5px;
+}
 
 /*---------------------------------------- event ----------------------------------------*/
 .label-view {

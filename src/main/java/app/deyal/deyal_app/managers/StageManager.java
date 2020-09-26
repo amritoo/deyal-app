@@ -5,9 +5,14 @@ import app.deyal.deyal_app.repository.PreferenceSave;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StageManager {
 
@@ -36,13 +41,17 @@ public class StageManager {
     public Stage notificationStage;
     public Stage searchMissionStage;
 
-    private final String themeUrl;
+    private String themeUrl;
 
-    private StageManager() {
-        if (PreferenceSave.getInstance().getBoolean("DarkTheme"))
+    private void getTheme() {
+        if (PreferenceSave.getInstance().isDarkTheme())
             themeUrl = getClass().getResource("/app/deyal/deyal_app/theme_dark.css").toExternalForm();
         else
             themeUrl = getClass().getResource("/app/deyal/deyal_app/theme_light.css").toExternalForm();
+    }
+
+    private StageManager() {
+        getTheme();
 
         createLoginStage();
         createRegisterStage();
@@ -51,17 +60,45 @@ public class StageManager {
 
         createChangePasswordStage();
         createCreateMissionStage();
+        createSearchMissionStage();
 
         createRequestMessageStage();    //message getter
         createAssignMessageStage();
         createSubmitMissionStage();
         createJudgingMessageStage();
         createCompleteMissionStage();
-        createSearchMissionStage();
     }
 
     private void setTheme(Scene scene) {
         scene.getStylesheets().add(themeUrl);
+    }
+
+    private static final String APP_ICON_URL = "/resources/images/icon.png";
+
+    public static void setStageIcon(Stage stage) {
+        stage.getIcons().add(new Image(APP_ICON_URL));
+    }
+
+    public static Object loadWindow(URL fxmlLocation, String title, Stage parentStage) {
+        Object controller = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent parent = loader.load();
+            controller = loader.getController();
+            Stage stage;
+            if (parentStage != null) {
+                stage = parentStage;
+            } else {
+                stage = new Stage(StageStyle.DECORATED);
+            }
+            stage.setTitle(title);
+            stage.setScene(new Scene(parent));
+            stage.show();
+            setStageIcon(stage);
+        } catch (IOException ex) {
+            Logger.getLogger(StageManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return controller;
     }
 
     private void createLoginStage() {
@@ -128,6 +165,7 @@ public class StageManager {
             setTheme(scene);
             mainStage.setScene(scene);
             mainStage.setTitle(Texts.TITLE_MAIN);
+//            mainStage.getIcons().add(new Image(getClass().getResource("/images/icon.png").toExternalForm()));
         } catch (IOException e) {
             e.printStackTrace();
         }

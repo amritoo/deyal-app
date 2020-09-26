@@ -6,25 +6,34 @@ public class PreferenceSave {
     private final Preferences preferences;
 
     private final String token = "TOKEN";
+    private final String theme = "DarkTheme";
 
     public String getToken() {
         return getString(token);
     }
 
     public void setToken(String token) {
-        if (token == null)
-            remove(this.token);
-        else
+        if (token != null)
             setString(this.token, token);
+        else
+            remove(this.token);
     }
 
-    public String getString(String key) {
+    public boolean isDarkTheme() {
+        return getBoolean(this.theme);
+    }
+
+    public boolean setTheme(boolean darkEnabled) {
+        return setBoolean(this.theme, darkEnabled);
+    }
+
+    private String getString(String key) {
         if (key == null)
             return null;
         return preferences.get(key, null);
     }
 
-    public boolean setString(String key, String value) {
+    private boolean setString(String key, String value) {
         if (key == null || value == null ||
                 key.length() > Preferences.MAX_KEY_LENGTH ||
                 value.length() > Preferences.MAX_VALUE_LENGTH)
@@ -33,19 +42,20 @@ public class PreferenceSave {
         return true;
     }
 
-    public void remove(String key) {
+    private void remove(String key) {
         if (key == null)
             return;
         preferences.remove(key);
     }
 
-    public boolean getBoolean(String key) {
+
+    private boolean getBoolean(String key) {
         if (key == null)
             return false;
         return preferences.getBoolean(key, false);
     }
 
-    public boolean setBoolean(String key, boolean value) {
+    private boolean setBoolean(String key, boolean value) {
         if (key == null || key.length() > Preferences.MAX_KEY_LENGTH)
             return false;
         preferences.putBoolean(key, value);

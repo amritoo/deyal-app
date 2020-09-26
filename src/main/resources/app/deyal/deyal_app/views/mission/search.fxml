@@ -19,7 +19,7 @@
             <JFXButton defaultButton="true" mnemonicParsing="false" onAction="#handleSearchMissionButtonAction"
                        prefHeight="30.0" prefWidth="150.0" text="Search Mission"/>
             <JFXButton cancelButton="true" mnemonicParsing="false" onAction="#handleCancelButtonAction"
-                       prefHeight="30.0" prefWidth="100.0" text="Cancel"/>
+                       prefHeight="30.0" prefWidth="100.0" text="Close"/>
         </HBox>
         <ScrollPane>
             <TableView fx:id="dashboardTableView" tableMenuButtonVisible="true">

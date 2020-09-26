@@ -1,8 +1,8 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.data.Notification;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.data.Notification;
 import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -18,7 +18,7 @@ public class NotificationController {
 
     @FXML
     public TableView<Notification> notificationTableView;
-    //    @FXML
+//    @FXML
 //    public TableColumn<Notification, Integer> indexNumberTableColumn;
     @FXML
     public TableColumn<Notification, String> notificationTableColumn;

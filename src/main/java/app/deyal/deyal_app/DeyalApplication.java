@@ -21,8 +21,9 @@ public class DeyalApplication extends Application {
             DataManager.getInstance().token = PreferenceSave.getInstance().getToken();
             StageManager.getInstance().createMainStage();
             StageManager.getInstance().mainStage.show();
-        } else
+        } else {
             StageManager.getInstance().loginStage.show();
+        }
     }
 
 }

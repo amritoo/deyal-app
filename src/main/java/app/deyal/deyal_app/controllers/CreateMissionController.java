@@ -12,7 +12,6 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
 
 public class CreateMissionController {
 
@@ -23,27 +22,19 @@ public class CreateMissionController {
     @FXML
     public JFXTextArea detailsTextArea;
     @FXML
-    public ComboBox<String> levelChoiceBox;
+    public JFXComboBox<String> levelChoiceBox;
     @FXML
     public JFXButton createButton;
     @FXML
     public JFXButton cancelButton;
 
-    public CreateMissionController() {
-        //TODO: error handle
-        levelChoiceBox = new JFXComboBox<>();
-//        levelChoiceBox.setValue("Very easy");
-//        levelChoiceBox.setValue("Easy");
-//        levelChoiceBox.setValue("Medium");
-//        levelChoiceBox.getItems().add("Very easy");
-//        levelChoiceBox.getItems().add("Easy");
-//        levelChoiceBox.getItems().add("Medium");
-//        levelChoiceBox.getItems().add("Hard");
-//        levelChoiceBox.getItems().add("Very hard");
-    }
-
     @FXML
     public void initialize() {
+        levelChoiceBox.getItems().add("Very easy");
+        levelChoiceBox.getItems().add("Easy");
+        levelChoiceBox.getItems().add("Medium");
+        levelChoiceBox.getItems().add("Hard");
+        levelChoiceBox.getItems().add("Very hard");
     }
 
     @FXML
@@ -71,20 +62,14 @@ public class CreateMissionController {
     }
 
     private MissionDifficulty getDifficulty() {
-        switch (levelChoiceBox.getValue()) {
-            case "Very easy":
-                return MissionDifficulty.VERY_EASY;
-            case "Easy":
-                return MissionDifficulty.EASY;
-            case "Medium":
-                return MissionDifficulty.MEDIUM;
-            case "Hard":
-                return MissionDifficulty.HARD;
-            case "Very hard":
-                return MissionDifficulty.VERY_HARD;
-            default:
-                return MissionDifficulty.UNKNOWN;
-        }
+        return switch (levelChoiceBox.getValue()) {
+            case "Very easy" -> MissionDifficulty.VERY_EASY;
+            case "Easy" -> MissionDifficulty.EASY;
+            case "Medium" -> MissionDifficulty.MEDIUM;
+            case "Hard" -> MissionDifficulty.HARD;
+            case "Very hard" -> MissionDifficulty.VERY_HARD;
+            default -> MissionDifficulty.UNKNOWN;
+        };
     }
 
     @FXML

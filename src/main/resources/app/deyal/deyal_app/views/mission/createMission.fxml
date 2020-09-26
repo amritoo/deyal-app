@@ -22,7 +22,7 @@
                 <JFXTextArea fx:id="detailsTextArea" labelFloat="true" prefHeight="150.0" prefWidth="500.0"
                              promptText="Detailed description"
                              text="Description: &#10;Expectations: &#10;Rewards: &#10;Deadline: "/>
-                <JFXComboBox id="levelChoiceBox" labelFloat="true" prefHeight="40.0" prefWidth="500.0"
+                <JFXComboBox fx:id="levelChoiceBox" labelFloat="true" prefHeight="40.0" prefWidth="500.0"
                              promptText="Difficulty"/>
                 <HBox alignment="CENTER" spacing="150.0">
                     <JFXButton fx:id="createButton" buttonType="RAISED" onAction="#handleCreateButtonAction"
