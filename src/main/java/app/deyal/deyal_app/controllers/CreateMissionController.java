@@ -2,6 +2,7 @@ package app.deyal.deyal_app.controllers;
 
 import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.data.MissionDifficulty;
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.MissionClient;
@@ -11,10 +12,15 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class CreateMissionController {
 
+    @FXML
+    public StackPane root;
+    @FXML
+    public VBox contentRoot;
     @FXML
     public JFXTextField titleTextField;
     @FXML
@@ -38,29 +44,33 @@ public class CreateMissionController {
     }
 
     @FXML
-    public void handleCreateButtonAction(ActionEvent event) {
+    public void handleCreateButtonAction(ActionEvent actionEvent) {
         Mission mission = new Mission();
         mission.setTitle(titleTextField.getText());
         mission.setDescription(shortDescriptionTextArea.getText());
         mission.setLongDescription(detailsTextArea.getText());
         mission.setDifficulty(this.getDifficulty());
 
-        if (MissionClient.createMission(DataManager.getInstance().getToken(), mission)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("Mission created");
-            alert.setContentText("Mission created successfully.");
-            alert.showAndWait();
-        } else {    //show mission could not be created
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Failed");
-            alert.setHeaderText("Mission creation failed");
-            alert.setContentText("Mission couldn't be created. Please check your internet connection.");
-            alert.showAndWait();
+        boolean result = MissionClient.createMission(DataManager.getInstance().getToken(), mission);
+        if (result) {
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Mission created",
+                    "Mission created successfully.");
+            StageManager.getInstance().createMissionStage.hide();
+        } else {
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Mission creation failed!",
+                    "Mission couldn't be created. Please check your internet connection and try again.");
         }
-        StageManager.getInstance().createMissionStage.hide();
     }
 
+    /**
+     * Gets and converts the chosen difficulty to MissionDifficulty object.
+     *
+     * @return the corresponding {@link MissionDifficulty}
+     */
     private MissionDifficulty getDifficulty() {
         return switch (levelChoiceBox.getValue()) {
             case "Very easy" -> MissionDifficulty.VERY_EASY;
@@ -73,7 +83,8 @@ public class CreateMissionController {
     }
 
     @FXML
-    public void handleCancelButtonAction(ActionEvent event) {
+    public void handleCancelButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().createMissionStage.hide();
     }
+
 }

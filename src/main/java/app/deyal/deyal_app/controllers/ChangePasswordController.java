@@ -1,5 +1,6 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
@@ -7,13 +8,17 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 public class ChangePasswordController {
 
+    @FXML
+    public StackPane root;
+    @FXML
+    public VBox contentRoot;
     @FXML
     public JFXPasswordField oldPasswordField;
     @FXML
@@ -26,43 +31,69 @@ public class ChangePasswordController {
     public JFXButton cancelButton;
 
     @FXML
-    public void handleSubmitButtonAction(ActionEvent event) {
+    public void handleSubmitButtonAction(ActionEvent actionEvent) {
         String newPassword = newPasswordField.getText();
         String oldPassword = oldPasswordField.getText();
-        if (newPasswordRepeatField.getText().equals(newPassword)) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("Are you sure?");
-            alert.setContentText("Your password will be changed after this action.");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                if (Auth.changePassword(DataManager.getInstance().getToken(), newPassword, oldPassword)) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText("Password changed successfully");
-                    alert.setContentText("Your password has been changed.");
+        if (isValid(newPassword, newPasswordRepeatField.getText())) {
+            // Buttons to show in confirmation dialog
+            JFXButton positiveButton = new JFXButton("Yes");
+            positiveButton.setOnMouseClicked(event -> {
+                boolean result = Auth.changePassword(DataManager.getInstance().getToken(), newPassword, oldPassword);
+                if (result) {
+                    AlertManager.showMaterialDialog(root, contentRoot,
+                            null,
+                            "Password changed successfully",
+                            "Your password has been changed.");
+                    resetTexts();
+                    StageManager.getInstance().changePasswordStage.hide();
                 } else {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Password couldn't be changed");
-                    alert.setContentText("Something went wrong.");
+                    AlertManager.showMaterialDialog(root, contentRoot,
+                            null,
+                            "Password couldn't be changed!",
+                            "Sorry. Something went wrong. Please try again.");
                 }
-                alert.showAndWait();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Passwords are not same");
-            alert.setContentText("Your new password and confirm password is different.");
-            alert.showAndWait();
+            });
+            JFXButton negativeButton = new JFXButton("No");
+
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    Arrays.asList(positiveButton, negativeButton),
+                    "Are you sure?",
+                    "Your password will be changed after this action.");
         }
     }
 
-    @FXML
-    public void handleCancelButtonAction(ActionEvent event) {
+    /**
+     * This method shows an alert if both password are not same. otherwise only returns true.
+     *
+     * @param newPassword     password
+     * @param confirmPassword repeat password
+     * @return true is both passwords are equal; false otherwise
+     */
+    private boolean isValid(String newPassword, String confirmPassword) {
+        if (newPassword.equals(confirmPassword)) {
+            return true;
+        } else {
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Passwords are not same!",
+                    "Your new password and confirm password is different.");
+            return false;
+        }
+    }
+
+    /**
+     * Clears all password fields' text.
+     */
+    private void resetTexts() {
         newPasswordField.setText("");
         newPasswordRepeatField.setText("");
         oldPasswordField.setText("");
+    }
+
+    @FXML
+    public void handleCancelButtonAction(ActionEvent actionEvent) {
+        resetTexts();
         StageManager.getInstance().changePasswordStage.hide();
     }
+
 }

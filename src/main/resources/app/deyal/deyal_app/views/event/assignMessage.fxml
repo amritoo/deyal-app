@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<SplitPane dividerPositions="0.1640625" orientation="VERTICAL" styleClass="root" prefHeight="250.0" prefWidth="370.0"
-           xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="app.deyal.deyal_app.controllers.AssignMessageController">
-    <items>
-        <VBox alignment="CENTER">
-            <Label text="Enter a message to contractor" styleClass="label-title"/>
-        </VBox>
-        <VBox alignment="CENTER" spacing="15.0">
-            <children>
-                <JFXTextArea fx:id="messageTextArea" promptText="Enter your expectations"/>
-                <JFXButton mnemonicParsing="false" defaultButton="true" onAction="#handleSendButtonAction"
-                           prefHeight="25.0" prefWidth="150.0" text="Send"/>
-            </children>
-            <padding>
-                <Insets bottom="35.0" left="35.0" right="35.0" top="35.0"/>
-            </padding>
-        </VBox>
-    </items>
-</SplitPane>
+<StackPane fx:id="root" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.AssignMessageController">
+    <VBox fx:id="contentRoot" alignment="CENTER" spacing="35.0">
+        <children>
+            <Label styleClass="label-title" text="Enter a message to contractor"/>
+            <JFXTextArea fx:id="messageTextArea" prefHeight="200.0" prefWidth="400.0"
+                         promptText="Enter your expectations"/>
+            <JFXButton defaultButton="true" mnemonicParsing="false" onAction="#handleSendButtonAction"
+                       prefHeight="25.0" prefWidth="150.0" text="Send"/>
+        </children>
+        <padding>
+            <Insets bottom="35.0" left="35.0" right="35.0" top="35.0"/>
+        </padding>
+    </VBox>
+</StackPane>
