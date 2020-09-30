@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<VBox alignment="CENTER" spacing="35" styleClass="root"
-      xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="app.deyal.deyal_app.controllers.RequestMessageController">
-    <children>
-        <HBox alignment="CENTER">
-            <Label text="Enter a message to client" styleClass="label-title"/>
-        </HBox>
-        <VBox alignment="CENTER" spacing="35.0">
-            <JFXTextArea fx:id="messageTextArea" prefHeight="150.0" prefWidth="350.0"
-                         promptText="Include your qualification, reason to choose you etc. to help the client decide in your favor"/>
-            <JFXButton mnemonicParsing="false" onAction="#handleSendButtonAction" prefHeight="25.0" prefWidth="150.0"
-                       text="Send"/>
-        </VBox>
-    </children>
-    <padding>
-        <Insets bottom="35.0" left="35.0" right="35.0" top="35.0"/>
-    </padding>
-</VBox>
+<?import javafx.scene.layout.*?>
+<StackPane fx:id="root" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="app.deyal.deyal_app.controllers.RequestMessageController">
+    <VBox fx:id="contentRoot" alignment="CENTER" spacing="35">
+        <children>
+            <HBox alignment="CENTER">
+                <Label styleClass="label-title" text="Enter a message to client"/>
+            </HBox>
+            <VBox alignment="CENTER">
+                <JFXTextArea fx:id="messageTextArea" prefHeight="200.0" prefWidth="400.0"
+                             promptText="Include your qualification, why you should be chosen etc. to help the client decide in your favor"/>
+            </VBox>
+            <HBox alignment="CENTER">
+                <JFXButton mnemonicParsing="false" onAction="#handleSendButtonAction" prefHeight="25.0"
+                           prefWidth="150.0" text="Send"/>
+            </HBox>
+        </children>
+        <padding>
+            <Insets bottom="35.0" left="35.0" right="35.0" top="35.0"/>
+        </padding>
+    </VBox>
+</StackPane>
