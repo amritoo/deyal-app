@@ -1,5 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.data.Constants;
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
@@ -60,6 +62,7 @@ public class MainController {
     @FXML
     private void initialize() {
         if (!Auth.getUserNameList(DataManager.getInstance().token)) {
+            // TODO replace alert
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Failed");
             alert.setHeaderText("User names loading failed");
@@ -146,7 +149,8 @@ public class MainController {
     }
 
     public void notificationButtonAction() {
-        StageManager.getInstance().createNotificationStage();
+        StageManager.getInstance().notificationStage = StageManager.getInstance()
+                .loadStage(Constants.NOTIFICATION_FXML, Constants.NOTIFICATION_TITLE);
         StageManager.getInstance().notificationStage.showAndWait();
     }
 
@@ -158,6 +162,7 @@ public class MainController {
     public void logoutButtonAction() {
         PreferenceSave.getInstance().setToken(null);    //remove preference token
         DataManager.getInstance().clearAllData();
+
         StageManager.getInstance().mainStage.hide();
         StageManager.getInstance().loginStage.show();
     }

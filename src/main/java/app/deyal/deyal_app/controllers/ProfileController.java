@@ -1,5 +1,6 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.data.Constants;
 import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
@@ -64,6 +65,7 @@ public class ProfileController {
 
     public void loadProfile() {
         if (!Auth.getUserData(DataManager.getInstance().getToken())) {  //show user data retrieve failed
+            // TODO replace alert
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Failed");
             alert.setHeaderText("User Profile retrieve Failed!");
@@ -109,7 +111,8 @@ public class ProfileController {
 
     @FXML
     public void handleEditProfileButtonAction(ActionEvent event) {
-        StageManager.getInstance().createEditProfileStage();
+        StageManager.getInstance().editProfileStage = StageManager.getInstance()
+                .loadStage(Constants.EDIT_PROFILE_FXML, Constants.EDIT_PROFILE_TITLE);
         StageManager.getInstance().editProfileStage.showAndWait();
         this.loadProfile();
     }

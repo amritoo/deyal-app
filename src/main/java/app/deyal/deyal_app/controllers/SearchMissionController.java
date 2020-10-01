@@ -41,6 +41,7 @@ public class SearchMissionController {
     public void handleSearchMissionButtonAction(ActionEvent actionEvent) {
         String title = titleTextField.getText();
         if (title == null) {
+            // TODO replace alert
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("No title given!");
@@ -49,6 +50,7 @@ public class SearchMissionController {
         } else {
             ArrayList<Mission> missionArrayList = DataManager.getInstance().searchMissionByTitle(title);
 
+            // TODO replace alert
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Result");
             if (missionArrayList == null) {
@@ -68,6 +70,7 @@ public class SearchMissionController {
                     Mission mission = param.getValue();
                     String name = DataManager.getInstance().getUserName(mission.getCreatorId());
                     if (name == null) {
+                        // TODO replace alert
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("Failed");
                         alert.setHeaderText("Creator name retrieve failed");
@@ -122,6 +125,7 @@ public class SearchMissionController {
                     DataManager.getInstance().tempMission = dashboardTableView.getItems().get(index);
                     if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,
                             DataManager.getInstance().tempMission.getId())) {   //show mission event list retrieve failed
+                        // TODO replace alert
                         Alert alert2 = new Alert(Alert.AlertType.WARNING);
                         alert2.setTitle("Failed");
                         alert2.setHeaderText("Mission event list retrieve Failed!");

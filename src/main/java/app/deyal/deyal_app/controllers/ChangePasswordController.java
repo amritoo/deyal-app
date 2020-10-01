@@ -76,7 +76,7 @@ public class ChangePasswordController {
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Passwords are not same!",
-                    "Your new password and confirm password is different.");
+                    "Your password does not match with second one. Both passwords need to be equal.");
             return false;
         }
     }

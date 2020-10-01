@@ -5,9 +5,9 @@ import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -22,7 +22,7 @@ public class CompleteMissionController {
     @FXML
     public JFXComboBox<String> gotRewardChoiceBox;
     @FXML
-    public TextArea messageTextArea;
+    public JFXTextArea messageTextArea;
 
     @FXML
     private void initialize() {

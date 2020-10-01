@@ -40,6 +40,7 @@ public class DashboardController {
 
     public void loadDashboard() {
         if (!MissionClient.getMissionList(DataManager.getInstance().getToken())) {  //show mission list retrieve failed
+            // TODO replace alert
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Failed");
             alert.setHeaderText("Mission list retrieve Failed!");
@@ -62,6 +63,7 @@ public class DashboardController {
                     Mission mission = param.getValue();
                     String name = DataManager.getInstance().getUserName(mission.getCreatorId());
                     if (name == null) {
+                        // TODO replace alert
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("Failed");
                         alert.setHeaderText("Creator name retrieve failed");
@@ -117,6 +119,7 @@ public class DashboardController {
                     DataManager.getInstance().tempMission = dashboardTableView.getItems().get(index);
                     if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,
                             DataManager.getInstance().tempMission.getId())) {   //show mission event list retrieve failed
+                        // TODO replace alert
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("Failed");
                         alert.setHeaderText("Mission event list retrieve Failed!");

@@ -15,8 +15,6 @@ public class DeyalApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-//            System.out.println("java version: " + System.getProperty("java.version"));
-//            System.out.println("javafx.version: " + System.getProperty("javafx.version"));
         if (Auth.getUserData(PreferenceSave.getInstance().getToken())) {
             DataManager.getInstance().token = PreferenceSave.getInstance().getToken();
             StageManager.getInstance().createMainStage();

@@ -40,6 +40,7 @@ public class NotificationController {
                 if (DataManager.getInstance().tempMission != null) {
                     if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,
                             DataManager.getInstance().tempMission.getId())) {   //show mission event list retrieve failed
+                        // TODO replace alert
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("Failed");
                         alert.setHeaderText("Mission event list retrieve Failed!");

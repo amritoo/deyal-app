@@ -26,7 +26,7 @@
     -fx-border-radius: 20px;
 }
 
-.button:hover, .button:focused {
+.button:hover {
     -fx-text-fill: -fx-primary;
     -fx-background-color: -fx-secondary;
     -fx-border-color: -fx-secondary;
@@ -281,6 +281,12 @@
     -jfx-focus-color: -fx-error;
 }
 
+.label-app-name {
+    -fx-text-fill: -fx-primarytext;
+    -fx-font-size: 50pt;
+    -fx-font-family: "Roboto Light";
+}
+
 /*---------------------------------------- Mission event ----------------------------------------*/
 .label-title {
     -fx-text-fill: -fx-secondary;
@@ -327,34 +333,3 @@
 .jfx-layout-actions {
     -fx-hgap: 16;
 }
-
-/*---------------------------------------- Alert dialogs ----------------------------------------*/
-.custom-alert {
-    -fx-background-color: -fx-primary;
-    -fx-text-fill: white;
-}
-
-.custom-alert > *.button-bar > *.container {
-    -fx-background-color: -fx-primary;
-}
-
-.custom-alert > *.label.content {
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-}
-
-/*.custom-alert:header *.header-panel {*/
-/*    -fx-background-color: blue;*/
-/*}*/
-
-/*.custom-alert:header .header-panel .label {*/
-/*    -fx-font-style: normal;*/
-/*    -fx-text-fill: white;*/
-/*}*/
-
-/*.custom-alert:header *.header-panel *.label {*/
-/*    -fx-font-size: 18px;*/
-/*    -fx-font-style: italic;*/
-/*    -fx-fill: -fx-primary;*/
-/*}*/

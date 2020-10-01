@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.*?>
-<SplitPane dividerPositions="0.12" orientation="VERTICAL" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.verifyCodeController">
-    <items>
-        <HBox alignment="CENTER_LEFT" spacing="10.0">
-            <children>
-                <JFXButton cancelButton="true" contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="ARROW_LEFT" size="25"/>
-                    </graphic>
-                </JFXButton>
-                <Label text="Recover password | Verify Code" styleClass="label-title"/>
-            </children>
-            <padding>
-                <Insets bottom="5.0" left="10.0" top="5.0"/>
-            </padding>
-        </HBox>
-        <VBox alignment="CENTER" spacing="30.0">
-            <children>
+<StackPane fx:id="root" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="app.deyal.deyal_app.controllers.verifyCodeController">
+    <VBox fx:id="contentRoot" alignment="CENTER" spacing="35.0">
+        <children>
+            <HBox alignment="CENTER_LEFT" spacing="25.0">
+                <children>
+                    <JFXButton cancelButton="true" contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="ARROW_LEFT" size="20"/>
+                        </graphic>
+                    </JFXButton>
+                    <Label styleClass="label-title" text="Recover password | Verify Code"/>
+                </children>
+                <padding>
+                    <Insets bottom="25.0"/>
+                </padding>
+            </HBox>
+            <VBox alignment="CENTER" spacing="35.0">
                 <HBox spacing="10.0">
                     <FontAwesomeIconView glyphName="HASHTAG" size="40.0"/>
-                    <JFXTextField fx:id="recoverCodeTextField" labelFloat="true" prefHeight="40.0" prefWidth="300.0"
-                                  promptText="Enter recover code"/>
+                    <JFXTextField fx:id="recoverCodeTextField" labelFloat="true" prefHeight="40.0"
+                                  prefWidth="350.0" promptText="Enter recover code"/>
                 </HBox>
-                <Label onMouseClicked="#sendCodeAction" text="Didn't get one? Click here to get another"
-                       styleClass="label-recover"/>
+                <HBox alignment="CENTER">
+                    <Label onMouseClicked="#sendCodeAction" styleClass="label-recover"
+                           text="Didn't get one? Click here to get another"/>
+                </HBox>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
-                    <JFXPasswordField fx:id="passwordField" labelFloat="true" prefHeight="40.0" prefWidth="300.0"
-                                      promptText="Enter your new password"/>
+                    <JFXPasswordField fx:id="passwordField" labelFloat="true" prefHeight="40.0"
+                                      prefWidth="350.0" promptText="Enter your new password"/>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
                     <JFXPasswordField fx:id="passwordRepeatField" labelFloat="true" prefHeight="40.0"
-                                      prefWidth="300.0" promptText="Re-enter password"/>
+                                      prefWidth="350.0" promptText="Re-enter password"/>
                 </HBox>
+            </VBox>
+            <HBox alignment="CENTER">
                 <JFXButton buttonType="RAISED" defaultButton="true" onAction="#handleVerifyButtonAction"
-                           prefHeight="50.0" prefWidth="250.0" text="Verify and change password"/>
-            </children>
-            <padding>
-                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
-            </padding>
-        </VBox>
-    </items>
-</SplitPane>
+                           prefHeight="25.0" prefWidth="150.0" text="Recover"/>
+            </HBox>
+        </children>
+        <padding>
+            <Insets bottom="35.0" left="35.0" right="35.0" top="35.0"/>
+        </padding>
+    </VBox>
+</StackPane>

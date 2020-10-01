@@ -1,51 +1,61 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 public class SendCodeController {
 
+    @FXML
+    public StackPane root;
+    @FXML
+    public VBox contentRoot;
     @FXML
     public JFXTextField emailTextField;
 
     @FXML
     public void handleSendButtonAction(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Is your email address correct?");
-        alert.setContentText("You cannot change it after this action.");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        // Buttons to show in confirmation dialog
+        JFXButton positiveButton = new JFXButton("Yes");
+        positiveButton.setOnMouseClicked(event1 -> {
             String email = emailTextField.getText();
-            if (Auth.sendCode(email)) {
+            boolean result = Auth.sendCode(email);
+            if (result) {
                 DataManager.getInstance().tempMessage = email;
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("Successfully sent recover code");
-                alert.setContentText("An recover code has been sent to your email address.");
-                alert.showAndWait();
+                AlertManager.showMaterialDialog(root, contentRoot,
+                        null,
+                        "Check your email",
+                        "A recover code has been sent to your email address. Please check your email and follow the instructions given there.");
                 DataManager.getInstance().tempChoice = true;
                 StageManager.getInstance().sendCodeStage.hide();
-            } else {    //show send code failed
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Send code Failed!");
-                alert.setContentText("Please check your email or internet connection.");
-                alert.showAndWait();
+            } else {
+                // show send code failed
+                AlertManager.showMaterialDialog(root, contentRoot,
+                        null,
+                        "Recover code sending failed!",
+                        "Recover code could not be sent for unknown reasons. Please check your internet connection and try again.");
             }
-        }
+        });
+        JFXButton negativeButton = new JFXButton("No");
+
+        AlertManager.showMaterialDialog(root, contentRoot,
+                Arrays.asList(positiveButton, negativeButton),
+                "Are you sure?",
+                "Please check if you entered a valid email address and an account exists with this email.");
     }
 
     @FXML
     public void handleBackButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().sendCodeStage.hide();
     }
+
 }

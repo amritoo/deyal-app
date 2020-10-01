@@ -40,6 +40,7 @@ public class MyMissionsController {
 
     public void loadMyMissions() {
         if (!MissionClient.getMyMissionList(DataManager.getInstance().getToken())) {    //show user's mission data retrieve failed
+            // TODO replace alert
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Failed");
             alert.setHeaderText("My mission list retrieve Failed!");
@@ -109,6 +110,7 @@ public class MyMissionsController {
                     DataManager.getInstance().tempMission = myMissionTableView.getItems().get(index); //sometime shows index out of bound error
                     if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,
                             DataManager.getInstance().tempMission.getId())) {   //show mission event list retrieve failed
+                        // TODO replace alert
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("Failed");
                         alert.setHeaderText("Mission event list retrieve Failed!");

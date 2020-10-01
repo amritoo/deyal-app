@@ -2,20 +2,25 @@ package app.deyal.deyal_app.controllers;
 
 import app.deyal.deyal_app.data.Address;
 import app.deyal.deyal_app.data.User;
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 
 public class EditProfile {
 
+    @FXML
+    public StackPane root;
+    @FXML
+    public VBox contentRoot;
     @FXML
     public JFXTextField userNameTextField;
     @FXML
@@ -40,6 +45,7 @@ public class EditProfile {
     @FXML
     private void initialize() {
         User user = DataManager.getInstance().userData;
+        // Setting data
         userNameTextField.setText(user.getUserName());
         String fullName = user.getFullName();
         int pos = fullName.lastIndexOf(" ");
@@ -54,38 +60,48 @@ public class EditProfile {
             policeStationTextField.setText(user.getAddress().getPoliceStation());
             postOfficeTextField.setText(user.getAddress().getPostOffice());
         }
+
+        birthDatePicker.getEditor().setOnMouseClicked(event -> birthDatePicker.show());
     }
 
     @FXML
     public void handleSaveButtonAction(ActionEvent actionEvent) {
         User user = new User();
-        user.setUserName(userNameTextField.getText());
-        user.setFullName(firstNameTextField.getText() + " " + lastNameTextField.getText());
-        user.setPhoneNumber(phoneNumberTextField.getText());
+        user.setUserName(extractText(userNameTextField));
+        user.setFullName(extractText(firstNameTextField) + " " + extractText(lastNameTextField));
+        user.setPhoneNumber(extractText(phoneNumberTextField));
         if (birthDatePicker.getValue() != null)
             user.setDateOfBirth(birthDatePicker.getValue().toEpochDay()); //converting dateOfBirth to EpochDay
         user.setAddress(new Address());
-        user.getAddress().setHouseAddress(houseAddressTextField.getText());
-        user.getAddress().setBlockAddress(blockAddressTextField.getText());
-        user.getAddress().setDistrict(districtTextField.getText());
-        user.getAddress().setPoliceStation(policeStationTextField.getText());
-        user.getAddress().setPostOffice(postOfficeTextField.getText());
+        user.getAddress().setHouseAddress(extractText(houseAddressTextField));
+        user.getAddress().setBlockAddress(extractText(blockAddressTextField));
+        user.getAddress().setDistrict(extractText(districtTextField));
+        user.getAddress().setPoliceStation(extractText(policeStationTextField));
+        user.getAddress().setPostOffice(extractText(postOfficeTextField));
 
-        Alert alert;
-        if (Auth.updateProfile(DataManager.getInstance().getToken(), user) &&
-                Auth.getUserData(DataManager.getInstance().getToken())) {
-            alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("User Profile updated");
-            alert.setContentText("Your profile has been updated successfully.");
+        boolean result = Auth.updateProfile(DataManager.getInstance().getToken(), user) && Auth.getUserData(DataManager.getInstance().getToken());
+        if (result) {
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Profile updated successfully",
+                    "Your profile has been updated successfully.");
         } else {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Failed");
-            alert.setHeaderText("User Profile update Failed!");
-            alert.setContentText("Please check your Internet connection. Update failed for some reasons.");
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Profile update failed!",
+                    "Update failed for some reasons. Please check your Internet connection and try again.");
         }
-        alert.showAndWait();
         StageManager.getInstance().editProfileStage.hide();
+    }
+
+    /**
+     * This method calls getText() method on given TextField and trims the string before returning.
+     *
+     * @param textField the object to get text from
+     * @return text
+     */
+    private String extractText(JFXTextField textField) {
+        return textField.getText().trim();
     }
 
     @FXML

@@ -30,4 +30,5 @@ public class ViewSubmissionController {
         StageManager.getInstance().judgingMessageStage.showAndWait();
         StageManager.getInstance().viewSubmissionStage.hide();
     }
+
 }

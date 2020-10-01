@@ -1,6 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
 
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
@@ -9,12 +10,17 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 
 public class LoginController {
 
+    @FXML
+    public StackPane root;
+    @FXML
+    public VBox contentRoot;
     @FXML
     public JFXTextField emailTextField;
     @FXML
@@ -23,13 +29,13 @@ public class LoginController {
     public JFXCheckBox rememberCheckbox;
 
     @FXML
-    private void handleRegisterButtonAction(ActionEvent event) {
+    private void handleRegisterButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().loginStage.hide();
         StageManager.getInstance().registerStage.showAndWait();
     }
 
     @FXML
-    private void handleSignInButtonAction(ActionEvent event) {
+    private void handleSignInButtonAction(ActionEvent actionEvent) {
         String email = emailTextField.getText();
         String password = passwordField.getText();
         boolean remember = rememberCheckbox.isSelected();
@@ -39,11 +45,10 @@ public class LoginController {
             StageManager.getInstance().createMainStage();
             StageManager.getInstance().mainStage.show();
         } else {    //show login failed
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Login Failed!");
-            alert.setContentText("Please check your email or password.");
-            alert.showAndWait();
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Login Failed!",
+                    "Please check your email or password and try again.");
             emailTextField.getStyleClass().add("wrong-credentials");
             passwordField.getStyleClass().add("wrong-credentials");
         }
