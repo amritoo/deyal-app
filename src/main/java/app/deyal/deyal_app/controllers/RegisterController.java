@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 
 public class RegisterController {
@@ -70,12 +71,15 @@ public class RegisterController {
         positiveButton.setOnMouseClicked(event -> {
             loadRegister();
             if (Auth.register(register)) {
+                JFXButton okayButton = new JFXButton("Okay");
+                okayButton.setOnMouseClicked(event1 -> {
+                    StageManager.getInstance().registerStage.hide();
+                    StageManager.getInstance().loginStage.show();
+                });
                 AlertManager.showMaterialDialog(root, contentRoot,
-                        null,
+                        Collections.singletonList(okayButton),
                         "Successfully registered account",
                         "Your new account has been created. Please login to use Deyal app.");
-                StageManager.getInstance().registerStage.hide();
-                StageManager.getInstance().loginStage.show();
             } else {
                 AlertManager.showMaterialDialog(root, contentRoot,
                         null,

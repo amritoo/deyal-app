@@ -9,6 +9,7 @@ import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
 import app.deyal.deyal_app.repository.MissionEventClient;
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ViewRequestController {
 
@@ -91,16 +93,17 @@ public class ViewRequestController {
     public void handleAcceptButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().assignMessageStage.showAndWait();
 
-        MissionEvent event = new MissionEvent(missionEvent.getMissionId(), EventType.ASSIGN);
+        MissionEvent event = new MissionEvent(missionEvent.getMissionId(), EventType.ASSIGN, requester.getUserName());
         event.setAssign(new Assign(requester.getId(), DataManager.getInstance().tempMessage));
 
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, event);
         if (result) {
+            JFXButton okayButton = new JFXButton("Okay");
+            okayButton.setOnMouseClicked(event1 -> StageManager.getInstance().viewRequestStage.hide());
             AlertManager.showMaterialDialog(root, contentRoot,
-                    null,
+                    Collections.singletonList(okayButton),
                     "Successfully assigned contractor",
                     "Your mission is being completed by the contractor. To know current progress contact your contractor.");
-            StageManager.getInstance().viewRequestStage.hide();
         } else {
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,

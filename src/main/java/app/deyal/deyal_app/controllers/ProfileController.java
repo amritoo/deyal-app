@@ -2,12 +2,12 @@ package app.deyal.deyal_app.controllers;
 
 import app.deyal.deyal_app.data.Constants;
 import app.deyal.deyal_app.data.User;
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -64,13 +64,12 @@ public class ProfileController {
     }
 
     public void loadProfile() {
-        if (!Auth.getUserData(DataManager.getInstance().getToken())) {  //show user data retrieve failed
-            // TODO replace alert
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Failed");
-            alert.setHeaderText("User Profile retrieve Failed!");
-            alert.setContentText("Please check your Internet connection.");
-            alert.showAndWait();
+        if (!Auth.getUserData(DataManager.getInstance().getToken())) {
+            // show user data retrieve failed
+            AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
+                    null,
+                    "User Profile retrieve failed!",
+                    "Please check your internet connection.");
         } else {
             User user = DataManager.getInstance().userData;
             userNameLabel.setText(user.getUserName());
@@ -110,7 +109,7 @@ public class ProfileController {
     }
 
     @FXML
-    public void handleEditProfileButtonAction(ActionEvent event) {
+    public void handleEditProfileButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().editProfileStage = StageManager.getInstance()
                 .loadStage(Constants.EDIT_PROFILE_FXML, Constants.EDIT_PROFILE_TITLE);
         StageManager.getInstance().editProfileStage.showAndWait();
@@ -118,7 +117,8 @@ public class ProfileController {
     }
 
     @FXML
-    public void handleChangePasswordButtonAction(ActionEvent event) {
+    public void handleChangePasswordButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().changePasswordStage.showAndWait();
     }
+
 }

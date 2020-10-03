@@ -6,6 +6,8 @@ public interface Constants {
 
     String LOG_NAME = "Deyal_log";
 
+    String SERVER_ADDRESS = "http://localhost:3030/v1";
+
     // Application
     String APP_NAME = "Deyal";
     URL APP_ICON = Constants.class.getResource("/images/ic_deyal.png");
@@ -50,6 +52,7 @@ public interface Constants {
     URL VIEW_REQUEST_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/event/viewRequest.fxml");
     URL COMPLETE_MISSION_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/event/completeMission.fxml");
     URL NOTIFICATION_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/notification.fxml");
+    URL TOOLBAR_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/main/toolbar.fxml");
 
     // Themes
     String DARK_THEME_CSS = Constants.class.getResource("/app/deyal/deyal_app/theme_dark.css").toExternalForm();

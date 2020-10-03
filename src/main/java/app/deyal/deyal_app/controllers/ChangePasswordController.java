@@ -40,7 +40,7 @@ public class ChangePasswordController {
             positiveButton.setOnMouseClicked(event -> {
                 boolean result = Auth.changePassword(DataManager.getInstance().getToken(), newPassword, oldPassword);
                 if (result) {
-                    AlertManager.showMaterialDialog(root, contentRoot,
+                    AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
                             null,
                             "Password changed successfully",
                             "Your password has been changed.");

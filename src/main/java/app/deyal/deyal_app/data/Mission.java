@@ -11,7 +11,11 @@ public class Mission {
     private MissionDifficulty difficulty;
 
     private String creatorId;
+    private String creatorName;
     private String contractorId;
+    private String contractorName;
+
+//    private boolean assigned;
 
     public Mission() {
     }
@@ -38,20 +42,14 @@ public class Mission {
     }
 
     public String getDifficultyAsString() {
-        switch (difficulty) {
-            case VERY_EASY:
-                return "Very Easy";
-            case EASY:
-                return "Easy";
-            case MEDIUM:
-                return "Medium";
-            case HARD:
-                return "Hard";
-            case VERY_HARD:
-                return "Very Hard";
-            default:
-                return "Unknown";
-        }
+        return switch (difficulty) {
+            case VERY_EASY -> "Very Easy";
+            case EASY -> "Easy";
+            case MEDIUM -> "Medium";
+            case HARD -> "Hard";
+            case VERY_HARD -> "Very Hard";
+            default -> "Unknown";
+        };
     }
 
     public String getId() {
@@ -102,6 +100,14 @@ public class Mission {
         this.creatorId = creatorId;
     }
 
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
     public String getContractorId() {
         return contractorId;
     }
@@ -109,4 +115,21 @@ public class Mission {
     public void setContractorId(String contractorId) {
         this.contractorId = contractorId;
     }
+
+    public String getContractorName() {
+        return contractorName;
+    }
+
+    public void setContractorName(String contractorName) {
+        this.contractorName = contractorName;
+    }
+
+//    public boolean isAssigned() {
+//        return assigned;
+//    }
+//
+//    public void setAssigned(boolean assigned) {
+//        this.assigned = assigned;
+//    }
+
 }

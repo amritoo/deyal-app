@@ -69,7 +69,7 @@
                 </padding>
                 <ImageView fx:id="avatarImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true"
                            preserveRatio="true">
-                    <Image url="@../../../../images/user_64px.png"/>
+                    <Image url="@../../../../images/user_avatar.png"/>
                 </ImageView>
                 <GridPane alignment="CENTER_LEFT" hgap="15.0" vgap="10.0">
                     <columnConstraints>

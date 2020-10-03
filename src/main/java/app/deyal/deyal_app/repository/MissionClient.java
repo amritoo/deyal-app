@@ -1,7 +1,8 @@
 package app.deyal.deyal_app.repository;
 
-import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.data.Constants;
 import app.deyal.deyal_app.data.Mission;
+import app.deyal.deyal_app.managers.DataManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -23,7 +24,7 @@ import java.util.Scanner;
 
 public class MissionClient {
 
-    private static final String serverUrl = DataManager.server + "/mission";
+    private static final String serverUrl = Constants.SERVER_ADDRESS.concat("/mission");
 
     public static boolean getMissionList(String token) {
         try {

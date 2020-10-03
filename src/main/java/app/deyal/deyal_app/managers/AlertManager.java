@@ -15,6 +15,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AlertManager {
 
@@ -28,7 +30,7 @@ public class AlertManager {
         JFXDialog dialog = new JFXDialog(root, dialogLayout, JFXDialog.DialogTransition.TOP);
 
         buttons.forEach(jfxButton -> {
-            jfxButton.getStyleClass().add("dialog-button");     // adding style class
+            jfxButton.getStyleClass().add("dialog-button"); // adding style class
             jfxButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 dialog.close();
             });
@@ -61,8 +63,8 @@ public class AlertManager {
             tray.add(trayIcon);
             trayIcon.displayMessage(title, message, TrayIcon.MessageType.INFO);
             tray.remove(trayIcon);
-        } catch (Exception exp) {
-            exp.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(Constants.LOG_NAME).log(Level.SEVERE, "AlertManager:showTrayMessage", ex);
         }
     }
 

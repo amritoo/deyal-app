@@ -1,8 +1,6 @@
 package app.deyal.deyal_app.data;
 
-import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.data.events.*;
-import javafx.scene.control.Alert;
 
 import java.util.Date;
 
@@ -12,6 +10,7 @@ public class MissionEvent {
     private EventType eventType;
     private String missionId;
     private Date eventTime;
+    private String username;
 
     private Create create;
     private Update update;
@@ -23,59 +22,49 @@ public class MissionEvent {
     private Reject reject;
     private Review review;
 
-    public MissionEvent(String missionId, EventType eventType) {
+    public MissionEvent(String missionId, EventType eventType, String username) {
         this.missionId = missionId;
         this.eventType = eventType;
+        this.username = username;
     }
 
     @Override
     public String toString() {
         String string = eventTime + "\n";
         switch (eventType) {
-            case CREATE:
-                if (DataManager.getInstance().getUserName(create.getCreatedBy()) != null) {
-                    string += "Mission created by " + DataManager.getInstance().tempUser.getUserName();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Failed");
-                    alert.setHeaderText("User name retrieve failed");
-                    alert.setContentText("Please check your internet connection.");
-                }
-                break;
-            case UPDATE:
-                string += "updated from\n" + update.toString();
-                break;
-            case PUBLISH:
-                string += "published with note:\n" + publish.getNote();
-                break;
-            case REQUEST:
-                if (DataManager.getInstance().getUserName(request.getRequestBy()) != null) {
-                    string += "requested by " + DataManager.getInstance().tempUser.getUserName() + "\n" +
-                            "with message:\n" + request.getRequestMessage();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Failed");
-                    alert.setHeaderText("User name retrieve failed");
-                    alert.setContentText("Please check your internet connection.");
-                }
-                break;
-            case ASSIGN:
-                string += "assigned to " + assign.getAssignTo() + "\n" +
-                        "with message:\n" + assign.getAssignMessage();
-                break;
-            case SUBMIT:
-                string += "submitted with proof of work:\n" + submit.getProofOfWork();
-                break;
-            case APPROVE:
-                string += "approved submission with message:\n" + approve.getApproveMessage();
-                break;
-            case REJECT:
-                string += "rejected with message:\n" + reject.getRejectMessage();
-                break;
-            case REVIEW:
-                string += "reviewed: " + (review.isGotReward() ? "I got my rewards" : "Client didn't pay") + "\n" +
-                        "with message:\n" + review.getMessage();
-                break;
+            case CREATE -> string += "Mission created by " + this.getUsername();
+            case UPDATE -> string += "updated from\n" + update.toString();
+            case PUBLISH -> string += "published with note:\n" + publish.getNote();
+            case REQUEST -> {
+                string += "requested by " + this.getUsername();
+                if (request.getRequestMessage().length() > 0)
+                    string += "\n" + "with message:\n" + request.getRequestMessage();
+            }
+            case ASSIGN -> {
+                string += "assigned to " + this.getUsername();
+                if (assign.getAssignMessage().length() > 0)
+                    string += "\n" + "with message:\n" + assign.getAssignMessage();
+            }
+            case SUBMIT -> {
+                string += "submitted by " + this.getUsername();
+                if (submit.getProofOfWork().length() > 0)
+                    string += "\n" + "with proof of work:\n" + submit.getProofOfWork();
+            }
+            case APPROVE -> {
+                string += "submission approved by " + this.getUsername();
+                if (approve.getApproveMessage().length() > 0)
+                    string += "\n" + "with message:\n" + approve.getApproveMessage();
+            }
+            case REJECT -> {
+                string += "submission rejected by " + this.getUsername();
+                if (reject.getRejectMessage().length() > 0)
+                    string += "\n" + "with message:\n" + reject.getRejectMessage();
+            }
+            case REVIEW -> {
+                string += this.getUsername() + " reviewed: " + (review.isGotReward() ? "I got my rewards :)" : "Client didn't pay :(");
+                if (review.getMessage().length() > 0)
+                    string += "\n" + "with message:\n" + review.getMessage();
+            }
         }
         return string;
     }
@@ -106,6 +95,14 @@ public class MissionEvent {
 
     public void setEventTime(Date eventTime) {
         this.eventTime = eventTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Approve getApprove() {

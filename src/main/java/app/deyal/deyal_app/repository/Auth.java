@@ -1,5 +1,6 @@
 package app.deyal.deyal_app.repository;
 
+import app.deyal.deyal_app.data.Constants;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.data.Register;
 import app.deyal.deyal_app.data.User;
@@ -29,42 +30,42 @@ import java.util.Scanner;
 
 public class Auth {
 
-    private static final String serverUrl = DataManager.server + "/auth";
+    private static final String serverUrl = Constants.SERVER_ADDRESS.concat("/auth");
 
     public static boolean login(String email, String password, boolean remember) {
         try {
-            //Creating a HttpClient object
+            // Creating a HttpClient object
             CloseableHttpClient httpclient = HttpClients.createDefault();
 
-            //Creating a HttpPost object
+            // Creating a HttpPost object
             HttpPost httppost = new HttpPost(serverUrl.concat("/login"));
 
-            //adding email and password
+            // adding email and password
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("email", email));
             nameValuePairs.add(new BasicNameValuePair("password", password));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-            //Executing the Post request
+            // Executing the Post request
             HttpResponse httpresponse = httpclient.execute(httppost);
 
             int statusCode = httpresponse.getStatusLine().getStatusCode();
 
             if (statusCode == 200) {
-                //getting payload from json
+                // getting payload from json
                 Scanner scanner = new Scanner(httpresponse.getEntity().getContent());
                 String json = scanner.nextLine();
                 JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
                 String token = jsonObject.getAsJsonObject().get("payload").getAsString();
 
                 DataManager.getInstance().token = token;
-                //if remember = true, add preference api to save token
+                // if remember = true, add preference api to save token
                 if (remember) {
                     PreferenceSave.getInstance().setToken(token);
                 }
                 return true;
             } else {
-                //Printing the status line
+                // Printing the status line
                 System.out.println("inside login");
                 System.out.println(httpresponse.getStatusLine());
                 Scanner sc = new Scanner(httpresponse.getEntity().getContent());
@@ -86,14 +87,14 @@ public class Auth {
 
             HttpPost httppost = new HttpPost(serverUrl.concat("/register"));
 
-            //adding register data
+            // adding register data
             Gson gson = new Gson();
             String json = gson.toJson(register);
             httppost.setEntity(new StringEntity(json));
             httppost.setHeader("Accept", "application/json");
             httppost.setHeader("Content-type", "application/json");
 
-            //Executing the Post request
+            // Executing the Post request
             HttpResponse httpresponse = httpclient.execute(httppost);
 
             int statusCode = httpresponse.getStatusLine().getStatusCode();
@@ -101,7 +102,7 @@ public class Auth {
             if (statusCode == 200) {
                 return true;
             } else {
-                //Printing the status line
+                // Printing the status line
                 System.out.println("inside register");
                 System.out.println(httpresponse.getStatusLine());
                 Scanner sc = new Scanner(httpresponse.getEntity().getContent());
@@ -117,35 +118,30 @@ public class Auth {
         }
     }
 
-    public static boolean getUserNameList(String token) {
+    public static boolean getUserName(String token, String userId) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/list/name"));
+            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/search/name"));
             uriBuilder.setParameter("token", token);
+            uriBuilder.setParameter("userId", userId);
             HttpGet httpGet = new HttpGet(uriBuilder.build());
 
-            //Executing the Get request
+            // Executing the Get request
             HttpResponse httpResponse = httpclient.execute(httpGet);
-
             int statusCode = httpResponse.getStatusLine().getStatusCode();
 
             System.out.println("Inside get user name");
             if (statusCode == 200) {
                 Scanner scanner = new Scanner(httpResponse.getEntity().getContent());
                 String json = scanner.nextLine();
-                JsonObject userdata = JsonParser.parseString(json).getAsJsonObject().get("payload").getAsJsonObject();
+                String username = JsonParser.parseString(json).getAsJsonObject().get("payload").getAsString();
 
-                System.out.println(userdata);
-                //Getting user name map from json object
-                Gson gson = new Gson();
-                Type type = new TypeToken<Map<String, String>>() {
-                }.getType();
-                DataManager.getInstance().userIdAndNameMap = gson.fromJson(userdata, type);
+                System.out.println(username);
 
                 System.out.println("Outside get user name");
                 return true;
             } else {
-                //Printing the status line
+                // Printing the status line
                 System.out.println(httpResponse.getStatusLine());
                 Scanner sc = new Scanner(httpResponse.getEntity().getContent());
                 while (sc.hasNext()) {
@@ -165,14 +161,14 @@ public class Auth {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
 
-            //adding token
+            // adding token
             URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/user"));
             uriBuilder.setParameter("token", token);
 
-            //Creating a HttpGet object
+            // Creating a HttpGet object
             HttpGet httpGet = new HttpGet(uriBuilder.build());
 
-            //Executing the Get request
+            // Executing the Get request
             HttpResponse httpResponse = httpclient.execute(httpGet);
 
             int statusCode = httpResponse.getStatusLine().getStatusCode();
@@ -185,14 +181,14 @@ public class Auth {
 
                 System.out.println(userdata);
 
-                //Getting user object from json object
+                // Getting user object from json object
                 Gson gson = new Gson();
                 DataManager.getInstance().userData = gson.fromJson(userdata, User.class);
 
                 System.out.println("Outside get user data");
                 return true;
             } else {
-                //Printing the status line
+                // Printing the status line
                 System.out.println(httpResponse.getStatusLine());
                 Scanner sc = new Scanner(httpResponse.getEntity().getContent());
                 while (sc.hasNext()) {

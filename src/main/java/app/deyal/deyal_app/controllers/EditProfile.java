@@ -86,7 +86,7 @@ public class EditProfile {
                     "Profile updated successfully",
                     "Your profile has been updated successfully.");
         } else {
-            AlertManager.showMaterialDialog(root, contentRoot,
+            AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
                     null,
                     "Profile update failed!",
                     "Update failed for some reasons. Please check your Internet connection and try again.");

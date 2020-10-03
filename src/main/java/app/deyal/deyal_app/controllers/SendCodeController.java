@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class SendCodeController {
 
@@ -23,20 +24,23 @@ public class SendCodeController {
     public JFXTextField emailTextField;
 
     @FXML
-    public void handleSendButtonAction(ActionEvent event) {
+    public void handleSendButtonAction(ActionEvent actionEvent) {
         // Buttons to show in confirmation dialog
         JFXButton positiveButton = new JFXButton("Yes");
-        positiveButton.setOnMouseClicked(event1 -> {
+        positiveButton.setOnMouseClicked(event -> {
             String email = emailTextField.getText();
             boolean result = Auth.sendCode(email);
             if (result) {
                 DataManager.getInstance().tempMessage = email;
+                JFXButton okayButton = new JFXButton("Okay");
+                okayButton.setOnMouseClicked(event1 -> {
+                    DataManager.getInstance().tempChoice = true;
+                    StageManager.getInstance().sendCodeStage.hide();
+                });
                 AlertManager.showMaterialDialog(root, contentRoot,
-                        null,
+                        Collections.singletonList(okayButton),
                         "Check your email",
                         "A recover code has been sent to your email address. Please check your email and follow the instructions given there.");
-                DataManager.getInstance().tempChoice = true;
-                StageManager.getInstance().sendCodeStage.hide();
             } else {
                 // show send code failed
                 AlertManager.showMaterialDialog(root, contentRoot,

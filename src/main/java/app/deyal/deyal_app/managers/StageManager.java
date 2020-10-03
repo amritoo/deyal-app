@@ -37,7 +37,7 @@ public class StageManager {
     public Stage viewRequestStage;
     public Stage assignMessageStage;
     public Stage submitMissionStage;
-    public Stage viewSubmissionStage;   //message loader
+    public Stage viewSubmissionStage;   // message loader
     public Stage judgingMessageStage;
     public Stage completeMissionStage;
 
@@ -49,7 +49,15 @@ public class StageManager {
             themePath = Constants.DARK_THEME_CSS;
         else
             themePath = Constants.LIGHT_THEME_CSS;
+        initializeStages();
+    }
 
+    public void changeTheme() {
+        PreferenceSave.getInstance().setTheme(!PreferenceSave.getInstance().isDarkTheme());
+        if (PreferenceSave.getInstance().isDarkTheme())
+            themePath = Constants.DARK_THEME_CSS;
+        else
+            themePath = Constants.LIGHT_THEME_CSS;
         initializeStages();
     }
 
@@ -77,7 +85,7 @@ public class StageManager {
         return themePath;
     }
 
-    private void setTheme(Scene scene) {
+    public void setTheme(Scene scene) {
         scene.getStylesheets().add(themePath);
     }
 
@@ -103,7 +111,6 @@ public class StageManager {
         return stage;
     }
 
-
     public void createMainStage() {
         mainStage = loadStage(Constants.MAIN_FXML, Constants.MAIN_TITLE);
     }
@@ -123,4 +130,5 @@ public class StageManager {
     private static class Singleton {
         private static final StageManager INSTANCE = new StageManager();
     }
+
 }

@@ -1,6 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
 import app.deyal.deyal_app.data.Mission;
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.MissionClient;
@@ -10,18 +11,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class MyMissionsController {
-    //My Missions
+
     @FXML
     public TableView<Mission> myMissionTableView;
     @FXML
@@ -39,26 +38,26 @@ public class MyMissionsController {
     }
 
     public void loadMyMissions() {
-        if (!MissionClient.getMyMissionList(DataManager.getInstance().getToken())) {    //show user's mission data retrieve failed
-            // TODO replace alert
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Failed");
-            alert.setHeaderText("My mission list retrieve Failed!");
-            alert.setContentText("Please check your Internet connection.");
-            alert.showAndWait();
+        if (!MissionClient.getMyMissionList(DataManager.getInstance().getToken())) {
+            // show user's mission data retrieve failed
+            AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
+                    null,
+                    "My mission list retrieve Failed!",
+                    "Please check your Internet connection.");
         } else {
             ArrayList<Mission> missionArrayList = DataManager.getInstance().myMissionsList;
 
-            mmMissionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("title"));
-            mmMissionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("difficulty") {
+            mmMissionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            mmMissionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty") {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();
                     return new ReadOnlyObjectWrapper<>(mission.getDifficultyAsString());
                 }
             });
-            mmMissionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("description"));
-            mmMissionStatusTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("id") {   //set status (completed, created, failed, ongoing) of my missions
+            mmMissionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+            mmMissionStatusTableColumn.setCellValueFactory(new PropertyValueFactory<>("id") {
+                // set status (completed, created, failed, ongoing) of my missions
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();
@@ -69,7 +68,7 @@ public class MyMissionsController {
             myMissionTableView.getItems().setAll(missionArrayList);
 
             // custom sort My Mission table
-            myMissionTableView.setSortPolicy(tv -> {
+            myMissionTableView.setSortPolicy(param -> {
                 final ObservableList<Mission> itemsList = myMissionTableView.getItems();
                 if (itemsList == null || itemsList.isEmpty()) {
                     return true;
@@ -103,19 +102,18 @@ public class MyMissionsController {
                 return true;
             });
 
-            //selecting a mission from dashboard
-            myMissionTableView.setOnMouseClicked((MouseEvent event) -> {
+            // selecting a mission from dashboard
+            myMissionTableView.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     int index = myMissionTableView.getSelectionModel().getSelectedIndex();
-                    DataManager.getInstance().tempMission = myMissionTableView.getItems().get(index); //sometime shows index out of bound error
-                    if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,
-                            DataManager.getInstance().tempMission.getId())) {   //show mission event list retrieve failed
-                        // TODO replace alert
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Failed");
-                        alert.setHeaderText("Mission event list retrieve Failed!");
-                        alert.setContentText("Please check your Internet connection.");
-                        alert.showAndWait();
+                    DataManager.getInstance().tempMission = myMissionTableView.getItems().get(index);
+                    String missionId = DataManager.getInstance().tempMission.getId();
+                    if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
+                        // show mission event list retrieve failed
+                        AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
+                                null,
+                                "Mission event list retrieve failed!",
+                                "Please check your internet connection.");
                     }
                     StageManager.getInstance().createViewMissionStage();
                     StageManager.getInstance().viewMissionStage.showAndWait();

@@ -13,10 +13,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -26,7 +27,18 @@ import java.util.logging.Logger;
 public class MainController {
 
     @FXML
+    public StackPane root;
+    @FXML
+    public AnchorPane contentRoot;
+
+    @FXML
     public TabPane mainTabPane;
+
+    // Side Drawer
+    @FXML
+    public JFXDrawer drawer;
+    @FXML
+    public JFXHamburger hamburger;
 
     // Dashboard
     @FXML
@@ -52,23 +64,9 @@ public class MainController {
     @FXML
     public AboutController aboutTabPageController;
 
-    // Side Drawer
-    @FXML
-    public JFXDrawer drawer;
-    @FXML
-    public JFXHamburger hamburger;
-
-    //TODO: handle auto refresh
+    // TODO: handle auto refresh
     @FXML
     private void initialize() {
-        if (!Auth.getUserNameList(DataManager.getInstance().token)) {
-            // TODO replace alert
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Failed");
-            alert.setHeaderText("User names loading failed");
-            alert.setContentText("Check your internet connection.");
-            alert.showAndWait();
-        }
         mainTabPane.getSelectionModel().selectedItemProperty()
                 .addListener((ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) -> {
                     if (newValue == dashboardTab) {
@@ -82,11 +80,13 @@ public class MainController {
                     }
                 });
         initializeDrawer();
+        DataManager.getInstance().mainRoot = this.root;
+        DataManager.getInstance().mainContentRoot = this.contentRoot;
     }
 
     private void initializeDrawer() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/deyal/deyal_app/views/main/toolbar.fxml"));
+            FXMLLoader loader = new FXMLLoader(Constants.TOOLBAR_FXML);
             VBox toolbar = loader.load();
             drawer.setSidePane(toolbar);
 
@@ -111,9 +111,7 @@ public class MainController {
         HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
         transition.setRate(-1);
 
-        hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            drawer.toggle();
-        });
+        hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> drawer.toggle());
 
         drawer.setOnDrawerOpening(event -> {
             transition.setRate(transition.getRate() * -1);
@@ -128,14 +126,23 @@ public class MainController {
         });
     }
 
+    /**
+     * This method shows createMissionStage
+     */
     public void createMissionButtonAction() {
         StageManager.getInstance().createMissionStage.showAndWait();
     }
 
+    /**
+     * This method shows searchMissionStage
+     */
     public void searchMissionButtonAction() {
         StageManager.getInstance().searchMissionStage.showAndWait();
     }
 
+    /**
+     * Handles refresh button action and reloads the corresponding view.
+     */
     public void refreshButtonAction() {
         if (dashboardTab.isSelected()) {
             dashboardTabPageController.initialize();
@@ -148,19 +155,29 @@ public class MainController {
         }
     }
 
+    /**
+     * Loads and shows notification Stage
+     */
     public void notificationButtonAction() {
         StageManager.getInstance().notificationStage = StageManager.getInstance()
                 .loadStage(Constants.NOTIFICATION_FXML, Constants.NOTIFICATION_TITLE);
         StageManager.getInstance().notificationStage.showAndWait();
     }
 
+    /**
+     * This method changes current theme and set new theme to parent scene.
+     */
     public void themeButtonAction() {
-        PreferenceSave.getInstance().setTheme(!PreferenceSave.getInstance().isDarkTheme());
-        // TODO show notification and ask to restart
+        root.getScene().getStylesheets().remove(StageManager.getInstance().getThemePath());
+        StageManager.getInstance().changeTheme();
+        StageManager.getInstance().setTheme(root.getScene());
     }
 
+    /**
+     * Handles logout action.
+     */
     public void logoutButtonAction() {
-        PreferenceSave.getInstance().setToken(null);    //remove preference token
+        PreferenceSave.getInstance().setToken(null);    // remove preference token
         DataManager.getInstance().clearAllData();
 
         StageManager.getInstance().mainStage.hide();

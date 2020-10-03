@@ -4,6 +4,7 @@ import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.Auth;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -11,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class verifyCodeController {
 
@@ -35,11 +39,12 @@ public class verifyCodeController {
 
         boolean result = Auth.verifyCode(DataManager.getInstance().tempMessage, code, password);
         if (result) {
+            JFXButton okayButton = new JFXButton("Okay");
+            okayButton.setOnMouseClicked(event -> StageManager.getInstance().verifyCodeStage.hide());
             AlertManager.showMaterialDialog(root, contentRoot,
-                    null,
+                    Collections.singletonList(okayButton),
                     "Password changed successfully",
                     "Your password has been changed.");
-            StageManager.getInstance().verifyCodeStage.hide();
         } else {
             // show send code failed
             AlertManager.showMaterialDialog(root, contentRoot,
@@ -89,6 +94,7 @@ public class verifyCodeController {
     @FXML
     public void handleBackButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().verifyCodeStage.hide();
+        StageManager.getInstance().sendCodeStage.showAndWait();
     }
 
 }

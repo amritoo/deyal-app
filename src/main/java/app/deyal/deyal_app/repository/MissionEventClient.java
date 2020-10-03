@@ -1,5 +1,6 @@
 package app.deyal.deyal_app.repository;
 
+import app.deyal.deyal_app.data.Constants;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.data.MissionEvent;
 import com.google.gson.Gson;
@@ -22,7 +23,7 @@ import java.util.Scanner;
 
 public class MissionEventClient {
 
-    private static final String serverUrl = DataManager.server + "/event";
+    private static final String serverUrl = Constants.SERVER_ADDRESS.concat("/event");
 
     public static boolean getMissionEventList(String token, String missionId) {
         try {

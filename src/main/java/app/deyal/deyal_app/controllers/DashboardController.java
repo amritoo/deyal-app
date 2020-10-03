@@ -1,8 +1,10 @@
 package app.deyal.deyal_app.controllers;
 
 import app.deyal.deyal_app.data.Mission;
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
+import app.deyal.deyal_app.repository.Auth;
 import app.deyal.deyal_app.repository.MissionClient;
 import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -10,15 +12,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DashboardController {
 
@@ -39,15 +41,16 @@ public class DashboardController {
     }
 
     public void loadDashboard() {
-        if (!MissionClient.getMissionList(DataManager.getInstance().getToken())) {  //show mission list retrieve failed
-            // TODO replace alert
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Failed");
-            alert.setHeaderText("Mission list retrieve Failed!");
-            alert.setContentText("Please check your Internet connection.");
-            alert.showAndWait();
+        if (!MissionClient.getMissionList(DataManager.getInstance().getToken())) {
+            // show mission list retrieve failed
+            AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
+                    null,
+                    "Mission list retrieve failed!",
+                    "Please check your internet connection and refresh.");
         } else {
             ArrayList<Mission> missionArrayList = DataManager.getInstance().allMissionsList;
+            // TODO  check if works... but first update server code
+//            List<Mission> missionLinkedList = sortMissionList(missionArrayList);
 
             missionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
             missionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty") {
@@ -57,27 +60,13 @@ public class DashboardController {
                     return new ReadOnlyObjectWrapper<>(mission.getDifficultyAsString());
                 }
             });
-            missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<>("creatorId") {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
-                    Mission mission = param.getValue();
-                    String name = DataManager.getInstance().getUserName(mission.getCreatorId());
-                    if (name == null) {
-                        // TODO replace alert
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Failed");
-                        alert.setHeaderText("Creator name retrieve failed");
-                        alert.setContentText("Please check your Internet connection.");
-                        alert.showAndWait();
-                    }
-                    return new ReadOnlyObjectWrapper<>(name);
-                }
-            });
+            missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
             missionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
             dashboardTableView.getItems().setAll(missionArrayList);
+//            dashboardTableView.getItems().setAll(missionLinkedList);
 
             // custom sort dashboard table
-            dashboardTableView.setSortPolicy(tv -> {
+            dashboardTableView.setSortPolicy(param -> {
                 final ObservableList<Mission> itemsList = dashboardTableView.getItems();
                 if (itemsList == null || itemsList.isEmpty()) {
                     return true;
@@ -111,26 +100,40 @@ public class DashboardController {
                 return true;
             });
 
-            //selecting a mission from dashboard
-            dashboardTableView.setOnMouseClicked((MouseEvent event) -> {
+            // selecting a mission from dashboard
+            dashboardTableView.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     int index = dashboardTableView.getSelectionModel().getSelectedIndex();
                     if (index < 0) return;
                     DataManager.getInstance().tempMission = dashboardTableView.getItems().get(index);
-                    if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,
-                            DataManager.getInstance().tempMission.getId())) {   //show mission event list retrieve failed
-                        // TODO replace alert
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Failed");
-                        alert.setHeaderText("Mission event list retrieve Failed!");
-                        alert.setContentText("Please check your Internet connection.");
-                        alert.showAndWait();
+                    String missionId = DataManager.getInstance().tempMission.getId();
+                    if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
+                        // show mission event list retrieve failed
+                        AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
+                                null,
+                                "Mission event list retrieve failed!",
+                                "There was an unknown error. Please check your internet connection and try again.");
                     }
+                    Auth.getUserName(DataManager.getInstance().token, DataManager.getInstance().tempMission.getCreatorId());
+                    Auth.getUserName(DataManager.getInstance().token, DataManager.getInstance().tempMission.getContractorId());
                     StageManager.getInstance().createViewMissionStage();
                     StageManager.getInstance().viewMissionStage.showAndWait();
                 }
             });
         }
     }
+
+//    private List<Mission> sortMissionList(List<Mission> missionList) {
+//        LinkedList<Mission> notAssigned = new LinkedList<>();
+//        LinkedList<Mission> assigned = new LinkedList<>();
+//        for (Mission mission : missionList) {
+//            if (mission.isAssigned())
+//                assigned.add(mission);
+//            else
+//                notAssigned.add(mission);
+//        }
+//        notAssigned.addAll(assigned);
+//        return notAssigned;
+//    }
 
 }

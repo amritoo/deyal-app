@@ -44,7 +44,7 @@ public class LoginController {
             StageManager.getInstance().loginStage.hide();
             StageManager.getInstance().createMainStage();
             StageManager.getInstance().mainStage.show();
-        } else {    //show login failed
+        } else {    // show login failed
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Login Failed!",

@@ -135,15 +135,15 @@
     -fx-opacity: 0;
 }
 
-.tab-pane .tab {
-    -fx-background-color: -fx-primary;
-}
-
 .tab-pane {
     -fx-tab-min-width: 120px;
     -fx-tab-max-width: 120px;
     -fx-tab-min-height: 40px;
     -fx-tab-max-height: 40px;
+}
+
+.tab-pane .tab {
+    -fx-background-color: -fx-primary;
 }
 
 .tab-pane .tab:selected {
@@ -176,7 +176,7 @@
 }
 
 .table-column {
-    -fx-alignment: CENTER;
+    -fx-alignment: CENTER_LEFT;
 }
 
 .table-view .column-header {
@@ -190,18 +190,11 @@
 .table-view .column-header-background .label {
     -fx-background-color: transparent;
     -fx-text-fill: -fx-secondary;
-}
-
-.table-row-cell {
-    -fx-cell-size: 50px;
+    -fx-alignment: center;
 }
 
 .table-view .table-cell {
     -fx-text-fill: -fx-primarytext;
-}
-
-.table-row-cell:focused, .table-cell:focused {
-    -fx-text-fill: -fx-primary;
 }
 
 .table-row-cell {
@@ -217,15 +210,13 @@
 .table-row-cell:selected {
     -fx-background-color: -fx-secondary;
     -fx-text-fill: -fx-primary;
+    -fx-cell-size: 30px;
+    -fx-font-size: 14pt;
     -fx-background-insets: 0;
 }
 
 .table-row-cell:selected .table-cell {
     -fx-text-fill: -fx-primary;
-}
-
-.placeholder .label {
-    -fx-text-fill: -fx-primarytext;
 }
 
 .table-view > .virtual-flow > .scroll-bar:vertical,
@@ -332,4 +323,12 @@
 
 .jfx-layout-actions {
     -fx-hgap: 16;
+}
+
+/*---------------------------------------- Splash ----------------------------------------*/
+.splash-stack-pane {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 20, 0, 0, 0);
+    -fx-padding: 10;
+    -fx-background-color: firebrick;
+    -fx-background-radius: 20px;
 }

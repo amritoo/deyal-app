@@ -53,7 +53,7 @@ public class CreateMissionController {
 
         boolean result = MissionClient.createMission(DataManager.getInstance().getToken(), mission);
         if (result) {
-            AlertManager.showMaterialDialog(root, contentRoot,
+            AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
                     null,
                     "Mission created",
                     "Mission created successfully.");
