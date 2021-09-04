@@ -15,8 +15,6 @@ public class Mission {
     private String contractorId;
     private String contractorName;
 
-//    private boolean assigned;
-
     public Mission() {
     }
 
@@ -123,13 +121,5 @@ public class Mission {
     public void setContractorName(String contractorName) {
         this.contractorName = contractorName;
     }
-
-//    public boolean isAssigned() {
-//        return assigned;
-//    }
-//
-//    public void setAssigned(boolean assigned) {
-//        this.assigned = assigned;
-//    }
 
 }
