@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class DataManager {
 
@@ -28,12 +27,15 @@ public class DataManager {
     public StackPane mainRoot;
     public Node mainContentRoot;
 
+    public static DataManager getInstance() {
+        return DataManager.Singleton.INSTANCE;
+    }
+
     public ArrayList<MissionEvent> getRequestEvents() {
         ArrayList<MissionEvent> missionEvents = new ArrayList<>();
         for (MissionEvent event : tempMissionEventList) {
             if (event.getEventType() == EventType.REQUEST) {
                 missionEvents.add(event);
-                System.out.println(event.getEventType());
             }
         }
         return missionEvents;
@@ -73,10 +75,6 @@ public class DataManager {
 
     public String getToken() {
         return token;
-    }
-
-    public static DataManager getInstance() {
-        return DataManager.Singleton.INSTANCE;
     }
 
     private static class Singleton {

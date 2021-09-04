@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 
 public class StageManager {
 
+    private final String APP_ICON_URL = Constants.APP_ICON.toExternalForm();
+
     // For authentications
     public Stage loginStage;
     public Stage registerStage;
@@ -37,12 +39,10 @@ public class StageManager {
     public Stage viewRequestStage;
     public Stage assignMessageStage;
     public Stage submitMissionStage;
-    public Stage viewSubmissionStage;   // message loader
+    public Stage viewSubmissionStage;
     public Stage judgingMessageStage;
     public Stage completeMissionStage;
-
     private String themePath;
-    private final String APP_ICON_URL = Constants.APP_ICON.toExternalForm();
 
     private StageManager() {
         if (PreferenceSave.getInstance().isDarkTheme())
@@ -52,6 +52,13 @@ public class StageManager {
         initializeStages();
     }
 
+    public static StageManager getInstance() {
+        return Singleton.INSTANCE;
+    }
+
+    /**
+     * Changes theme between dark and light
+     */
     public void changeTheme() {
         PreferenceSave.getInstance().setTheme(!PreferenceSave.getInstance().isDarkTheme());
         if (PreferenceSave.getInstance().isDarkTheme())
@@ -93,6 +100,13 @@ public class StageManager {
         stage.getIcons().add(new Image(APP_ICON_URL));
     }
 
+    /**
+     * Loads a stage with given fxml file and title. Also sets theme, icon and common properties.
+     *
+     * @param fxmlLocation Location of fxml file
+     * @param title        stage title
+     * @return - created stage
+     */
     public Stage loadStage(URL fxmlLocation, String title) {
         Stage stage = null;
         try {
@@ -121,10 +135,6 @@ public class StageManager {
 
     public void createUserProfileStage() {
         userProfileStage = loadStage(Constants.VIEW_PROFILE_FXML, Constants.VIEW_PROFILE_TITLE);
-    }
-
-    public static StageManager getInstance() {
-        return Singleton.INSTANCE;
     }
 
     private static class Singleton {

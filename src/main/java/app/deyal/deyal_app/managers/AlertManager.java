@@ -20,6 +20,15 @@ import java.util.logging.Logger;
 
 public class AlertManager {
 
+    /**
+     * Shows a material style dialog with blurred background and given number of buttons. If no button is given, shows default 'Okay' button.
+     *
+     * @param root            - StackPane
+     * @param nodeToBeBlurred - Node
+     * @param buttons         - button list
+     * @param header          - dialog header
+     * @param body            - dialog body
+     */
     public static void showMaterialDialog(StackPane root, Node nodeToBeBlurred, List<JFXButton> buttons, String header, String body) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
         if (buttons == null) {
@@ -31,9 +40,7 @@ public class AlertManager {
 
         buttons.forEach(jfxButton -> {
             jfxButton.getStyleClass().add("dialog-button"); // adding style class
-            jfxButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                dialog.close();
-            });
+            jfxButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> dialog.close());
         });
 
         Label title = new Label(header);
@@ -45,9 +52,7 @@ public class AlertManager {
         dialogLayout.setBody(content);
         dialogLayout.setActions(buttons);
 
-        dialog.setOnDialogClosed(event -> {
-            nodeToBeBlurred.setEffect(null);
-        });
+        dialog.setOnDialogClosed(event -> nodeToBeBlurred.setEffect(null));
         nodeToBeBlurred.setEffect(blur);
 
         dialog.show();
