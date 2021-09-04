@@ -5,7 +5,7 @@ import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 
-public class EditProfile {
+public class EditProfileController {
 
     @FXML
     public StackPane root;
@@ -45,7 +45,7 @@ public class EditProfile {
     @FXML
     private void initialize() {
         User user = DataManager.getInstance().userData;
-        // Setting data
+        // Loading data
         userNameTextField.setText(user.getUserName());
         String fullName = user.getFullName();
         int pos = fullName.lastIndexOf(" ");
@@ -79,8 +79,9 @@ public class EditProfile {
         user.getAddress().setPoliceStation(extractText(policeStationTextField));
         user.getAddress().setPostOffice(extractText(postOfficeTextField));
 
-        boolean result = Auth.updateProfile(DataManager.getInstance().getToken(), user) && Auth.getUserData(DataManager.getInstance().getToken());
+        boolean result = AuthClient.updateProfile(DataManager.getInstance().getToken(), user);
         if (result) {
+            AuthClient.getUserData(DataManager.getInstance().getToken());
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Profile updated successfully",

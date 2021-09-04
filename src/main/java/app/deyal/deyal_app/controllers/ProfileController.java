@@ -5,7 +5,7 @@ import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -64,8 +64,8 @@ public class ProfileController {
     }
 
     public void loadProfile() {
-        if (!Auth.getUserData(DataManager.getInstance().getToken())) {
-            // show user data retrieve failed
+        if (!AuthClient.getUserData(DataManager.getInstance().getToken())) {
+            // Shows user data retrieve failed
             AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
                     null,
                     "User Profile retrieve failed!",

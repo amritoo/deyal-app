@@ -1,10 +1,8 @@
 package app.deyal.deyal_app.controllers;
 
 import app.deyal.deyal_app.data.Constants;
-import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
 import app.deyal.deyal_app.repository.PreferenceSave;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -64,7 +62,6 @@ public class MainController {
     @FXML
     public AboutController aboutTabPageController;
 
-    // TODO: handle auto refresh
     @FXML
     private void initialize() {
         mainTabPane.getSelectionModel().selectedItemProperty()
@@ -108,6 +105,7 @@ public class MainController {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        // Adding effects
         HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
         transition.setRate(-1);
 

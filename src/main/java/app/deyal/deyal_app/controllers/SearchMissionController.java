@@ -5,7 +5,6 @@ import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.MissionEventClient;
-import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,7 +20,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class SearchMissionController {
@@ -61,12 +59,12 @@ public class SearchMissionController {
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "No mission found!",
-                    "A mission title having the given text does not exist yet.");
+                    "A mission title containing the given text does not exist yet.");
         } else {
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Mission found",
-                    "A total of " + missionArrayList.size() + " missions were found having the given text in title.");
+                    "A total of " + missionArrayList.size() + " missions were found containing the given text in title.");
         }
 
         missionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -81,7 +79,7 @@ public class SearchMissionController {
         missionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         searchMissionTableView.getItems().setAll(missionArrayList);
 
-        // custom sort dashboard table
+        // Custom sort table
         searchMissionTableView.setSortPolicy(param -> {
             final ObservableList<Mission> itemsList = searchMissionTableView.getItems();
             if (itemsList == null || itemsList.isEmpty()) {
@@ -116,7 +114,7 @@ public class SearchMissionController {
             return true;
         });
 
-        // selecting a mission from tableview
+        // Selecting a mission from tableview
         searchMissionTableView.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                 int index = searchMissionTableView.getSelectionModel().getSelectedIndex();
@@ -124,20 +122,11 @@ public class SearchMissionController {
 
                 String missionId = DataManager.getInstance().tempMission.getId();
                 if (MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
-                    StageManager.getInstance().createViewMissionStage();
-                    StageManager.getInstance().viewMissionStage.showAndWait();
-                } else {
-                    // show mission event list retrieve failed
-                    JFXButton okayButton = new JFXButton("Okay");
-                    okayButton.setOnMouseClicked(event1 -> {
-                        StageManager.getInstance().createViewMissionStage();
-                        StageManager.getInstance().viewMissionStage.showAndWait();
-                    });
-                    AlertManager.showMaterialDialog(root, contentRoot,
-                            Collections.singletonList(okayButton),
-                            "Mission event list retrieve failed!",
-                            "There was an unknown error. Please check your internet connection and try again.");
+                    DataManager.getInstance().tempMissionEventList = null;
                 }
+
+                StageManager.getInstance().createViewMissionStage();
+                StageManager.getInstance().viewMissionStage.showAndWait();
             }
         });
     }
