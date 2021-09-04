@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 public class DeyalApplication extends Application {
 
-    public static boolean showLogin;
+    public static boolean showLogin = true;
 
     public static void main(String[] args) {
         launch(args);

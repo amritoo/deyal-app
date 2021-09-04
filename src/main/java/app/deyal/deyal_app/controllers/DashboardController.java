@@ -4,7 +4,6 @@ import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
 import app.deyal.deyal_app.repository.MissionClient;
 import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -19,8 +18,6 @@ import javafx.scene.input.MouseButton;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
 
 public class DashboardController {
 
@@ -42,15 +39,13 @@ public class DashboardController {
 
     public void loadDashboard() {
         if (!MissionClient.getMissionList(DataManager.getInstance().getToken())) {
-            // show mission list retrieve failed
+            // Shows mission list retrieve failed
             AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
                     null,
                     "Mission list retrieve failed!",
                     "Please check your internet connection and refresh.");
         } else {
             ArrayList<Mission> missionArrayList = DataManager.getInstance().allMissionsList;
-            // TODO  check if works... but first update server code
-//            List<Mission> missionLinkedList = sortMissionList(missionArrayList);
 
             missionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
             missionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty") {
@@ -63,9 +58,8 @@ public class DashboardController {
             missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
             missionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
             dashboardTableView.getItems().setAll(missionArrayList);
-//            dashboardTableView.getItems().setAll(missionLinkedList);
 
-            // custom sort dashboard table
+            // Custom sort dashboard table
             dashboardTableView.setSortPolicy(param -> {
                 final ObservableList<Mission> itemsList = dashboardTableView.getItems();
                 if (itemsList == null || itemsList.isEmpty()) {
@@ -100,7 +94,7 @@ public class DashboardController {
                 return true;
             });
 
-            // selecting a mission from dashboard
+            // Selecting a mission from dashboard
             dashboardTableView.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     int index = dashboardTableView.getSelectionModel().getSelectedIndex();
@@ -108,32 +102,14 @@ public class DashboardController {
                     DataManager.getInstance().tempMission = dashboardTableView.getItems().get(index);
                     String missionId = DataManager.getInstance().tempMission.getId();
                     if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
-                        // show mission event list retrieve failed
-                        AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
-                                null,
-                                "Mission event list retrieve failed!",
-                                "There was an unknown error. Please check your internet connection and try again.");
+                        DataManager.getInstance().tempMissionEventList = null;
                     }
-                    Auth.getUserName(DataManager.getInstance().token, DataManager.getInstance().tempMission.getCreatorId());
-                    Auth.getUserName(DataManager.getInstance().token, DataManager.getInstance().tempMission.getContractorId());
+
                     StageManager.getInstance().createViewMissionStage();
                     StageManager.getInstance().viewMissionStage.showAndWait();
                 }
             });
         }
     }
-
-//    private List<Mission> sortMissionList(List<Mission> missionList) {
-//        LinkedList<Mission> notAssigned = new LinkedList<>();
-//        LinkedList<Mission> assigned = new LinkedList<>();
-//        for (Mission mission : missionList) {
-//            if (mission.isAssigned())
-//                assigned.add(mission);
-//            else
-//                notAssigned.add(mission);
-//        }
-//        notAssigned.addAll(assigned);
-//        return notAssigned;
-//    }
 
 }

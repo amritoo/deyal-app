@@ -39,7 +39,7 @@ public class MyMissionsController {
 
     public void loadMyMissions() {
         if (!MissionClient.getMyMissionList(DataManager.getInstance().getToken())) {
-            // show user's mission data retrieve failed
+            // Shows user's mission data retrieve failed
             AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
                     null,
                     "My mission list retrieve Failed!",
@@ -57,7 +57,7 @@ public class MyMissionsController {
             });
             mmMissionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
             mmMissionStatusTableColumn.setCellValueFactory(new PropertyValueFactory<>("id") {
-                // set status (completed, created, failed, ongoing) of my missions
+                // Set status (completed, created, failed, ongoing) of my missions
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
                     Mission mission = param.getValue();
@@ -67,7 +67,7 @@ public class MyMissionsController {
             });
             myMissionTableView.getItems().setAll(missionArrayList);
 
-            // custom sort My Mission table
+            // Custom sort My Mission table
             myMissionTableView.setSortPolicy(param -> {
                 final ObservableList<Mission> itemsList = myMissionTableView.getItems();
                 if (itemsList == null || itemsList.isEmpty()) {
@@ -102,19 +102,16 @@ public class MyMissionsController {
                 return true;
             });
 
-            // selecting a mission from dashboard
+            // Selecting a mission from table
             myMissionTableView.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     int index = myMissionTableView.getSelectionModel().getSelectedIndex();
                     DataManager.getInstance().tempMission = myMissionTableView.getItems().get(index);
                     String missionId = DataManager.getInstance().tempMission.getId();
                     if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
-                        // show mission event list retrieve failed
-                        AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
-                                null,
-                                "Mission event list retrieve failed!",
-                                "Please check your internet connection.");
+                        DataManager.getInstance().tempMissionEventList = null;
                     }
+
                     StageManager.getInstance().createViewMissionStage();
                     StageManager.getInstance().viewMissionStage.showAndWait();
                 }
