@@ -38,7 +38,7 @@ public class CompleteMissionController {
                     "Reward not chosen yet!",
                     "Please choose whether you got your reward or not.");
         } else {
-            // Buttons to shoe in confirmation dialog
+            // Buttons to show in confirmation dialog
             JFXButton positiveButton = new JFXButton("Yes");
             positiveButton.setOnMouseClicked(event -> {
                 DataManager.getInstance().tempChoice = gotRewardChoiceBox.getValue().equals("Yes");

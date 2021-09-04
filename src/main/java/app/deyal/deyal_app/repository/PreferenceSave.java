@@ -8,6 +8,14 @@ public class PreferenceSave {
     private final String token = "TOKEN";
     private final String theme = "DarkTheme";
 
+    public PreferenceSave() {
+        this.preferences = Preferences.userRoot().node(this.getClass().getName());
+    }
+
+    public static PreferenceSave getInstance() {
+        return Singleton.INSTANCE;
+    }
+
     public String getToken() {
         return getString(token);
     }
@@ -48,7 +56,6 @@ public class PreferenceSave {
         preferences.remove(key);
     }
 
-
     private boolean getBoolean(String key) {
         if (key == null)
             return false;
@@ -60,14 +67,6 @@ public class PreferenceSave {
             return false;
         preferences.putBoolean(key, value);
         return true;
-    }
-
-    public PreferenceSave() {
-        this.preferences = Preferences.userRoot().node(this.getClass().getName());
-    }
-
-    public static PreferenceSave getInstance() {
-        return Singleton.INSTANCE;
     }
 
     private static class Singleton {

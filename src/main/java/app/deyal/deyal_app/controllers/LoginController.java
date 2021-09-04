@@ -4,7 +4,7 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -40,11 +40,11 @@ public class LoginController {
         String password = passwordField.getText();
         boolean remember = rememberCheckbox.isSelected();
 
-        if (Auth.login(email, password, remember)) {
+        if (AuthClient.login(email, password, remember)) {
             StageManager.getInstance().loginStage.hide();
             StageManager.getInstance().createMainStage();
             StageManager.getInstance().mainStage.show();
-        } else {    // show login failed
+        } else {    // Shows login failed
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Login Failed!",
@@ -56,11 +56,10 @@ public class LoginController {
 
     @FXML
     private void handleForgotPasswordAction(MouseEvent mouseEvent) {
-        if (!DataManager.getInstance().tempChoice) {
-            StageManager.getInstance().sendCodeStage.showAndWait();
-        }
         if (DataManager.getInstance().tempChoice) {
             StageManager.getInstance().verifyCodeStage.showAndWait();
+        } else {
+            StageManager.getInstance().sendCodeStage.showAndWait();
         }
     }
 

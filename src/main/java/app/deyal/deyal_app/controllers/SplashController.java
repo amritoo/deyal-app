@@ -1,7 +1,7 @@
 package app.deyal.deyal_app.controllers;
 
 import app.deyal.deyal_app.DeyalApplication;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import app.deyal.deyal_app.repository.PreferenceSave;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
@@ -15,6 +15,7 @@ public class SplashController {
 
     @FXML
     public void initialize() {
+        // Add effect fade in and fade out
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), root);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
@@ -27,7 +28,7 @@ public class SplashController {
 
         fadeIn.play();
         fadeIn.setOnFinished(event -> {
-            DeyalApplication.showLogin = !Auth.getUserData(PreferenceSave.getInstance().getToken());
+            DeyalApplication.showLogin = !AuthClient.getUserData(PreferenceSave.getInstance().getToken());
             fadeOut.play();
         });
 

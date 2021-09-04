@@ -3,7 +3,7 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.data.Register;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
@@ -70,7 +70,7 @@ public class RegisterController {
         JFXButton positiveButton = new JFXButton("Yes");
         positiveButton.setOnMouseClicked(event -> {
             loadRegister();
-            if (Auth.register(register)) {
+            if (AuthClient.register(register)) {
                 JFXButton okayButton = new JFXButton("Okay");
                 okayButton.setOnMouseClicked(event1 -> {
                     StageManager.getInstance().registerStage.hide();
@@ -78,7 +78,7 @@ public class RegisterController {
                 });
                 AlertManager.showMaterialDialog(root, contentRoot,
                         Collections.singletonList(okayButton),
-                        "Successfully registered account",
+                        "Successfully registered new account",
                         "Your new account has been created. Please login to use Deyal app.");
             } else {
                 AlertManager.showMaterialDialog(root, contentRoot,
@@ -103,7 +103,7 @@ public class RegisterController {
 
     private boolean check() {
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
-            // show password mismatch
+            // Shows password mismatch
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Passwords are not same!",
@@ -111,7 +111,7 @@ public class RegisterController {
             return false;
         }
         if (!agreementCheckBox.isSelected()) {
-            // show must agree to terms and conditions
+            // Shows must agree to term and conditions
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Must agree to terms and conditions!",

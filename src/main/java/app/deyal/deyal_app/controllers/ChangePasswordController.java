@@ -3,7 +3,7 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.event.ActionEvent;
@@ -38,7 +38,7 @@ public class ChangePasswordController {
             // Buttons to show in confirmation dialog
             JFXButton positiveButton = new JFXButton("Yes");
             positiveButton.setOnMouseClicked(event -> {
-                boolean result = Auth.changePassword(DataManager.getInstance().getToken(), newPassword, oldPassword);
+                boolean result = AuthClient.changePassword(DataManager.getInstance().getToken(), newPassword, oldPassword);
                 if (result) {
                     AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
                             null,
