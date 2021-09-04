@@ -10,7 +10,7 @@
     <VBox fx:id="contentRoot" alignment="CENTER" spacing="35.0">
         <children>
             <HBox alignment="CENTER">
-                <Label fx:id="missionTitleLabel" alignment="CENTER" styleClass="label-title" text="Mission Name"/>
+                <Label fx:id="missionTitleLabel" alignment="CENTER" styleClass="label-title" text="Mission Title"/>
             </HBox>
             <HBox alignment="CENTER">
                 <JFXTextArea fx:id="shortDescriptionTextArea" editable="false" labelFloat="true"
@@ -42,7 +42,7 @@
             </HBox>
             <HBox alignment="CENTER" spacing="100.0">
                 <JFXButton fx:id="acceptButton" buttonType="RAISED" onAction="#handleAcceptButtonAction"
-                           prefHeight="50.0" prefWidth="125.0" text="Accept"/>
+                           prefHeight="50.0" prefWidth="125.0" text="Accept" visible="false"/>
                 <JFXButton buttonType="RAISED" onAction="#handleCancelButtonAction" prefHeight="50.0"
                            prefWidth="125.0" text="Close"/>
             </HBox>

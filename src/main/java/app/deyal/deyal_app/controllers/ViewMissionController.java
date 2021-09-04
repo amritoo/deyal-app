@@ -7,7 +7,7 @@ import app.deyal.deyal_app.data.events.*;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import app.deyal.deyal_app.repository.MissionEventClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ViewMissionController {
+
+    private final MissionEvent lastEvent;
+    private final String currentUsername = DataManager.getInstance().userData.getUserName();
 
     @FXML
     public StackPane root;
@@ -45,11 +48,13 @@ public class ViewMissionController {
     public JFXButton acceptButton;
 
     private Mission mission;
-    private final MissionEvent lastEvent;
-    private final String currentUsername = DataManager.getInstance().userData.getUserName();
 
     public ViewMissionController() {
-        lastEvent = DataManager.getInstance().tempMissionEventList.get(DataManager.getInstance().tempMissionEventList.size() - 1);
+        if (DataManager.getInstance().tempMissionEventList != null) {
+            lastEvent = DataManager.getInstance().tempMissionEventList.get(DataManager.getInstance().tempMissionEventList.size() - 1);
+        } else {
+            lastEvent = null;
+        }
     }
 
     @FXML
@@ -66,7 +71,18 @@ public class ViewMissionController {
         creatorLabel.setText(mission.getCreatorName());
         contractorLabel.setText(mission.getContractorName());
 
-        // add events
+        if (DataManager.getInstance().tempMissionEventList == null) {
+            AlertManager.showMaterialDialog(this.root, this.contentRoot,
+                    null,
+                    "Mission event list retrieve failed!",
+                    "There was an unknown error. Please check your internet connection and try again.");
+        } else {
+            addEventAndButton();
+        }
+    }
+
+    private void addEventAndButton() {
+        // Add events
         ArrayList<MissionEvent> missionEvents = DataManager.getInstance().tempMissionEventList;
         StringBuilder events = new StringBuilder();
         for (MissionEvent missionEvent : missionEvents) {
@@ -74,9 +90,9 @@ public class ViewMissionController {
         }
         eventsTextArea.setText(events.toString());
 
-        // setting acceptButton text and visibility according to latest event type
+        // Setting acceptButton text and visibility according to the latest event type
         switch (lastEvent.getEventType()) {
-            case CREATE:
+            case CREATE:    // Shows Request button to everyone, except creator
                 if (DataManager.getInstance().userData.getId().equals(mission.getCreatorId()))
                     acceptButton.setVisible(false);
                 else {
@@ -84,7 +100,7 @@ public class ViewMissionController {
                     acceptButton.setVisible(true);
                 }
                 break;
-            case REQUEST:
+            case REQUEST:   // Shows Assign button for creator, and Request button for others
                 if (DataManager.getInstance().userData.getId().equals(mission.getCreatorId())) {
                     acceptButton.setText("Assign");
                 } else {
@@ -92,21 +108,21 @@ public class ViewMissionController {
                 }
                 acceptButton.setVisible(true);
                 break;
-            case ASSIGN:
+            case ASSIGN:    // Shows Submit button only for contractor
                 if (DataManager.getInstance().userData.getId().equals(mission.getContractorId())) {
                     acceptButton.setText("Submit");
                     acceptButton.setVisible(true);
                 } else
                     acceptButton.setVisible(false);
                 break;
-            case SUBMIT:
+            case SUBMIT:    // Shows View Submission button only for creator
                 if (DataManager.getInstance().userData.getId().equals(mission.getCreatorId())) {
                     acceptButton.setText("View Submission");
                     acceptButton.setVisible(true);
                 } else
                     acceptButton.setVisible(false);
                 break;
-            case APPROVE:
+            case APPROVE:   // Shows Complete button only for contractor
                 if (DataManager.getInstance().userData.getId().equals(mission.getContractorId())) {
                     acceptButton.setText("Complete");
                     acceptButton.setVisible(true);
@@ -131,10 +147,14 @@ public class ViewMissionController {
         acceptButton.setVisible(false);
     }
 
+    /**
+     * Creates a new mission request event
+     */
     private void requestButton() {
         StageManager.getInstance().requestMessageStage.showAndWait();
         MissionEvent missionEvent = new MissionEvent(mission.getId(), EventType.REQUEST, currentUsername);
-        missionEvent.setRequest(new Request(DataManager.getInstance().userData.getId(),
+        missionEvent.setRequest(new Request(
+                DataManager.getInstance().userData.getId(),
                 DataManager.getInstance().tempMessage));
 
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, missionEvent);
@@ -153,13 +173,23 @@ public class ViewMissionController {
         }
     }
 
+    /**
+     * Shows view request stage and after assigning hides this stage
+     */
     private void assignButton() {
         DataManager.getInstance().tempMission = mission;
+        DataManager.getInstance().tempChoice = false;
         StageManager.getInstance().viewRequestStage = StageManager.getInstance()
                 .loadStage(Constants.VIEW_REQUEST_FXML, Constants.VIEW_REQUEST_TITLE);
         StageManager.getInstance().viewRequestStage.showAndWait();
+        if (DataManager.getInstance().tempChoice) {
+            StageManager.getInstance().viewMissionStage.hide();
+        }
     }
 
+    /**
+     * Creates a new mission submit event
+     */
     private void submitButton() {
         StageManager.getInstance().submitMissionStage.showAndWait();
 
@@ -180,6 +210,9 @@ public class ViewMissionController {
         }
     }
 
+    /**
+     * Shows submission results and creates a new approve or reject event
+     */
     private void viewSubmissionButton() {
         DataManager.getInstance().tempMessage = lastEvent.getSubmit().getProofOfWork();
         StageManager.getInstance().viewSubmissionStage = StageManager.getInstance()
@@ -198,9 +231,7 @@ public class ViewMissionController {
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, missionEvent);
         if (result) {
             JFXButton okayButton = new JFXButton("Okay");
-            okayButton.setOnMouseClicked(event -> {
-                StageManager.getInstance().viewSubmissionStage.hide();
-            });
+            okayButton.setOnMouseClicked(event -> StageManager.getInstance().viewSubmissionStage.hide());
             AlertManager.showMaterialDialog(root, contentRoot,
                     Collections.singletonList(okayButton),
                     "Successfully judged submission",
@@ -214,6 +245,9 @@ public class ViewMissionController {
         }
     }
 
+    /**
+     * Creates a mission complete event
+     */
     private void completeButton() {
         StageManager.getInstance().completeMissionStage.showAndWait();
 
@@ -242,7 +276,7 @@ public class ViewMissionController {
 
     @FXML
     public void showCreatorProfileAction(MouseEvent actionEvent) {
-        if (!Auth.searchUser(DataManager.getInstance().token, mission.getCreatorId())) {
+        if (!AuthClient.searchUser(DataManager.getInstance().token, mission.getCreatorId())) {
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "User data retrieve failed!",
@@ -255,7 +289,7 @@ public class ViewMissionController {
 
     @FXML
     public void showContractorProfileAction(MouseEvent actionEvent) {
-        if (!Auth.searchUser(DataManager.getInstance().token, mission.getContractorId())) {
+        if (!AuthClient.searchUser(DataManager.getInstance().token, mission.getContractorId())) {
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "User data retrieve failed!",
