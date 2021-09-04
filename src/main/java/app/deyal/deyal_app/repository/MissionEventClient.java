@@ -1,8 +1,8 @@
 package app.deyal.deyal_app.repository;
 
 import app.deyal.deyal_app.data.Constants;
-import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.data.MissionEvent;
+import app.deyal.deyal_app.managers.DataManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -23,29 +23,24 @@ import java.util.Scanner;
 
 public class MissionEventClient {
 
-    private static final String serverUrl = Constants.SERVER_ADDRESS.concat("/event");
-
     public static boolean getMissionEventList(String token, String missionId) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/list"));
+            URIBuilder uriBuilder = new URIBuilder(Constants.URL_EVENT_LIST);
             uriBuilder.setParameter("token", token);
             uriBuilder.setParameter("missionId", missionId);
             HttpGet httpGet = new HttpGet(uriBuilder.build());
 
-            //Executing the Get request
+            // Executing the Get request
             HttpResponse httpResponse = httpclient.execute(httpGet);
 
             int statusCode = httpResponse.getStatusLine().getStatusCode();
-
-            System.out.println("inside get mission event list");
             if (statusCode == 200) {
                 Scanner scanner = new Scanner(httpResponse.getEntity().getContent());
                 String json = scanner.nextLine();
                 JsonArray jsonList = JsonParser.parseString(json).getAsJsonObject().get("payload").getAsJsonArray();
 
-                System.out.println(jsonList);
-                //Getting mission event array from json array
+                // Getting mission event array from json array
                 Gson gson = new Gson();
                 Type missionEventListType = new TypeToken<ArrayList<MissionEvent>>() {
                 }.getType();
@@ -53,11 +48,10 @@ public class MissionEventClient {
 
                 DataManager.getInstance().tempMissionEventList = missionEventArray;
 
-                System.out.println("Outside get mission event list");
                 return true;
             } else {
-                //Printing the status line
-                System.out.println(httpResponse.getStatusLine());
+                // Printing the status line
+                System.out.println("Inside get mission event list\n" + httpResponse.getStatusLine());
                 Scanner sc = new Scanner(httpResponse.getEntity().getContent());
                 while (sc.hasNext()) {
                     System.out.println(sc.nextLine());
@@ -75,34 +69,31 @@ public class MissionEventClient {
     public static boolean addEvent(String token, MissionEvent missionEvent) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            URIBuilder uriBuilder = new URIBuilder(serverUrl.concat("/add"));
+            URIBuilder uriBuilder = new URIBuilder(Constants.URL_EVENT_ADD);
             uriBuilder.setParameter("token", token);
             HttpPost httpPost = new HttpPost(uriBuilder.build());
 
-            //adding missionEvent data
+            // Adding missionEvent data
             Gson gson = new Gson();
             String json = gson.toJson(missionEvent);
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
             httpPost.setEntity(new StringEntity(json));
 
-            System.out.println("inside add event client");
-            System.out.println(json);
-
-            //Executing the Put request
+            // Executing the Put request
             HttpResponse httpresponse = httpclient.execute(httpPost);
+
             int statusCode = httpresponse.getStatusLine().getStatusCode();
             if (statusCode == 200) {
-                System.out.println("Outside add event client");
                 return true;
             } else {
-                //Printing the status line
-                System.out.println(httpresponse.getStatusLine());
+                // Printing the status line
+                System.out.println("Inside add mission event\n" + httpresponse.getStatusLine());
                 Scanner sc = new Scanner(httpresponse.getEntity().getContent());
                 while (sc.hasNext()) {
                     System.out.println(sc.nextLine());
                 }
-                System.out.println("Outside add event client");
+                System.out.println("Outside add mission event");
                 return false;
             }
         } catch (IOException | URISyntaxException e) {

@@ -6,7 +6,27 @@ public interface Constants {
 
     String LOG_NAME = "Deyal_log";
 
+    // Server API URLs
     String SERVER_ADDRESS = "http://localhost:3030/v1";
+
+    String URL_AUTH_REGISTER = SERVER_ADDRESS + "/auth/register";
+    String URL_AUTH_LOGIN = SERVER_ADDRESS + "/auth/login";
+    String URL_AUTH_USER = SERVER_ADDRESS + "/auth/user";
+    String URL_AUTH_SEARCH = SERVER_ADDRESS + "/auth/search";
+    String URL_AUTH_SEARCH_NAME = SERVER_ADDRESS + "/auth/search/name";
+    String URL_AUTH_UPDATE_USER = SERVER_ADDRESS + "/auth/update/user";
+    String URL_AUTH_UPDATE_PASS = SERVER_ADDRESS + "/auth/update/password";
+    String URL_AUTH_FORGOT_SEND = SERVER_ADDRESS + "/auth/forgot/send";
+    String URL_AUTH_FORGOT_VERIFY = SERVER_ADDRESS + "/auth/forgot/verify";
+
+    String URL_MISSION_LIST_ALL = SERVER_ADDRESS + "/mission/list/all";
+    String URL_MISSION_LIST_MY = SERVER_ADDRESS + "/mission/list/my";
+    String URL_MISSION_SEARCH = SERVER_ADDRESS + "/mission/search/title";
+    String URL_MISSION_CREATE = SERVER_ADDRESS + "/mission/create";
+    String URL_MISSION_UPDATE = SERVER_ADDRESS + "/mission/update";
+
+    String URL_EVENT_LIST = SERVER_ADDRESS + "/event/list";
+    String URL_EVENT_ADD = SERVER_ADDRESS + "/event/add";
 
     // Application
     String APP_NAME = "Deyal";
