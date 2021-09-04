@@ -84,7 +84,7 @@
                     <Insets bottom="35.0" left="5.0" right="5.0" top="5.0"/>
                 </padding>
                 <Button mnemonicParsing="false" onAction="#handleAcceptButtonAction" prefHeight="25.0"
-                        prefWidth="100.0" text="Accept"/>
+                        prefWidth="100.0" text="Assign"/>
                 <Button mnemonicParsing="false" onAction="#handlePreviousButtonAction" prefHeight="25.0"
                         prefWidth="100.0" text="Previous"/>
                 <Button mnemonicParsing="false" onAction="#handleNextButtonAction" prefHeight="25.0"

@@ -7,7 +7,7 @@ import app.deyal.deyal_app.data.events.EventType;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import app.deyal.deyal_app.repository.MissionEventClient;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -74,7 +74,7 @@ public class ViewRequestController {
     private void setData() {
         missionEvent = requestEventsList.get(currentIndex);
 
-        boolean result = Auth.searchUser(DataManager.getInstance().token, missionEvent.getRequest().getRequestBy());
+        boolean result = AuthClient.searchUser(DataManager.getInstance().token, missionEvent.getRequest().getRequestBy());
         if (result) {
             requester = DataManager.getInstance().tempUser;
             nameLabel.setText(requester.getUserName());
@@ -99,6 +99,7 @@ public class ViewRequestController {
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, event);
         if (result) {
             JFXButton okayButton = new JFXButton("Okay");
+            DataManager.getInstance().tempChoice = true;
             okayButton.setOnMouseClicked(event1 -> StageManager.getInstance().viewRequestStage.hide());
             AlertManager.showMaterialDialog(root, contentRoot,
                     Collections.singletonList(okayButton),
