@@ -18,7 +18,7 @@
                 <JFXTextArea fx:id="shortDescriptionTextArea" labelFloat="true" prefHeight="100.0"
                              prefWidth="400.0" promptText="Short description"/>
                 <JFXTextArea fx:id="detailsTextArea" labelFloat="true" prefHeight="150.0" prefWidth="400.0"
-                             promptText="Detailed description (include any special requirements, deadline, reward etc.)"
+                             promptText="Detailed description"
                              text="Description: &#10;Expectations: &#10;Rewards: &#10;Deadline: "/>
                 <JFXComboBox fx:id="levelChoiceBox" labelFloat="true" prefHeight="40.0" prefWidth="400.0"
                              promptText="Difficulty"/>
