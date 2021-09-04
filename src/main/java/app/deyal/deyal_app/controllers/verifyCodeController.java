@@ -3,7 +3,7 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -13,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class verifyCodeController {
@@ -37,16 +36,16 @@ public class verifyCodeController {
             return;
         }
 
-        boolean result = Auth.verifyCode(DataManager.getInstance().tempMessage, code, password);
+        boolean result = AuthClient.verifyCode(DataManager.getInstance().tempMessage, code, password);
         if (result) {
             JFXButton okayButton = new JFXButton("Okay");
             okayButton.setOnMouseClicked(event -> StageManager.getInstance().verifyCodeStage.hide());
             AlertManager.showMaterialDialog(root, contentRoot,
                     Collections.singletonList(okayButton),
                     "Password changed successfully",
-                    "Your password has been changed.");
+                    "Your password has been changed. Please login using new password.");
         } else {
-            // show send code failed
+            // Shows send code failed
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Password recovery failed!",
@@ -55,7 +54,7 @@ public class verifyCodeController {
     }
 
     /**
-     * This method shows an alert if both password are not same. otherwise only returns true.
+     * This method shows an alert if both password are not same. otherwise, only returns true.
      *
      * @param newPassword     password
      * @param confirmPassword repeat password
@@ -76,18 +75,18 @@ public class verifyCodeController {
     @FXML
     public void sendCodeAction(MouseEvent mouseEvent) {
         String email = DataManager.getInstance().tempMessage;
-        boolean result = Auth.sendCode(email);
+        boolean result = AuthClient.sendCode(email);
         if (result) {
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
                     "Check your email",
                     "A new recover code has been sent to your email address. Please check your email and follow the instructions given there.");
         } else {
-            // show send code failed
+            // Shows send code failed
             AlertManager.showMaterialDialog(root, contentRoot,
                     null,
-                    "Recover code sending failed!",
-                    "Recover code could not be sent for unknown reasons. Please check your internet connection and try again.");
+                    "Recovery code sending failed!",
+                    "Recovery code could not be sent for unknown reasons. Please check your internet connection and try again.");
         }
     }
 

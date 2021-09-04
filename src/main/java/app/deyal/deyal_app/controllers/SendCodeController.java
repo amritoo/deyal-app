@@ -3,7 +3,7 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -29,20 +29,21 @@ public class SendCodeController {
         JFXButton positiveButton = new JFXButton("Yes");
         positiveButton.setOnMouseClicked(event -> {
             String email = emailTextField.getText();
-            boolean result = Auth.sendCode(email);
+            boolean result = AuthClient.sendCode(email);
             if (result) {
                 DataManager.getInstance().tempMessage = email;
                 JFXButton okayButton = new JFXButton("Okay");
                 okayButton.setOnMouseClicked(event1 -> {
                     DataManager.getInstance().tempChoice = true;
                     StageManager.getInstance().sendCodeStage.hide();
+                    StageManager.getInstance().verifyCodeStage.show();
                 });
                 AlertManager.showMaterialDialog(root, contentRoot,
                         Collections.singletonList(okayButton),
                         "Check your email",
                         "A recover code has been sent to your email address. Please check your email and follow the instructions given there.");
             } else {
-                // show send code failed
+                // Shows send code failed
                 AlertManager.showMaterialDialog(root, contentRoot,
                         null,
                         "Recover code sending failed!",
