@@ -304,6 +304,18 @@
     -fx-border-radius: 0px;
 }
 
+/*---------------------------------------- About ----------------------------------------*/
+.label-name {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold;
+}
+.label-details {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 12pt;
+    -fx-font-style: italic;
+}
+
 /*---------------------------------------- Dialogs ----------------------------------------*/
 .dialog-button {
     -fx-pref-width: 100px;
