@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane styleClass="root" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.MyMissionsController">
+    <TableView fx:id="myMissionTableView" prefHeight="600.0" tableMenuButtonVisible="true">
+        <columns>
+            <TableColumn fx:id="mmMissionTitleTableColumn" editable="false" prefWidth="200.0"
+                         text="Mission Title"/>
+            <TableColumn fx:id="mmMissionStatusTableColumn" editable="false" prefWidth="120.0"
+                         text="Status"/>
+            <TableColumn fx:id="mmMissionLevelTableColumn" editable="false" prefWidth="100.0"
+                         text="Level"/>
+            <TableColumn fx:id="mmMissionDescriptionTableColumn" editable="false" prefWidth="380.0"
+                         text="Short Description"/>
+        </columns>
+    </TableView>
+</AnchorPane>

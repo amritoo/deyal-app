@@ -24,6 +24,11 @@ public class User {
 
     private Date registrationDate;
 
+    public User() {
+    }
+
+    /*............................................................................................................*/
+
     public void print() {
         System.out.println(id);
         System.out.println(userName);
@@ -36,11 +41,6 @@ public class User {
         System.out.println(missionInfo);
         System.out.println(reputation);
         System.out.println(registrationDate);
-    }
-
-    /*............................................................................................................*/
-
-    public User() {
     }
 
     public String getId() {
@@ -123,15 +123,15 @@ public class User {
         return notifications;
     }
 
-    public ArrayList<Notification> getNotificationsInReverse() {
-        ArrayList<Notification> reverseNotifications = new ArrayList<>();
-        for(int i = notifications.size() - 1; i >= 0; i--)
-            reverseNotifications.add(notifications.get(i));
-        return reverseNotifications;
-    }
-
     public void setNotifications(ArrayList<Notification> notifications) {
         this.notifications = notifications;
+    }
+
+    public ArrayList<Notification> getNotificationsInReverse() {
+        ArrayList<Notification> reverseNotifications = new ArrayList<>();
+        for (int i = notifications.size() - 1; i >= 0; i--)
+            reverseNotifications.add(notifications.get(i));
+        return reverseNotifications;
     }
 
     public Date getRegistrationDate() {

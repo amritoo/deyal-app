@@ -4,19 +4,17 @@ import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.data.MissionEvent;
 import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.data.events.EventType;
+import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class DataManager {
-
-    public static String server = "http://localhost:3030/v1";
 
     public String token;
     public User userData;
     public ArrayList<Mission> allMissionsList;
     public ArrayList<Mission> myMissionsList;
-    public Map<String, String> userIdAndNameMap;
 
     public User tempUser;
     public Mission tempMission;
@@ -26,8 +24,11 @@ public class DataManager {
     public String tempMessage;
     public boolean tempChoice;
 
-    public String getUserName(String userId) {
-        return userIdAndNameMap.get(userId);
+    public StackPane mainRoot;
+    public Node mainContentRoot;
+
+    public static DataManager getInstance() {
+        return DataManager.Singleton.INSTANCE;
     }
 
     public ArrayList<MissionEvent> getRequestEvents() {
@@ -35,7 +36,6 @@ public class DataManager {
         for (MissionEvent event : tempMissionEventList) {
             if (event.getEventType() == EventType.REQUEST) {
                 missionEvents.add(event);
-                System.out.println(event.getEventType());
             }
         }
         return missionEvents;
@@ -53,7 +53,7 @@ public class DataManager {
     public ArrayList<Mission> searchMissionByTitle(String title) {
         ArrayList<Mission> missionArrayList = new ArrayList<>();
         for (Mission mission : allMissionsList) {
-            if (mission.getTitle().equals(title)) {
+            if (mission.getTitle().contains(title)) {
                 missionArrayList.add(mission);
             }
         }
@@ -65,7 +65,6 @@ public class DataManager {
         userData = null;
         allMissionsList = null;
         myMissionsList = null;
-        userIdAndNameMap = null;
         tempUser = null;
         tempMission = null;
         tempMissionList = null;
@@ -76,10 +75,6 @@ public class DataManager {
 
     public String getToken() {
         return token;
-    }
-
-    public static DataManager getInstance() {
-        return DataManager.Singleton.INSTANCE;
     }
 
     private static class Singleton {

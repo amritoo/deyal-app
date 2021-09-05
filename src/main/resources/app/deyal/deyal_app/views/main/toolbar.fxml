@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox alignment="TOP_CENTER" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171">
+
+    <JFXButton accessibleText="createMissionButton" contentDisplay="TOP" mnemonicParsing="false" prefHeight="130.0"
+               prefWidth="140.0" styleClass="toolbar-button" text="Create Mission">
+        <graphic>
+            <FontAwesomeIconView glyphName="PLUS_SQUARE" size="48"/>
+        </graphic>
+    </JFXButton>
+
+    <JFXButton accessibleText="searchMissionButton" contentDisplay="TOP" mnemonicParsing="false" prefHeight="130.0"
+               prefWidth="140.0" styleClass="toolbar-button" text="Search Mission">
+        <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" size="48"/>
+        </graphic>
+    </JFXButton>
+
+    <JFXButton accessibleText="refreshButton" contentDisplay="TOP" mnemonicParsing="false" prefHeight="130.0"
+               prefWidth="140.0" styleClass="toolbar-button" text="Refresh">
+        <graphic>
+            <FontAwesomeIconView glyphName="REFRESH" size="48"/>
+        </graphic>
+    </JFXButton>
+
+    <JFXButton accessibleText="notificationButton" contentDisplay="TOP" mnemonicParsing="false" prefHeight="130.0"
+               prefWidth="140.0" styleClass="toolbar-button" text="Notification">
+        <graphic>
+            <FontAwesomeIconView glyphName="BELL_ALT" size="48"/>
+        </graphic>
+    </JFXButton>
+
+    <JFXButton accessibleText="themeButton" contentDisplay="TOP" mnemonicParsing="false" prefHeight="130.0"
+               prefWidth="140.0" styleClass="toolbar-button" text="Change Theme">
+        <graphic>
+            <FontAwesomeIconView glyphName="SUPERPOWERS" size="48"/>
+        </graphic>
+    </JFXButton>
+
+    <JFXButton accessibleText="logoutButton" contentDisplay="TOP" mnemonicParsing="false" prefHeight="130.0"
+               prefWidth="140.0" styleClass="toolbar-button" text="Logout">
+        <graphic>
+            <FontAwesomeIconView glyphName="SIGN_OUT" size="48"/>
+        </graphic>
+    </JFXButton>
+
+</VBox>

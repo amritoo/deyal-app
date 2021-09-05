@@ -1,59 +1,65 @@
 package app.deyal.deyal_app.controllers;
 
 
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.repository.AuthClient;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 
 public class LoginController {
 
     @FXML
-    private TextField emailTextField;
+    public StackPane root;
     @FXML
-    private PasswordField passwordField;
+    public VBox contentRoot;
     @FXML
-    private CheckBox checkBox;
+    public JFXTextField emailTextField;
     @FXML
-    private Label forgotPasswordLabel;
+    public JFXPasswordField passwordField;
+    @FXML
+    public JFXCheckBox rememberCheckbox;
 
     @FXML
-    private void handleRegisterButtonAction(ActionEvent event) {
+    private void handleRegisterButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().loginStage.hide();
         StageManager.getInstance().registerStage.showAndWait();
     }
 
     @FXML
-    private void handleSignInButtonAction(ActionEvent event) {
+    private void handleSignInButtonAction(ActionEvent actionEvent) {
         String email = emailTextField.getText();
         String password = passwordField.getText();
-        boolean remember = checkBox.isSelected();
+        boolean remember = rememberCheckbox.isSelected();
 
-        if (Auth.login(email, password, remember)) {
+        if (AuthClient.login(email, password, remember)) {
             StageManager.getInstance().loginStage.hide();
             StageManager.getInstance().createMainStage();
             StageManager.getInstance().mainStage.show();
-        } else {    //show login failed
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Login Failed!");
-            alert.setContentText("Please check your email or password.");
-            alert.showAndWait();
+        } else {    // Shows login failed
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Login Failed!",
+                    "Please check your email or password and try again.");
+            emailTextField.getStyleClass().add("wrong-credentials");
+            passwordField.getStyleClass().add("wrong-credentials");
         }
     }
 
     @FXML
-    private void handleMouseEvent(MouseEvent event) {
-        //TODO: for mouse hover action show underline
-        if (!DataManager.getInstance().tempChoice) {
-            StageManager.getInstance().sendCodeStage.showAndWait();
-        }
-        if(DataManager.getInstance().tempChoice) {
+    private void handleForgotPasswordAction(MouseEvent mouseEvent) {
+        if (DataManager.getInstance().tempChoice) {
             StageManager.getInstance().verifyCodeStage.showAndWait();
+        } else {
+            StageManager.getInstance().sendCodeStage.showAndWait();
         }
     }
 

@@ -1,8 +1,9 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.data.Mission;
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -10,13 +11,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,13 +25,17 @@ import java.util.Comparator;
 public class SearchMissionController {
 
     @FXML
-    public TextField titleTextField;
+    public StackPane root;
     @FXML
-    public TableView<Mission> dashboardTableView;
+    public VBox contentRoot;
+    @FXML
+    public TextField searchTextField;
+    @FXML
+    public TableView<Mission> searchMissionTableView;
     @FXML
     public TableColumn<Mission, String> missionTitleTableColumn;
     @FXML
-    public TableColumn<Mission, Integer> missionLevelTableColumn;
+    public TableColumn<Mission, String> missionLevelTableColumn;
     @FXML
     public TableColumn<Mission, String> missionCreatorTableColumn;
     @FXML
@@ -39,100 +44,91 @@ public class SearchMissionController {
 
     @FXML
     public void handleSearchMissionButtonAction(ActionEvent actionEvent) {
-        String title = titleTextField.getText();
-        if (title == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No title given!");
-            alert.setContentText("Please enter the mission title you're looking for.");
-            alert.showAndWait();
-        } else {
-            ArrayList<Mission> missionArrayList = DataManager.getInstance().searchMissionByTitle(title);
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Result");
-            if (missionArrayList == null) {
-                alert.setHeaderText("No mission found.");
-                alert.setContentText("A mission having the given title is not created yet.");
-            } else {
-                alert.setHeaderText("Mission found.");
-                alert.setContentText("A total of " + missionArrayList.size() + " missions were found having the given title.");
-            }
-            alert.showAndWait();
-
-            missionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("title"));
-            missionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, Integer>("difficulty"));
-            missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<>("creatorId") {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
-                    Mission mission = param.getValue();
-                    String name = DataManager.getInstance().getUserName(mission.getCreatorId());
-                    if (name == null) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Failed");
-                        alert.setHeaderText("Creator name retrieve failed");
-                        alert.setContentText("Please check your Internet connection.");
-                        alert.showAndWait();
-                    }
-                    return new ReadOnlyObjectWrapper<>(name);
-                }
-            });
-            missionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<Mission, String>("description"));
-            dashboardTableView.getItems().setAll(missionArrayList);
-
-            // custom sort dashboard table
-            dashboardTableView.setSortPolicy(tv -> {
-                final ObservableList<Mission> itemsList = dashboardTableView.getItems();
-                if (itemsList == null || itemsList.isEmpty()) {
-                    return true;
-                }
-                final ArrayList<TableColumn<Mission, ?>> columns = new ArrayList<>(dashboardTableView.getSortOrder());
-                if (columns.isEmpty()) {
-                    return true;
-                }
-                FXCollections.sort(itemsList, (a, b) -> {
-                    for (TableColumn<Mission, ?> col : columns) {
-                        if (col.getSortType() == null || !col.isSortable()) {
-                            continue;
-                        }
-
-                        Object value1 = col.getCellData(a);
-                        Object value2 = col.getCellData(b);
-                        if (missionLevelTableColumn.equals(col)) {
-                            value1 = a.getDifficulty();
-                            value2 = b.getDifficulty();
-                        }
-
-                        @SuppressWarnings("unchecked") final Comparator<Object> c = (Comparator<Object>) col.getComparator();
-                        final int result = TableColumn.SortType.ASCENDING.equals(col.getSortType()) ? c.compare(value1, value2)
-                                : c.compare(value2, value1);
-                        if (result != 0) {
-                            return result;
-                        }
-                    }
-                    return 0;
-                });
-                return true;
-            });
-
-            //selecting a mission from dashboard
-            dashboardTableView.setOnMouseClicked((MouseEvent event) -> {
-                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                    int index = dashboardTableView.getSelectionModel().getSelectedIndex();
-                    DataManager.getInstance().tempMission = dashboardTableView.getItems().get(index);
-                    if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token,
-                            DataManager.getInstance().tempMission.getId())) {   //show mission event list retrieve failed
-                        Alert alert2 = new Alert(Alert.AlertType.WARNING);
-                        alert2.setTitle("Failed");
-                        alert2.setHeaderText("Mission event list retrieve Failed!");
-                        alert2.setContentText("Please check your Internet connection.");
-                        alert2.showAndWait();
-                    }
-                    StageManager.getInstance().createViewMissionStage();
-                    StageManager.getInstance().viewMissionStage.showAndWait();
-                }
-            });
+        String title = searchTextField.getText();
+        if (title == null || title.length() == 0) {
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "No title given!",
+                    "Please enter some texts to find all missions containing that text.");
+            return;
         }
+
+        // Getting an arraylist containing the inquired missions
+        ArrayList<Mission> missionArrayList = DataManager.getInstance().searchMissionByTitle(title);
+        if (missionArrayList.size() == 0) {
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "No mission found!",
+                    "A mission title containing the given text does not exist yet.");
+        } else {
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Mission found",
+                    "A total of " + missionArrayList.size() + " missions were found containing the given text in title.");
+        }
+
+        missionTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        missionLevelTableColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty") {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Mission, String> param) {
+                Mission mission = param.getValue();
+                return new ReadOnlyObjectWrapper<>(mission.getDifficultyAsString());
+            }
+        });
+        missionCreatorTableColumn.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
+        missionDescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        searchMissionTableView.getItems().setAll(missionArrayList);
+
+        // Custom sort table
+        searchMissionTableView.setSortPolicy(param -> {
+            final ObservableList<Mission> itemsList = searchMissionTableView.getItems();
+            if (itemsList == null || itemsList.isEmpty()) {
+                return true;
+            }
+            final ArrayList<TableColumn<Mission, ?>> columns = new ArrayList<>(searchMissionTableView.getSortOrder());
+            if (columns.isEmpty()) {
+                return true;
+            }
+            FXCollections.sort(itemsList, (o1, o2) -> {
+                for (TableColumn<Mission, ?> col : columns) {
+                    if (col.getSortType() == null || !col.isSortable()) {
+                        continue;
+                    }
+
+                    Object value1 = col.getCellData(o1);
+                    Object value2 = col.getCellData(o2);
+                    if (missionLevelTableColumn.equals(col)) {
+                        value1 = o1.getDifficulty();
+                        value2 = o2.getDifficulty();
+                    }
+
+                    @SuppressWarnings("unchecked") final Comparator<Object> c = (Comparator<Object>) col.getComparator();
+                    final int result = TableColumn.SortType.ASCENDING.equals(col.getSortType()) ? c.compare(value1, value2)
+                            : c.compare(value2, value1);
+                    if (result != 0) {
+                        return result;
+                    }
+                }
+                return 0;
+            });
+            return true;
+        });
+
+        // Selecting a mission from tableview
+        searchMissionTableView.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                int index = searchMissionTableView.getSelectionModel().getSelectedIndex();
+                DataManager.getInstance().tempMission = searchMissionTableView.getItems().get(index);
+
+                String missionId = DataManager.getInstance().tempMission.getId();
+                if (MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
+                    DataManager.getInstance().tempMissionEventList = null;
+                }
+
+                StageManager.getInstance().createViewMissionStage();
+                StageManager.getInstance().viewMissionStage.showAndWait();
+            }
+        });
     }
 
     @FXML

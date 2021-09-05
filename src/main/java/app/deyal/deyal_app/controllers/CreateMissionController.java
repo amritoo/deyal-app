@@ -1,28 +1,38 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.managers.DataManager;
-import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Mission;
 import app.deyal.deyal_app.data.MissionDifficulty;
+import app.deyal.deyal_app.managers.AlertManager;
+import app.deyal.deyal_app.managers.DataManager;
+import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.MissionClient;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class CreateMissionController {
 
     @FXML
-    public TextField titleTextField;
+    public StackPane root;
     @FXML
-    public TextArea shortDescriptionTextArea;
+    public VBox contentRoot;
     @FXML
-    public TextArea detailsTextArea;
+    public JFXTextField titleTextField;
     @FXML
-    public ChoiceBox<String> levelChoiceBox;
+    public JFXTextArea shortDescriptionTextArea;
     @FXML
-    public Button createButton;
+    public JFXTextArea detailsTextArea;
     @FXML
-    public Button cancelButton;
+    public JFXComboBox<String> levelChoiceBox;
+    @FXML
+    public JFXButton createButton;
+    @FXML
+    public JFXButton cancelButton;
 
     @FXML
     public void initialize() {
@@ -34,48 +44,47 @@ public class CreateMissionController {
     }
 
     @FXML
-    public void handleCreateButtonAction(ActionEvent event) {
+    public void handleCreateButtonAction(ActionEvent actionEvent) {
         Mission mission = new Mission();
         mission.setTitle(titleTextField.getText());
         mission.setDescription(shortDescriptionTextArea.getText());
         mission.setLongDescription(detailsTextArea.getText());
         mission.setDifficulty(this.getDifficulty());
 
-        if (MissionClient.createMission(DataManager.getInstance().getToken(), mission)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("Mission created");
-            alert.setContentText("Mission created successfully.");
-            alert.showAndWait();
-        } else {    //show mission could not be created
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Failed");
-            alert.setHeaderText("Mission creation failed");
-            alert.setContentText("Mission couldn't be created. Please check your internet connection.");
-            alert.showAndWait();
+        boolean result = MissionClient.createMission(DataManager.getInstance().getToken(), mission);
+        if (result) {
+            AlertManager.showMaterialDialog(DataManager.getInstance().mainRoot, DataManager.getInstance().mainContentRoot,
+                    null,
+                    "Mission created",
+                    "Mission created successfully.");
+            StageManager.getInstance().createMissionStage.hide();
+        } else {
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Mission creation failed!",
+                    "Mission couldn't be created. Please check your internet connection and try again.");
         }
-        StageManager.getInstance().createMissionStage.hide();
     }
 
+    /**
+     * Gets and converts the chosen difficulty to MissionDifficulty object.
+     *
+     * @return the corresponding {@link MissionDifficulty}
+     */
     private MissionDifficulty getDifficulty() {
-        switch (levelChoiceBox.getValue()) {
-            case "Very easy":
-                return MissionDifficulty.VERY_EASY;
-            case "Easy":
-                return MissionDifficulty.EASY;
-            case "Medium":
-                return MissionDifficulty.MEDIUM;
-            case "Hard":
-                return MissionDifficulty.HARD;
-            case "Very hard":
-                return MissionDifficulty.VERY_HARD;
-            default:
-                return MissionDifficulty.UNKNOWN;
-        }
+        return switch (levelChoiceBox.getValue()) {
+            case "Very easy" -> MissionDifficulty.VERY_EASY;
+            case "Easy" -> MissionDifficulty.EASY;
+            case "Medium" -> MissionDifficulty.MEDIUM;
+            case "Hard" -> MissionDifficulty.HARD;
+            case "Very hard" -> MissionDifficulty.VERY_HARD;
+            default -> MissionDifficulty.UNKNOWN;
+        };
     }
 
     @FXML
-    public void handleCancelButtonAction(ActionEvent event) {
+    public void handleCancelButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().createMissionStage.hide();
     }
+
 }

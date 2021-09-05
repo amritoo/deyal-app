@@ -1,8 +1,8 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.data.User;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.data.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -63,6 +63,7 @@ public class ViewProfileController {
             emailLabel.setText(user.getEmail());
             phoneNumberLabel.setText(user.getPhoneNumber());
             birthDateLabel.setText(String.valueOf(LocalDate.ofEpochDay(user.getDateOfBirth()))); //converting user dateOfBirth to LocalDate String
+
             if (user.getAddress() != null) {
                 houseLabel.setText(user.getAddress().getHouseAddress());
                 blockLabel.setText(user.getAddress().getBlockAddress());
@@ -70,7 +71,9 @@ public class ViewProfileController {
                 policeStationLabel.setText(user.getAddress().getPoliceStation());
                 postOfficeLabel.setText(user.getAddress().getPostOffice());
             }
+
             accountAgeLabel.setText(this.calculateAccountAge(user.getRegistrationDate()));
+
             if (user.getMissionInfo() != null) {
                 ratingClientLabel.setText(String.valueOf(user.getMissionInfo().getRatingAsClient()));
                 ratingContractorLabel.setText(String.valueOf(user.getMissionInfo().getRatingAsContractor()));
@@ -78,6 +81,7 @@ public class ViewProfileController {
                 missionCompletedLabel.setText(String.valueOf(user.getMissionInfo().getCompleted().size()));
                 missionFailedLabel.setText(String.valueOf(user.getMissionInfo().getFailed().size()));
             }
+
             reputationLabel.setText(String.valueOf(user.getReputation()));
         }
     }
@@ -98,4 +102,5 @@ public class ViewProfileController {
     public void handleCloseButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().userProfileStage.hide();
     }
+
 }

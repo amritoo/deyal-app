@@ -1,21 +1,28 @@
 package app.deyal.deyal_app.controllers;
 
+import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 public class CompleteMissionController {
+
     @FXML
-    public ChoiceBox<String> gotRewardChoiceBox;
+    public StackPane root;
     @FXML
-    public TextArea messageTextArea;
+    public VBox contentRoot;
+    @FXML
+    public JFXComboBox<String> gotRewardChoiceBox;
+    @FXML
+    public JFXTextArea messageTextArea;
 
     @FXML
     private void initialize() {
@@ -26,23 +33,26 @@ public class CompleteMissionController {
     @FXML
     public void handleCompleteButtonAction(ActionEvent actionEvent) {
         if (gotRewardChoiceBox.getValue() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Not chosen yet");
-            alert.setContentText("Please choose whether you got your reward or not.");
-            alert.showAndWait();
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Reward not chosen yet!",
+                    "Please choose whether you got your reward or not.");
         } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("Are you sure?");
-            alert.setContentText("You will complete this mission and can not change it after this.");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
+            // Buttons to show in confirmation dialog
+            JFXButton positiveButton = new JFXButton("Yes");
+            positiveButton.setOnMouseClicked(event -> {
                 DataManager.getInstance().tempChoice = gotRewardChoiceBox.getValue().equals("Yes");
                 DataManager.getInstance().tempMessage = messageTextArea.getText();
                 messageTextArea.setText("");
                 StageManager.getInstance().completeMissionStage.hide();
-            }
+            });
+            JFXButton negativeButton = new JFXButton("No");
+
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    Arrays.asList(positiveButton, negativeButton),
+                    "Are you sure?",
+                    "You will complete this mission and can not change this afterwards.");
         }
     }
+
 }

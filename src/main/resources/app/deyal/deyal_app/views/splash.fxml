@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<StackPane fx:id="root" styleClass="splash-stack-pane" xmlns="http://javafx.com/javafx/11.0.1"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.SplashController">
+    <ImageView fitHeight="320.0" fitWidth="320.0" pickOnBounds="true">
+        <Image url="@../../../../images/ic_deyal.png"/>
+    </ImageView>
+</StackPane>

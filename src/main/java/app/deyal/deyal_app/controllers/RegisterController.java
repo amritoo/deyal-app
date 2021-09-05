@@ -1,93 +1,121 @@
 package app.deyal.deyal_app.controllers;
 
-import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.data.Register;
-import app.deyal.deyal_app.repository.Auth;
+import app.deyal.deyal_app.managers.AlertManager;
+import app.deyal.deyal_app.managers.StageManager;
+import app.deyal.deyal_app.repository.AuthClient;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.Collections;
 
 
 public class RegisterController {
 
     @FXML
-    private TextField userNameTextField;
+    public StackPane root;
     @FXML
-    private TextField fullNameTextField;
+    public VBox contentRoot;
     @FXML
-    private TextField emailTextField;
+    public JFXTextField firstNameTextField;
     @FXML
-    private PasswordField passwordField;
+    public JFXTextField lastNameTextField;
     @FXML
-    private PasswordField confirmPasswordField;
+    public JFXTextField userNameTextField;
     @FXML
-    private TextField phoneTextField;
+    public JFXTextField emailTextField;
     @FXML
-    private CheckBox checkBox;
+    public JFXPasswordField passwordField;
+    @FXML
+    public JFXPasswordField confirmPasswordField;
+    @FXML
+    public JFXTextField phoneTextField;
+    @FXML
+    public JFXCheckBox agreementCheckBox;
 
     private Register register;
 
     private void loadRegister() {
         register = new Register();
-        register.setUserName(userNameTextField.getText());
-        register.setFullName(fullNameTextField.getText());
-        register.setEmail(emailTextField.getText());
+        register.setUserName(extractText(userNameTextField));
+        register.setFullName(extractText(firstNameTextField) + " " + extractText(lastNameTextField));
+        register.setEmail(extractText(emailTextField));
         register.setPassword(passwordField.getText());
-        register.setPhoneNumber("+880" + phoneTextField.getText());
+        register.setPhoneNumber(extractText(phoneTextField));
+    }
+
+    /**
+     * This method calls getText() method on given TextField and trims the string before returning.
+     *
+     * @param textField the object to get text from
+     * @return text without beginning and trailing spaces
+     */
+    private String extractText(JFXTextField textField) {
+        return textField.getText().trim();
     }
 
     @FXML
-    private void handleCreateButtonAction(ActionEvent event) {
-        if (check()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("Do you want to submit?");
-            alert.setContentText("If you submit your account will be created using the given email. You can not change email later.");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                loadRegister();
-                if (Auth.register(register)) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText("Successfully registered account.");
-                    alert.setContentText("Your new account has been created. Please login to use Deyal app.");
-                    alert.showAndWait();
+    private void handleCreateButtonAction(ActionEvent actionEvent) {
+        if (!check()) {
+            return;
+        }
+
+        JFXButton positiveButton = new JFXButton("Yes");
+        positiveButton.setOnMouseClicked(event -> {
+            loadRegister();
+            if (AuthClient.register(register)) {
+                JFXButton okayButton = new JFXButton("Okay");
+                okayButton.setOnMouseClicked(event1 -> {
                     StageManager.getInstance().registerStage.hide();
                     StageManager.getInstance().loginStage.show();
-                } else {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Registration Failed");
-                    alert.setContentText("Registration failed for some reasons.");
-                    alert.showAndWait();
-                }
+                });
+                AlertManager.showMaterialDialog(root, contentRoot,
+                        Collections.singletonList(okayButton),
+                        "Successfully registered new account",
+                        "Your new account has been created. Please login to use Deyal app.");
+            } else {
+                AlertManager.showMaterialDialog(root, contentRoot,
+                        null,
+                        "Registration Failed!",
+                        "Registration failed for unknown reasons. Please check your internet connection and try again.");
             }
-        }
+        });
+        JFXButton negativeButton = new JFXButton("No");
+
+        AlertManager.showMaterialDialog(root, contentRoot,
+                Arrays.asList(positiveButton, negativeButton),
+                "Are you sure?",
+                "If you are sure, then press yes and your account will be created using the given email. You can not change email later.");
     }
 
     @FXML
-    private void handleBackButtonAction(ActionEvent event) {
+    private void handleBackButtonAction(ActionEvent actionEvent) {
         StageManager.getInstance().registerStage.hide();
         StageManager.getInstance().loginStage.show();
     }
 
     private boolean check() {
-        if (!passwordField.getText().equals(confirmPasswordField.getText())) {  //show password mismatch
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Password and confirm password is not same");
-            alert.setContentText("Password and confirm password needs to be same.");
-            alert.showAndWait();
+        if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+            // Shows password mismatch
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Passwords are not same!",
+                    "Your password does not match with second one. Both passwords need to be equal.");
             return false;
         }
-        if (!checkBox.isSelected()) {   //show must agree to terms and conditions
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText("Must agree to terms and conditions");
-            alert.setContentText("To proceed you MUST agree to terms and conditions.");
-            alert.showAndWait();
+        if (!agreementCheckBox.isSelected()) {
+            // Shows must agree to term and conditions
+            AlertManager.showMaterialDialog(root, contentRoot,
+                    null,
+                    "Must agree to terms and conditions!",
+                    "To proceed you MUST agree to terms and conditions.");
             return false;
         }
         return true;

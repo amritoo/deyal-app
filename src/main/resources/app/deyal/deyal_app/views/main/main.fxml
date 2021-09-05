@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane fx:id="root" styleClass="root" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="app.deyal.deyal_app.controllers.MainController">
+    <AnchorPane fx:id="contentRoot">
+        <JFXDrawer fx:id="drawer" defaultDrawerSize="140.0" direction="BOTTOM" resizableOnDrag="true"
+                   resizeContent="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
+                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Tab fx:id="dashboardTab" text="Dashboard">
+                <fx:include fx:id="dashboardTabPage" source="dashboard.fxml"/>
+            </Tab>
+            <Tab fx:id="myMissionsTab" text="My Missions">
+                <fx:include fx:id="myMissionsTabPage" source="my_missions.fxml"/>
+            </Tab>
+            <Tab fx:id="profileTab" text="Profile">
+                <fx:include fx:id="profileTabPage" source="profile.fxml"/>
+            </Tab>
+            <Tab fx:id="aboutTab" text="About">
+                <fx:include fx:id="aboutTabPage" source="about.fxml"/>
+            </Tab>
+        </TabPane>
+        <JFXHamburger fx:id="hamburger" styleClass="jfx-hamburger-icon" AnchorPane.rightAnchor="25.0"
+                      AnchorPane.topAnchor="10.0"/>
+    </AnchorPane>
+</StackPane>

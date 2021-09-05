@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane styleClass="root" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="app.deyal.deyal_app.controllers.AboutController">
+    <ScrollPane>
+        <VBox prefHeight="600.0" prefWidth="800.0" spacing="10.0" styleClass="root">
+            <children>
+                <HBox alignment="CENTER" prefWidth="450.0">
+                    <Label styleClass="label-title" text="Contact us at deyal.app@gmail.com"/>
+                    <padding>
+                        <Insets bottom="10.0"/>
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" spacing="50.0">
+                    <VBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0">
+                        <Label fx:id="firstMemberName" styleClass="label-name" text="Name"/>
+                        <Label fx:id="firstMemberDetails" styleClass="label-details" text="Introduction"
+                               textAlignment="CENTER" wrapText="true"/>
+                    </VBox>
+                    <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../images/first_member.png"/>
+                    </ImageView>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" spacing="50.0">
+                    <VBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0">
+                        <Label fx:id="secondMemberName" styleClass="label-name" text="Name"/>
+                        <Label fx:id="secondMemberDetails" styleClass="label-details" text="Introduction"
+                               textAlignment="CENTER" wrapText="true"/>
+                    </VBox>
+                    <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../images/second_member.png"/>
+                    </ImageView>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" spacing="50.0">
+                    <VBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0">
+                        <Label fx:id="thirdMemberName" styleClass="label-name" text="Name"/>
+                        <Label fx:id="thirdMemberDetails" styleClass="label-details" text="Introduction"
+                               textAlignment="CENTER" wrapText="true"/>
+                    </VBox>
+                    <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../images/third_member.png"/>
+                    </ImageView>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="35.0" left="35.0" right="35.0" top="35.0"/>
+            </padding>
+        </VBox>
+    </ScrollPane>
+</AnchorPane>

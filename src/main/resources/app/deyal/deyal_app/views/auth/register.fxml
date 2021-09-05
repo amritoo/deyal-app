@@ -1,122 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<SplitPane dividerPositions="0.075" orientation="VERTICAL" xmlns="http://javafx.com/javafx/10.0.2-internal"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.deyal.deyal_app.controllers.RegisterController">
-    <items>
-        <HBox alignment="CENTER_LEFT" spacing="10.0">
-            <children>
-                <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false"
-                        onAction="#handleBackButtonAction" prefHeight="30.0" prefWidth="60.0" text="Back"/>
-                <Label text="Create New Account">
-                    <font>
-                        <Font size="20.0"/>
-                    </font>
-                </Label>
-            </children>
-            <padding>
-                <Insets bottom="5.0" left="10.0" top="5.0"/>
-            </padding>
-        </HBox>
-        <VBox alignment="CENTER_LEFT" spacing="10.0">
-            <children>
-                <Label text="User Name">
-                    <font>
-                        <Font size="13.0"/>
-                    </font>
-                </Label>
-                <TextField fx:id="userNameTextField" prefHeight="40.0" prefWidth="450.0"
-                           promptText="Enter Your User Name"/>
-                <Label text="Full Name">
-                    <font>
-                        <Font size="13.0"/>
-                    </font>
-                </Label>
-                <TextField fx:id="fullNameTextField" prefHeight="40.0" prefWidth="450.0"
-                           promptText="Enter Your Full Name"/>
-                <Label text="Email">
-                    <font>
-                        <Font size="13.0"/>
-                    </font>
-                </Label>
-                <HBox>
-                    <children>
-                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="45.0" text="\@">
-                            <font>
-                                <Font name="System Bold Italic" size="24.0"/>
-                            </font>
-                        </Label>
-                        <TextField fx:id="emailTextField" prefHeight="40.0" prefWidth="400.0"
-                                   promptText="Enter email address"/>
-                    </children>
+<StackPane fx:id="root" styleClass="root" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="app.deyal.deyal_app.controllers.RegisterController">
+    <VBox fx:id="contentRoot" alignment="CENTER" spacing="20.0">
+        <children>
+            <HBox alignment="CENTER_LEFT" spacing="25.0">
+                <children>
+                    <JFXButton cancelButton="true" contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="ARROW_LEFT" size="20"/>
+                        </graphic>
+                    </JFXButton>
+                    <Label styleClass="label-title" text="Create New Account"/>
+                </children>
+                <padding>
+                    <Insets bottom="25.0"/>
+                </padding>
+            </HBox>
+            <VBox alignment="CENTER_LEFT" spacing="35.0">
+                <HBox spacing="40.0">
+                    <JFXTextField fx:id="firstNameTextField" labelFloat="true" prefHeight="40.0" prefWidth="180.0"
+                                  promptText="First name"/>
+                    <JFXTextField fx:id="lastNameTextField" labelFloat="true" prefHeight="40.0" prefWidth="180.0"
+                                  promptText="Last name"/>
                 </HBox>
-                <Label text="Password">
-                    <font>
-                        <Font size="13.0"/>
-                    </font>
-                </Label>
-                <HBox>
-                    <children>
-                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="45.0" text="#">
-                            <font>
-                                <Font name="System Bold Italic" size="24.0"/>
-                            </font>
-                        </Label>
-                        <PasswordField fx:id="passwordField" prefHeight="40.0" prefWidth="400.0"
-                                       promptText="Enter Password"/>
-                    </children>
+                <HBox spacing="10.0">
+                    <FontAwesomeIconView glyphName="USER_CIRCLE" size="40.0"/>
+                    <JFXTextField fx:id="userNameTextField" labelFloat="true" prefHeight="40.0" prefWidth="350.0"
+                                  promptText="User name"/>
                 </HBox>
-                <Label text="Confirm Password">
-                    <font>
-                        <Font size="13.0"/>
-                    </font>
-                </Label>
-                <HBox>
-                    <children>
-                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="45.0" text="#">
-                            <font>
-                                <Font name="System Bold Italic" size="24.0"/>
-                            </font>
-                        </Label>
-                        <PasswordField fx:id="confirmPasswordField" prefHeight="40.0" prefWidth="400.0"
-                                       promptText="Re-enter Password"/>
-                    </children>
+                <HBox spacing="10.0">
+                    <FontAwesomeIconView glyphName="AT" size="40.0"/>
+                    <JFXTextField fx:id="emailTextField" labelFloat="true" prefHeight="40.0" prefWidth="350.0"
+                                  promptText="Email address"/>
                 </HBox>
-                <Label text="Mobile Number">
-                    <font>
-                        <Font size="13.0"/>
-                    </font>
-                </Label>
-                <HBox>
-                    <children>
-                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="45.0" text="+880 ">
-                            <font>
-                                <Font name="System Bold" size="14.0"/>
-                            </font>
-                        </Label>
-                        <TextField fx:id="phoneTextField" prefHeight="40.0" prefWidth="400.0"
-                                   promptText="Enter Your Mobile Number"/>
-                    </children>
+                <HBox spacing="10.0">
+                    <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
+                    <JFXPasswordField fx:id="passwordField" labelFloat="true" prefHeight="40.0" prefWidth="350.0"
+                                      promptText="Password"/>
                 </HBox>
-                <CheckBox fx:id="checkBox" mnemonicParsing="false" text="I agree to terms and conditions">
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                </CheckBox>
-                <HBox alignment="CENTER">
-                    <children>
-                        <Button mnemonicParsing="false" onAction="#handleCreateButtonAction" prefHeight="40.0"
-                                prefWidth="150.0" text="Create"/>
-                    </children>
+                <HBox spacing="10.0">
+                    <FontAwesomeIconView glyphName="EXPEDITEDSSL" size="40.0"/>
+                    <JFXPasswordField fx:id="confirmPasswordField" labelFloat="true" prefHeight="40.0" prefWidth="350.0"
+                                      promptText="Re-enter password"/>
                 </HBox>
-            </children>
-            <padding>
-                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
-            </padding>
-        </VBox>
-    </items>
-</SplitPane>
+                <HBox spacing="10.0">
+                    <FontAwesomeIconView glyphName="PHONE" size="40.0"/>
+                    <JFXTextField fx:id="phoneTextField" labelFloat="true" prefHeight="40.0" prefWidth="350.0"
+                                  promptText="Phone number (ex. 01900-000000)"/>
+                </HBox>
+                <JFXCheckBox fx:id="agreementCheckBox" styleClass="checkbox-main"
+                             text="I agree to terms and conditions"/>
+            </VBox>
+            <HBox alignment="CENTER">
+                <JFXButton alignment="CENTER" buttonType="RAISED" defaultButton="true"
+                           onAction="#handleCreateButtonAction" prefHeight="50.0" prefWidth="250.0" text="Create"/>
+            </HBox>
+        </children>
+        <padding>
+            <Insets bottom="35.0" left="35.0" right="35.0" top="35.0"/>
+        </padding>
+    </VBox>
+</StackPane>
