@@ -156,6 +156,7 @@ public class ViewMissionController {
         missionEvent.setRequest(new Request(
                 DataManager.getInstance().userData.getId(),
                 DataManager.getInstance().tempMessage));
+        DataManager.getInstance().tempMessage = "";
 
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, missionEvent);
         if (result) {
@@ -195,6 +196,7 @@ public class ViewMissionController {
 
         MissionEvent missionEvent = new MissionEvent(mission.getId(), EventType.SUBMIT, currentUsername);
         missionEvent.setSubmit(new Submit(DataManager.getInstance().tempMessage));
+        DataManager.getInstance().tempMessage = "";
 
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, missionEvent);
         if (result) {
@@ -227,6 +229,7 @@ public class ViewMissionController {
             missionEvent = new MissionEvent(mission.getId(), EventType.REJECT, currentUsername);
             missionEvent.setReject(new Reject(DataManager.getInstance().tempMessage));
         }
+        DataManager.getInstance().tempMessage = "";
 
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, missionEvent);
         if (result) {
@@ -254,6 +257,7 @@ public class ViewMissionController {
         MissionEvent missionEvent = new MissionEvent(mission.getId(), EventType.REVIEW, currentUsername);
         missionEvent.setReview(new Review(DataManager.getInstance().tempChoice,
                 DataManager.getInstance().tempMessage));
+        DataManager.getInstance().tempMessage = "";
 
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, missionEvent);
         if (result) {
