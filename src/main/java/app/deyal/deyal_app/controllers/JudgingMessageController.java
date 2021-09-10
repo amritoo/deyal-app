@@ -24,10 +24,11 @@ public class JudgingMessageController {
     @FXML
     public void handleFinaliseButtonAction(ActionEvent actionEvent) {
         // Buttons to show in confirmation dialog
-        JFXButton positiveButton = new JFXButton("Yes");
+        JFXButton positiveButton = new JFXButton("I'm sure!");
         positiveButton.setOnMouseClicked(event -> {
             DataManager.getInstance().tempMessage = messageTextArea.getText();
             messageTextArea.setText("");
+            DataManager.getInstance().tempChoice = true;
             StageManager.getInstance().judgingMessageStage.hide();
         });
         JFXButton negativeButton = new JFXButton("No");

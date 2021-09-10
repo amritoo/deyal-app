@@ -22,7 +22,7 @@ public class DataManager {
     public ArrayList<MissionEvent> tempMissionEventList;
 
     public String tempMessage;
-    public boolean tempChoice;
+    public boolean tempChoice, tempApprove;
 
     public StackPane mainRoot;
     public Node mainContentRoot;

@@ -5,7 +5,6 @@ import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.MissionClient;
-import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -100,11 +99,6 @@ public class DashboardController {
                     int index = dashboardTableView.getSelectionModel().getSelectedIndex();
                     if (index < 0) return;
                     DataManager.getInstance().tempMission = dashboardTableView.getItems().get(index);
-                    String missionId = DataManager.getInstance().tempMission.getId();
-                    if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
-                        DataManager.getInstance().tempMissionEventList = null;
-                    }
-
                     StageManager.getInstance().createViewMissionStage();
                     StageManager.getInstance().viewMissionStage.showAndWait();
                 }
