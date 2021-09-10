@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.Collections;
 
-public class verifyCodeController {
+public class VerifyCodeController {
 
     @FXML
     public StackPane root;

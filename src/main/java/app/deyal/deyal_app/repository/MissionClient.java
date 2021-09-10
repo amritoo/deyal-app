@@ -155,7 +155,6 @@ public class MissionClient {
             // Adding user data
             Gson gson = new Gson();
             String json = gson.toJson(mission);
-            System.out.println(json);
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
             httpPost.setEntity(new StringEntity(json));

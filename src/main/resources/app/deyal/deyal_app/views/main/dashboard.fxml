@@ -11,7 +11,7 @@
             <TableColumn fx:id="missionLevelTableColumn" editable="false" prefWidth="100.0"
                          text="Level"/>
             <TableColumn fx:id="missionCreatorTableColumn" editable="false" prefWidth="150.0"
-                         text="Contractor"/>
+                         text="Creator"/>
             <TableColumn fx:id="missionDescriptionTableColumn" editable="false" prefWidth="400.0"
                          text="Short Description"/>
         </columns>

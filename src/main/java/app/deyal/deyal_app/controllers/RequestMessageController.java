@@ -24,13 +24,14 @@ public class RequestMessageController {
     @FXML
     public void handleSendButtonAction(ActionEvent actionEvent) {
         // Buttons to show in confirmation dialog
-        JFXButton positiveButton = new JFXButton("Yes");
+        JFXButton positiveButton = new JFXButton("I'm sure!");
         positiveButton.setOnMouseClicked(event -> {
             DataManager.getInstance().tempMessage = messageTextArea.getText();
             messageTextArea.setText("");
+            DataManager.getInstance().tempChoice = true;
             StageManager.getInstance().requestMessageStage.hide();
         });
-        JFXButton negativeButton = new JFXButton("Yes");
+        JFXButton negativeButton = new JFXButton("No");
 
         AlertManager.showMaterialDialog(root, contentRoot,
                 Arrays.asList(positiveButton, negativeButton),

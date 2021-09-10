@@ -79,13 +79,12 @@ public class StageManager {
         searchMissionStage = loadStage(Constants.SEARCH_MISSION_FXML, Constants.SEARCH_MISSION_TITLE);
 
         // message getter
-        requestMessageStage = loadStage(Constants.REQUEST_MESSAGE_FXML, Constants.REQUEST_MESSAGE_TITLE);
-        assignMessageStage = loadStage(Constants.ASSIGN_MESSAGE_FXML, Constants.ASSIGN_MESSAGE_TITLE);
-        submitMissionStage = loadStage(Constants.SUBMIT_MISSION_FXML, Constants.SUBMIT_MISSION_TITLE);
+        requestMessageStage = loadStageUndecorated(Constants.REQUEST_MESSAGE_FXML, Constants.REQUEST_MESSAGE_TITLE);
+        assignMessageStage = loadStageUndecorated(Constants.ASSIGN_MESSAGE_FXML, Constants.ASSIGN_MESSAGE_TITLE);
+        submitMissionStage = loadStageUndecorated(Constants.SUBMIT_MISSION_FXML, Constants.SUBMIT_MISSION_TITLE);
 
-        // TODO: set closing property, cannot close
-        judgingMessageStage = loadStage(Constants.JUDGING_MESSAGE_FXML, Constants.JUDGE_MESSAGE_TITLE);
-        completeMissionStage = loadStage(Constants.COMPLETE_MISSION_FXML, Constants.COMPLETE_MISSION_TITLE);
+        judgingMessageStage = loadStageUndecorated(Constants.JUDGING_MESSAGE_FXML, Constants.JUDGE_MESSAGE_TITLE);
+        completeMissionStage = loadStageUndecorated(Constants.COMPLETE_MISSION_FXML, Constants.COMPLETE_MISSION_TITLE);
     }
 
     public String getThemePath() {
@@ -125,16 +124,39 @@ public class StageManager {
         return stage;
     }
 
+    public Stage loadStageUndecorated(URL fxmlLocation, String title) {
+        Stage stage = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+            stage = new Stage(StageStyle.DECORATED);
+            Scene scene = new Scene(root);
+            setTheme(scene);
+            stage.setScene(scene);
+            stage.setTitle(title);
+            setStageIcon(stage);
+            stage.setResizable(false);
+            Stage finalStage = stage;
+            stage.setOnCloseRequest(event -> {
+                event.consume();
+                finalStage.hide();
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(Constants.LOG_NAME).log(Level.SEVERE, "StageManager:loadStage", ex);
+        }
+        return stage;
+    }
+
     public void createMainStage() {
         mainStage = loadStage(Constants.MAIN_FXML, Constants.MAIN_TITLE);
     }
 
     public void createViewMissionStage() {
-        viewMissionStage = loadStage(Constants.VIEW_MISSION_FXML, Constants.VIEW_MISSION_TITLE);
+        viewMissionStage = loadStageUndecorated(Constants.VIEW_MISSION_FXML, Constants.VIEW_MISSION_TITLE);
     }
 
     public void createUserProfileStage() {
-        userProfileStage = loadStage(Constants.VIEW_PROFILE_FXML, Constants.VIEW_PROFILE_TITLE);
+        userProfileStage = loadStageUndecorated(Constants.VIEW_PROFILE_FXML, Constants.VIEW_PROFILE_TITLE);
     }
 
     private static class Singleton {

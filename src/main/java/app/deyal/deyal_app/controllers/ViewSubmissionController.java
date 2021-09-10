@@ -19,14 +19,14 @@ public class ViewSubmissionController {
 
     @FXML
     public void handleApproveButtonAction(ActionEvent actionEvent) {
-        DataManager.getInstance().tempChoice = true;
+        DataManager.getInstance().tempApprove = true;
         StageManager.getInstance().judgingMessageStage.showAndWait();
         StageManager.getInstance().viewSubmissionStage.hide();
     }
 
     @FXML
     public void handleRejectButtonAction(ActionEvent actionEvent) {
-        DataManager.getInstance().tempChoice = false;
+        DataManager.getInstance().tempApprove = false;
         StageManager.getInstance().judgingMessageStage.showAndWait();
         StageManager.getInstance().viewSubmissionStage.hide();
     }

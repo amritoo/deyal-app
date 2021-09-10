@@ -3,7 +3,6 @@ package app.deyal.deyal_app.controllers;
 import app.deyal.deyal_app.data.Notification;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
-import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.TableCell;
@@ -54,10 +53,6 @@ public class NotificationController {
                 String missionId = notificationTableView.getItems().get(index).getMissionId();
                 DataManager.getInstance().tempMission = DataManager.getInstance().searchMissionById(missionId);
                 if (DataManager.getInstance().tempMission != null) {
-                    if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
-                        DataManager.getInstance().tempMissionEventList = null;
-                    }
-
                     StageManager.getInstance().createViewMissionStage();
                     StageManager.getInstance().viewMissionStage.showAndWait();
                 }

@@ -39,11 +39,12 @@ public class CompleteMissionController {
                     "Please choose whether you got your reward or not.");
         } else {
             // Buttons to show in confirmation dialog
-            JFXButton positiveButton = new JFXButton("Yes");
+            JFXButton positiveButton = new JFXButton("I'm sure!");
             positiveButton.setOnMouseClicked(event -> {
-                DataManager.getInstance().tempChoice = gotRewardChoiceBox.getValue().equals("Yes");
+                DataManager.getInstance().tempApprove = gotRewardChoiceBox.getValue().equals("Yes");
                 DataManager.getInstance().tempMessage = messageTextArea.getText();
                 messageTextArea.setText("");
+                DataManager.getInstance().tempChoice = true;
                 StageManager.getInstance().completeMissionStage.hide();
             });
             JFXButton negativeButton = new JFXButton("No");

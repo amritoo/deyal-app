@@ -95,6 +95,7 @@ public class ViewRequestController {
 
         MissionEvent event = new MissionEvent(missionEvent.getMissionId(), EventType.ASSIGN, requester.getUserName());
         event.setAssign(new Assign(requester.getId(), DataManager.getInstance().tempMessage));
+        DataManager.getInstance().tempMessage = "";
 
         boolean result = MissionEventClient.addEvent(DataManager.getInstance().token, event);
         if (result) {

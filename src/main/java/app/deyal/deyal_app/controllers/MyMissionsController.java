@@ -5,7 +5,6 @@ import app.deyal.deyal_app.managers.AlertManager;
 import app.deyal.deyal_app.managers.DataManager;
 import app.deyal.deyal_app.managers.StageManager;
 import app.deyal.deyal_app.repository.MissionClient;
-import app.deyal.deyal_app.repository.MissionEventClient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -107,11 +106,6 @@ public class MyMissionsController {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     int index = myMissionTableView.getSelectionModel().getSelectedIndex();
                     DataManager.getInstance().tempMission = myMissionTableView.getItems().get(index);
-                    String missionId = DataManager.getInstance().tempMission.getId();
-                    if (!MissionEventClient.getMissionEventList(DataManager.getInstance().token, missionId)) {
-                        DataManager.getInstance().tempMissionEventList = null;
-                    }
-
                     StageManager.getInstance().createViewMissionStage();
                     StageManager.getInstance().viewMissionStage.showAndWait();
                 }

@@ -61,7 +61,7 @@ public interface Constants {
     URL CHANGE_PASSWORD_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/auth/changePassword.fxml");
     URL CREATE_MISSION_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/mission/createMission.fxml");
     URL SEARCH_MISSION_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/mission/search.fxml");
-    URL VIEW_MISSION_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/mission/ViewMission.fxml");
+    URL VIEW_MISSION_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/mission/viewMission.fxml");
     URL VIEW_PROFILE_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/viewProfile.fxml");
     URL EDIT_PROFILE_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/main/edit_profile.fxml");
     URL REQUEST_MESSAGE_FXML = Constants.class.getResource("/app/deyal/deyal_app/views/event/requestMessage.fxml");
