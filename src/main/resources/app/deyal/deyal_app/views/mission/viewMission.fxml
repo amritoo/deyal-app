@@ -8,7 +8,7 @@
             fx:controller="app.deyal.deyal_app.controllers.ViewMissionController">
     <StackPane fx:id="root" prefHeight="600.0" prefWidth="585.0" styleClass="root">
         <ScrollPane>
-            <VBox fx:id="contentRoot" alignment="CENTER" spacing="35.0">
+            <VBox fx:id="contentRoot" alignment="CENTER" spacing="35.0" styleClass="root">
                 <children>
                     <HBox alignment="CENTER">
                         <Label fx:id="missionTitleLabel" alignment="CENTER" prefWidth="300.0" styleClass="label-title"
